@@ -26,8 +26,4 @@ Route::get('/dumb-reset-password', function () {
     return view('auth.login');
 })->name('dumb-reset-password');
 
-Route::get('/bantuan-teknis', function () {
-    return view('bantuan-teknis.bantuan_teknis');
-})->name('bantuan-teknis');
-
 require __DIR__.'/auth.php';
