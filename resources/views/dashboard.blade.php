@@ -28,23 +28,25 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 mt-6 w-full sm:w-1/2">
-                    <a
-                        href="#"
-                        class="w-full px-4 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center">
-                        <h3 class="text-2xl font-bold">E-DISDAY</h3>
-                        <p class="text-md font-medium mt-2">Data Permohonan / Disday</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6 mt-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                          </svg>
-                    </a>
-
-                    <a href="#"
-                        class="w-full px-6 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center">
-                        <h3 class="text-2xl font-bold">E-AMBULANCE</h3>
-                        <p class="text-md font-medium mt-2">Data Layanan Ambulance</p>
+                    @php
+                        $isDisabled = auth()->user()->driver_id ? 'pointer-events-none opacity-50' : '';
+                    @endphp
+                    <a href="#" class="w-full px-4 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center {{ $isDisabled }}">
+                            <h3 class="text-2xl font-bold">E-DISDAY</h3>
+                            <p class="text-md font-medium mt-2">Data Permohonan / Disday</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6 mt-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                              </svg>                              
+                            </svg>
+                    </a>
+
+                    <a href="#" class="w-full px-6 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center">
+                        <button>
+                            <h3 class="text-2xl font-bold">E-AMBULANCE</h3>
+                            <p class="text-md font-medium mt-2">Data Layanan Ambulance</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6 mt-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>                              
+                        </button>
                     </a>
                 </div>
             </div>
