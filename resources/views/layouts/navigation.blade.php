@@ -50,13 +50,13 @@
                                         @else
                                         <div
                                             class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold">
-                                            {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                                            {{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}
                                         </div>
                                         @endif
 
                                         <!-- Nama & Email -->
                                         <div class="flex flex-col ms-3 text-left">
-                                            <span class="text-gray-700 font-semibold">{{ Auth::user()->name }}</span>
+                                            <span class="text-gray-700 font-semibold">{{ Auth::user()->nama }}</span>
                                             <span class="text-gray-500 text-xs">{{ Auth::user()->email }}</span>
                                         </div>
 

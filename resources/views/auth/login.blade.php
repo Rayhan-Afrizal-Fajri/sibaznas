@@ -8,8 +8,8 @@
                 Masuk ke akun anda
             </div>
             @csrf
-            <x-input label="No HP" name="no_hp" type="text" required />
-            <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
+            <x-input label="No HP" name="nohp" type="text" required />
+            <x-input-error :messages="$errors->get('nohp')" class="mt-2" />
             <x-input label="Password" name="password" type="password" required />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
             <div class="flex justify-between items-center mt-4">

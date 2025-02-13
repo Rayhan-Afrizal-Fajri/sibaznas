@@ -12,9 +12,9 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="no_hp" :value="__('No HP')" />
-            <x-text-input id="no_hp" class="block mt-1 w-full" type="number" name="no_hp" {{-- :value="old('no_hp')" --}} />
-            <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
+            <x-input-label for="nohp" :value="__('No HP')" />
+            <x-text-input id="nohp" class="block mt-1 w-full" type="number" name="nohp" {{-- :value="old('nohp')" --}} />
+            <x-input-error :messages="$errors->get('nohp')" class="mt-2" />
         </div>
 
         <div class="flex item-center justify-center mt-4">
