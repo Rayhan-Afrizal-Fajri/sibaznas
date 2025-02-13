@@ -72,4 +72,13 @@ class Pengguna extends Authenticatable
         return 'nohp';
     }
 
+
+    public function wilayah() {
+        return $this->belongsTo(Wilayah::class, 'wilayah_id', 'wilayah_id');
+    }
+
+    public function pengurus() {
+        return $this->belongsTo(Pengurus::class, 'pengurus_id', 'pengurus_id');
+    }
+
 }
