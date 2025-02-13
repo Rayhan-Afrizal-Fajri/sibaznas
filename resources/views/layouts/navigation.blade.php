@@ -57,7 +57,7 @@
                                         <!-- Nama & Email -->
                                         <div class="flex flex-col ms-3 text-left">
                                             <span class="text-gray-700 font-semibold">{{ Auth::user()->nama }}</span>
-                                            <span class="text-gray-500 text-xs">{{ Auth::user()->email }}</span>
+                                            <span class="text-gray-500 text-xs">{{ Auth::user()->pengurus->jabatan->jabatan }}</span>
                                         </div>
 
                                         <!-- Icon Dropdown -->
