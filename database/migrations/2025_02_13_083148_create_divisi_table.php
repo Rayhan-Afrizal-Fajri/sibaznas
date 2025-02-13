@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('divisi', function (Blueprint $table) {
-            $table->string('divisi_id')->primary();
+            $table->integer('divisi_id')->primary()->autoIncrement();
             $table->string('divisi')->unique();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

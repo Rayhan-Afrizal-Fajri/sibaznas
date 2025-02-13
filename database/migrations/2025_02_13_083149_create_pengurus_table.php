@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('pengurus', function (Blueprint $table) {
-            $table->string('pengurus_id')->primary();
-            $table->string('jabatan_id');
+            $table->integer('pengurus_id')->primary()->autoIncrement();
+            $table->integer('jabatan_id');
+            $table->foreign('jabatan_id')->references('jabatan_id')->on('jabatan');
             $table->string('sk_nomor');
             $table->string('sk_url');
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');
-            $table->enum('status', [""]);
+            $table->enum('status', [""]); //kosongi
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

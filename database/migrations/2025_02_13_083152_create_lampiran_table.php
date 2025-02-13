@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('lampiran', function (Blueprint $table) {
-            $table->string('lampiran_id')->primary();
-            $table->string('permohonan_id')->index();
+            $table->integer('lampiran_id')->primary()->autoIncrement();
+            $table->integer('permohonan_id')->index();
             $table->foreign('permohonan_id')->references('permohonan_id')->on('permohonan');
             $table->enum('jenis', ["Permohonan","Survey","Pencairan","LPJ"]);
             $table->string('keterangan');
