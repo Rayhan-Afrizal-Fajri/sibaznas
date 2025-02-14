@@ -13,9 +13,11 @@ class JabatanSeeder extends Seeder
     public function run(): void
     {
         DB::table('jabatan')->insert([
-            ['divisi_id' => 1, 'jabatan' => 'Manager Keuangan', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 2, 'jabatan' => 'IT Administrator', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 3, 'jabatan' => 'Supervisor Operasional', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => 1, 'jabatan' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => 2, 'jabatan' => 'Wakil Ketua', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => 3, 'jabatan' => 'Pelaksana', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => 4, 'jabatan' => 'Staf', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => 5, 'jabatan' => 'Security', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }
