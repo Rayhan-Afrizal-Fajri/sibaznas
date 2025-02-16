@@ -17,7 +17,7 @@ class PenggunaSeeder extends Seeder
             [
                 'wilayah_id' => 1,
                 'pengurus_id' => 1,
-                'driver_id' => 1,
+                // 'driver_id' => 1,
                 'nik' => '1234567890123456',
                 'kk' => '3201123456789012',
                 'nama' => 'Rayhan Afrizal',
