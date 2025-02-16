@@ -7,10 +7,10 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="GET" action="{{ route('dumb-forgot-password') }}">
+    <form method="POST" action="{{ route('password.email') }}">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Nomor hp -->
         <div>
             <x-input-label for="nohp" :value="__('No HP')" />
             <x-text-input id="nohp" class="block mt-1 w-full" type="number" name="nohp" {{-- :value="old('nohp')" --}} />
@@ -24,8 +24,8 @@
         </div>
     </form>
     <div class="flex items-center justify-center mt-4">
-        <button onclick="window.history.back()" class="bg-[#F5F5F5] text-[#00593b] px-4 py-2 rounded-md hover:bg-white w-full">
+        <a href="{{ route('login') }}" class="bg-[#F5F5F5] text-[#00593b] px-4 py-2 rounded-md hover:bg-white w-full flex justify-center">
             {{ __('Kembali') }}
-        </button>
+        </a>
     </div>
 </x-guest-layout>
