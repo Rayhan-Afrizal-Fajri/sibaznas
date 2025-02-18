@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengguna;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PasswordResetLinkController extends Controller
 {
@@ -28,37 +33,40 @@ class PasswordResetLinkController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'no_hp' => ['required', 'numeric', 'exists:users,no_hp'],
+            'nohp' => ['required', 'exists:pengguna,nohp'],
         ]);
 
-        $user = User::where('no_hp', $request->no_hp)->first();
+        $user = Pengguna::where('nohp', $request->nohp)->first();
 
-        if (!$user) {
-            return back()->withError(['no_hp' =>'Nomor HP tidak ditemukan.']);
-        }
 
-        //Generate token reset password
-        $token = Password::createToken($user);
+        //generate token
+        $token = Str::random(60);
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $user->email],
+            ['token' => Hash::make($token), 'created_at' => now()], 
+        );
 
-        //simpan token dan kirimkan ke nomor HP (bisa pake SMS Gateway atau WhatsApp API)
-        DB::table('password_reset_token')->insert([
-            'email' => $user->email,
-            'token' => $token,
-            'created_at' => now(),
+        //Link reset password
+        $resetLink = url("/reset-password/$token");
+
+        //pesan whatsapp
+        $message = "BAZNAS CILACAP - NOTIFIKASI\n\n"
+        . "Assalamualaikum,\nSilahkan klik link berikut untuk reset password akun SIBAZNAS anda.\n\n"
+        . "Link: $resetLink\n\n"
+        . "Klik link di atas dan masukkan password baru anda.\n\n"
+        . "1️⃣ Ini adalah pesan otomatis by sistem\n"
+        . "2️⃣ Jika bukan anda yang mengajukan reset password, abaikan pesan ini\n"
+        . "3️⃣ Hub. Cs. Admin SIBAZNAS jika ada kendala/error\n\n"
+        . "Cs. Admin SIBAZNAS\n+62 858-4271-6803";
+
+        //kirim whatsapp melalui api
+        $response = Http::post("http://103.23.198.175:3125/send", [
+            'nohp' => '62' + substr($user->nohp, 1),
+            'message' => $message
         ]);
-
+        
+        dd($response, $response->body());
+        
         return back()->with('status', 'Token reset password telah dikirim ke nomor HP Anda.');
-
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        // $status = Password::sendResetLink(
-        //     $request->only('no_hp')
-        // );
-
-        // return $status == Password::RESET_LINK_SENT
-        //             ? back()->with('status', __($status))
-        //             : back()->withInput($request->only('no_hp'))
-        //                 ->withErrors(['no_hp' => __($status)]);
     }
 }
