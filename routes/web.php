@@ -12,9 +12,9 @@ Route::get('/home', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('home');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -23,9 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dumb-forgot-password', function () {
-    return view('auth.reset-password');
-})->name('dumb-forgot-password');
+Route::get('/program', function () {
+    return view('program.index');
+})->name('program');
 
 Route::get('/dumb-reset-password', function () {
     return view('auth.login');
