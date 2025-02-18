@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('permohonan', function (Blueprint $table) {
-            $table->integer('permohonan_id')->primary()->autoIncrement();
-            $table->integer('surat_id')->index()->nullable();
+            $table->uuid('permohonan_id')->primary();
+            $table->foreignUuid('surat_id')->index()->nullable();
             $table->foreign('surat_id')->references('surat_id')->on('surat');
-            $table->integer('program_id')->index();
+            $table->foreignUuid('program_id')->index();
             $table->foreign('program_id')->references('program_id')->on('program');
-            $table->integer('sub_program_id')->index();
+            $table->foreignUuid('sub_program_id')->index();
             $table->foreign('sub_program_id')->references('sub_program_id')->on('sub_program');
-            $table->integer('asnaf_id')->index();
+            $table->foreignUuid('asnaf_id')->index();
             $table->foreign('asnaf_id')->references('asnaf_id')->on('asnaf');
-            $table->integer('mustahik_id')->index();
+            $table->foreignUuid('mustahik_id')->index();
             $table->foreign('mustahik_id')->references('mustahik_id')->on('mustahik');
-            $table->integer('upz_id')->index()->nullable();
+            $table->foreignUuid('upz_id')->index()->nullable();
             $table->foreign('upz_id')->references('upz_id')->on('upz');
             $table->string('permohonan_nomor');
             $table->enum('permohonan_jenis', ["BAZNAS","UPZ"]);

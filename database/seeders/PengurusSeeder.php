@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PengurusSeeder extends Seeder
 {
@@ -14,7 +15,8 @@ class PengurusSeeder extends Seeder
     {
         DB::table('pengurus')->insert([
             [
-                'jabatan_id' => 1,
+                'pengurus_id' => Str::uuid(),
+                'jabatan_id' => DB::table('jabatan')->where('jabatan', 'Wakil Ketua I')->value('jabatan_id'),
                 'sk_nomor' => 'SK-001',
                 'sk_url' => 'uploads/sk_001.pdf',
                 'tgl_mulai' => '2023-01-01',
@@ -23,7 +25,8 @@ class PengurusSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'jabatan_id' => 2,
+                'pengurus_id' => Str::uuid(),
+                'jabatan_id' => DB::table('jabatan')->where('jabatan', 'Wakil Ketua II')->value('jabatan_id'),
                 'sk_nomor' => 'SK-002',
                 'sk_url' => 'uploads/sk_002.pdf',
                 'tgl_mulai' => '2023-06-01',

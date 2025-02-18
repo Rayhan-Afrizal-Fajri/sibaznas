@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('surat', function (Blueprint $table) {
-            $table->integer('surat_id')->primary()->autoIncrement();
+            $table->uuid('surat_id')->primary();
             $table->string('surat_url');
             $table->string('surat_nomor');
             $table->string('surat_tgl');

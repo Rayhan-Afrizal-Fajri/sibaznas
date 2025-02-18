@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('pengguna', function (Blueprint $table) {
-            $table->integer('pengguna_id')->primary()->autoIncrement();
-            $table->integer('wilayah_id');
+            $table->uuid('pengguna_id')->primary();
+            $table->foreignUuid('wilayah_id');
             $table->foreign('wilayah_id')->references('wilayah_id')->on('wilayah');
-            $table->integer('pengurus_id');
+            $table->foreignUuid('pengurus_id');
             $table->foreign('pengurus_id')->references('pengurus_id')->on('pengurus');
             $table->string('driver_id')->nullable();
             $table->string('nik');

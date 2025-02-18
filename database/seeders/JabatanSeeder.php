@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class JabatanSeeder extends Seeder
 {
@@ -13,11 +14,11 @@ class JabatanSeeder extends Seeder
     public function run(): void
     {
         DB::table('jabatan')->insert([
-            ['divisi_id' => 1, 'jabatan' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 2, 'jabatan' => 'Wakil Ketua', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 3, 'jabatan' => 'Pelaksana', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 4, 'jabatan' => 'Staf', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => 5, 'jabatan' => 'Security', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Pengumpulan')->value('divisi_id'), 'jabatan' => 'Wakil Ketua I', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Distribusi dan Dayaguna')->value('divisi_id'), 'jabatan' => 'Wakil Ketua II', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Perencanaan Keuangan dan Pelaporan')->value('divisi_id'), 'jabatan' => 'Wakil Ketua III', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Adm. SDM dan Umum')->value('divisi_id'), 'jabatan' => 'Wakil Ketua IV', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Ketua')->value('divisi_id'), 'jabatan' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

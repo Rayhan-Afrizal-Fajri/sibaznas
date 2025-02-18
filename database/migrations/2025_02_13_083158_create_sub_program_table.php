@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('sub_program', function (Blueprint $table) {
-            $table->integer('sub_program_id')->primary()->autoIncrement();
-            $table->integer('program_id')->index();
+            $table->uuid('sub_program_id')->primary();
+            $table->foreignUuid('program_id')->index();
             $table->foreign('program_id')->references('program_id')->on('program');
             $table->string('sub_program');
             $table->timestamp('created_at');

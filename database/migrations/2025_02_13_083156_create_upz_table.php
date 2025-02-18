@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('upz', function (Blueprint $table) {
-            $table->integer('upz_id')->primary()->autoIncrement();
+            $table->uuid('upz_id')->primary();
             $table->string('upz');
             $table->string('alamat');
             $table->string('nohp');

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('asnaf', function (Blueprint $table) {
-            $table->integer('asnaf_id')->primary()->autoIncrement();
+            $table->uuid('asnaf_id')->primary();
             $table->string('asnaf');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

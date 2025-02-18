@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PenggunaSeeder extends Seeder
 {
@@ -15,8 +16,9 @@ class PenggunaSeeder extends Seeder
     {
         DB::table('pengguna')->insert([
             [
-                'wilayah_id' => 1,
-                'pengurus_id' => 1,
+                'pengguna_id' => Str::uuid(),
+                'wilayah_id' => DB::table('wilayah')->where('wilayah', 'Jakarta')->value('wilayah_id'),
+                'pengurus_id' => DB::table('pengurus')->where('sk_nomor', 'SK-001')->value('pengurus_id'),
                 'driver_id' => 1,
                 'nik' => '1234567890123456',
                 'kk' => '3201123456789012',
