@@ -19,7 +19,7 @@ class PenggunaSeeder extends Seeder
                 'pengguna_id' => Str::uuid(),
                 'wilayah_id' => DB::table('wilayah')->where('wilayah', 'Jakarta')->value('wilayah_id'),
                 'pengurus_id' => DB::table('pengurus')->where('sk_nomor', 'SK-001')->value('pengurus_id'),
-                'driver_id' => 1,
+                'driver_id' => null,
                 'nik' => '1234567890123456',
                 'kk' => '3201123456789012',
                 'nama' => 'Rayhan Afrizal',
