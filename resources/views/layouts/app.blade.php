@@ -9,26 +9,67 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
+            rel="stylesheet"/>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen flex flex-col">
-            @include('layouts.navigation')
-    
+        <div class="flex flex-col">
+            @include('layouts.navigation') @include('layouts.sidebar')
             <!-- Page Content -->
-            <main class="flex-grow px-6 sm:px-20">
-                {{ $slot }}
-            </main>
-    
-            <!-- Footer -->
-            <footer class="bg-[#00593b] text-white text-center py-6 mt-8 border-b-4 border-yellow-500">
-                <div class="container mx-auto">
-                    <a href="https://baznas-cilacap.or.id/" target="_blank" class="text-sm">&copy; {{ date('Y') }} BAZNAS CILACAP</a>
+            <main class="p-2 sm:ml-64">
+                <div class="p-4 mt-12">
+                    <div class="flex flex-wrap justify-between gap-y-2 sm:flex-row flex-col">
+                        <!-- Breadcrumb -->
+                        <nav class="w-full sm:w-auto" aria-label="Breadcrumb">
+                            <ol
+                                class="flex flex-wrap items-center gap-2 md:gap-3 text-xs sm:text-sm md:text-md">
+                                <li class="flex items-center">
+                                    <a
+                                        href="{{ route('dashboard') }}"
+                                        class="font-regular text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li class="text-gray-400">/</li>
+                                @if (View::hasSection('main_folder'))
+                                <li class="flex items-center">
+                                    <a
+                                        href="#"
+                                        class="font-regular text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                        @yield('main_folder')
+                                    </a>
+                                </li>
+                                @endif @if (View::hasSection('sub_folder'))
+                                <li class="text-gray-400">/</li>
+                                <li aria-current="page">
+                                    <span class="font-regular text-gray-500 dark:text-gray-400">@yield('sub_folder')</span>
+                                </li>
+                                @endif
+                            </ol>
+                        </nav>
+
+                        <!-- Tanggal -->
+                        <div
+                            class="w-full sm:w-auto text-xs sm:text-sm md:text-md text-gray-700 dark:text-gray-400">
+                            <p class="text-left">
+                                {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Container Hijau di Belakang -->
+                    <div class="mt-4">
+                        <!-- Container Putih di Depan -->
+                        <div class="bg-white shadow-lg rounded-lg  min-h-screen border-t-4 p-4 border-[#00593b]">
+                            @yield('content')
+                        </div>                        
+                    </div>
+
                 </div>
-            </footer>
+            </main>
         </div>
-    </body>    
+    </body>
 </html>
