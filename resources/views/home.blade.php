@@ -177,7 +177,7 @@
                                 @php
                                     $isDisabled = auth()->user()->driver_id ? 'pointer-events-none opacity-50' : '';
                                 @endphp
-                                <a href="#" class="w-full px-4 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center {{ $isDisabled }}">
+                                <a href="{{ route('dashboard') }}" class="w-full px-4 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center {{ $isDisabled }}">
                                         <h3 class="text-2xl font-bold">E-DISDAY</h3>
                                         <p class="text-md font-medium mt-2">Data Permohonan / Disday</p>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6 mt-2">
