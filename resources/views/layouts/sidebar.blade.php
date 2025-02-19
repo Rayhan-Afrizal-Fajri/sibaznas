@@ -1,5 +1,5 @@
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <div class="flex flex-col items-center pb-2 border-b-2 border-yellow-500 mt-2 mb-8 mx-7 gap-1">
             <h1 class="text-xl text-[#00593b] font-bold">BAZNAS CILACAP</h1>
             <h3 class="text-md font-medium">{{ Auth::user()->nama }}</h3>
