@@ -30,7 +30,7 @@
                                 <li class="flex items-center">
                                     <a
                                         href="{{ route('dashboard') }}"
-                                        class="font-regular text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                        class="font-regular text-gray-700 hover:text-blue-600">
                                         Dashboard
                                     </a>
                                 </li>
@@ -39,14 +39,14 @@
                                 <li class="flex items-center">
                                     <a
                                         href="#"
-                                        class="font-regular text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                        class="font-regular text-gray-700 hover:text-blue-600">
                                         @yield('main_folder')
                                     </a>
                                 </li>
                                 @endif @if (View::hasSection('sub_folder'))
                                 <li class="text-gray-400">/</li>
                                 <li aria-current="page">
-                                    <span class="font-regular text-gray-500 dark:text-gray-400">@yield('sub_folder')</span>
+                                    <span class="font-regular text-gray-500">@yield('sub_folder')</span>
                                 </li>
                                 @endif
                             </ol>
@@ -54,7 +54,7 @@
 
                         <!-- Tanggal -->
                         <div
-                            class="w-full sm:w-auto text-xs sm:text-sm md:text-md text-gray-700 dark:text-gray-400">
+                            class="w-full sm:w-auto text-xs sm:text-sm md:text-md text-gray-700">
                             <p class="text-left">
                                 {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
                             </p>
