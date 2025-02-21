@@ -32,7 +32,7 @@
             <li><span class="text-sm font-semibold text-gray-500">E-Disday</span></li>
 
             <li>
-                <a href="#" class="flex items-center p-3 rounded-lg shadow-md bg-white text-[#00593b] hover:bg-gray-100 transition-all group {{ request()->routeIs('permohonan') ? 'bg-[#00593b] text-white' : '' }}">
+                <a href="{{ route('permohonan') }}" class="flex items-center p-3 rounded-lg shadow-md text-[#00593b] transition-all group {{ request()->routeIs('permohonan') ? 'bg-[#00593b] text-white' : '' }}">
                     <img src="{{ asset('build/icons/document.svg') }}" class="w-5 h-5 filter-green group-hover:filter-green-hover {{ request()->routeIs('permohonan') ? 'filter-white' : '' }}" alt="Document Icon">
                     <span class="ms-3 text-sm font-light">Data Permohonan</span>
                 </a>
