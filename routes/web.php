@@ -24,16 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/permohonan', function () {
-    return view('permohonan.index');
-})->name('permohonan');
+Route::resource('permohonan', PermohonanController::class);
 
 Route::get('/program', function () {
     return view('program.index');
 })->name('program');
 
-Route::get('/dumb-reset-password', function () {
-    return view('auth.login');
-})->name('dumb-reset-password');
+
 
 require __DIR__.'/auth.php';
