@@ -21,8 +21,8 @@
             <div class="flex items-center">
                 <img src="{{ asset('build/images/Logo-Baznas-Cilacap-tmb 1.png') }}" alt="BAZNAS Cilacap" class="w-24 mr-4 bg-white p-2 rounded-2xl">
                 <div>
-                    <h1 class="text-2xl font-bold">SIBAZNAS CILACAP</h1>
-                    <p class="text-xl">SISTEM INFORMASI BAZNAS CILACAP</p>
+                    <h1 class="text-2xl font-bold">e-DisDay</h1>
+                    <p class="text-xl">Pendistribusian & Pemberdayaan</p>
                 </div>
             </div>           
             <p class="text-left mt-6 text-2xl font-regular">
@@ -42,11 +42,11 @@
             </div>
         </div>
         <div class="flex justify-center items-center bg-white px-4 sm:px-4 py-4 sm:py-6">
-            <div class=" max-w-md mx-8">
+            <div class="max-w-md mx-8">
                 <div class="text-center mb-6">
                     <img src="{{ asset('build/images/Logo-Baznas-Cilacap-tmb 1.png') }}" alt="BAZNAS Cilacap" class="w-24 mx-auto">
-                    <h2 class="text-2xl font-bold text-[#00593b]">Selamat datang di SIBAZNAS</h2>
-                    <p class="text-md text-[#00593b]">Sistem Informasi BAZNAS Cilacap</p>
+                    <h2 class="text-2xl font-bold text-[#00593b]">Selamat datang di e-DisDay</h2>
+                    <p class="text-md text-[#00593b]">Pendistribusian & Pemberdayaan</p>
                     <hr class="border-yellow-500 my-2 mx-28">
                 </div>
             {{ $slot }}

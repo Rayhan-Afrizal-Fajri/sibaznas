@@ -34,8 +34,8 @@
                                 </a>
                             </div>
                             <div>
-                                <h1 class="text-md sm:text-2xl font-bold text-[#00593b]">SIBAZNAS CILACAP</h1>
-                                <p class="text-sm sm:text:xl text-[#00593b]">SISTEM INFORMASI BAZNAS CILACAP</p>
+                                <h1 class="text-md sm:text-2xl font-bold text-[#00593b]">e-DisDay</h1>
+                                <p class="text-sm sm:text:xl text-[#00593b]">Pendistribusian & Pemberdayaan</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4 sm:gap-0">
@@ -116,30 +116,6 @@
                                 </x-slot>
                             </x-dropdown>
                         </div>
-
-                        <!-- Hamburger -->
-                        {{-- <div class="-me-2 flex items-center sm:hidden">
-                                        <button
-                                            @click="open = ! open"
-                                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                                <path
-                                                    :class="{'hidden': open, 'inline-flex': ! open }"
-                                                    class="inline-flex"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M4 6h16M4 12h16M4 18h16"/>
-                                                <path
-                                                    :class="{'hidden': ! open, 'inline-flex': open }"
-                                                    class="hidden"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                        </button>
-                                    </div> --}}
                     </div>
                 </div>
             </nav>
@@ -179,7 +155,7 @@
                                 @endphp
                                 <a href="{{ route('dashboard') }}" class="w-full px-4 py-4 bg-[#00593b] text-white rounded-lg shadow-md hover:bg-green-800 transition flex flex-col justify-center {{ $isDisabled }}">
                                         <h3 class="text-2xl font-bold">E-DISDAY</h3>
-                                        <p class="text-md font-medium mt-2">Data Permohonan / Disday</p>
+                                        <p class="text-md font-medium mt-2">Pendistribusian & Pemberdayaan</p>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6 mt-2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                         </svg>
