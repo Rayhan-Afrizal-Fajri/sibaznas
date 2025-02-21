@@ -8,6 +8,6 @@ class PermohonanController extends Controller
 {
     public function index()
     {
-        
+        return view('permohonan.index');
     }
 }
