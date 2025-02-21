@@ -1,7 +1,7 @@
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="px-2 py-2 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start rtl:justify-end mx-6">
+            <div class="flex items-center justify-start rtl:justify-end">
                 <button
                     data-drawer-target="logo-sidebar"
                     data-drawer-toggle="logo-sidebar"
@@ -25,9 +25,9 @@
                     <img
                         src="{{ asset('build/images/Logo-Baznas-Cilacap-tmb 1.png') }}"
                         class="h-8 me-3"
-                        alt="FlowBite Logo"/>
+                        alt="Baznas Logo"/>
                     <span
-                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#00593b]">E-DISDAY</span>
+                        class="self-center text-sm font-semibold sm:text-xl whitespace-nowrap text-[#00593b]">E-DISDAY</span>
                 </a>
             </div>
         </div>
