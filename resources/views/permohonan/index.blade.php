@@ -189,55 +189,8 @@
                         </button>
                     </div>
                 </div>
-            </label>            
-            <div class="w-full">
-                <div class="w-full flex items-center gap-2">
-                        <button id="openModal-addPermohonan" class="w-full bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-white">
-                                <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-                            </svg>                          
-                            Tambah
-                        </button>
-                    <button class="w-full bg-white border border-[#00593b] px-3 py-2 text-xs text-[#00593b] font-semibold rounded-lg flex justify-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-[#00593b]">
-                            <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                            <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                          </svg>                                                    
-                        Ekspor
-                    </button>
-                </div>
             </div>
         </div>
-
-
-
-        <!-- Modal tambah permohonan -->
-        <div id="modal-addPermohonan"
-            class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                <h2 class="text-lg font-semibold text-gray-800">Tambah Permohonan</h2>
-                <p class="text-sm text-gray-600">Isi form berikut untuk menambahkan permohonan.</p>
-
-                <!-- Form -->
-                <form action="#" method="POST" class="mt-4">
-                    <label class="block text-sm font-medium text-gray-700">Nama</label>
-                    <input type="text"
-                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-[#00593b] focus:border-[#00593b]">
-
-                    <label class="block text-sm font-medium text-gray-700 mt-3">Email</label>
-                    <input type="email"
-                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-[#00593b] focus:border-[#00593b]">
-
-                    <div class="flex justify-end gap-2 mt-4">
-                        <button type="button" id="closeModal"
-                            class="px-4 py-2 text-sm bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Batal</button>
-                        <button type="submit"
-                            class="px-4 py-2 text-sm bg-[#00593b] text-white rounded-lg hover:bg-[#004027]">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     
     {{-- <div class="w-full overflow-x-auto"> --}}
         <table id="" class="table-fixed w-full overflow-x-scroll text-[9px] text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
@@ -454,7 +407,6 @@
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan / Catatan Tambahan</label>
                     <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bantuan biaya pendidikan pembayaran SPP"></textarea>
                 </div>
-                
 
                 <div class="flex justify-end gap-2 mt-4">
                     {{-- <button id="closeModal" class="px-4 py-2 text-sm bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Batal</button> --}}
@@ -462,28 +414,7 @@
                 </div>
             </form>
         </div>
-    </div>
-
-
-    <!-- JavaScript untuk Modal -->
-    <script>
-        document.getElementById("openModal-addPermohonan").addEventListener("click", function() {
-            document.getElementById("modal-addPermohonan").classList.remove("hidden");
-        });
-
-        document.getElementById("closeModal").addEventListener("click", function() {
-            document.getElementById("modal-addPermohonan").classList.add("hidden");
-        });
-
-        // Tutup modal jika klik di luar modal
-        document.getElementById("modal-addPermohonan").addEventListener("click", function(event) {
-            if (event.target === this) {
-                this.classList.add("hidden");
-            }
-        });
-
-    </script>    
-
+    </div>  
 
         <!-- JavaScript untuk Modal -->
         <script>
