@@ -24,7 +24,7 @@
                 <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
                     <img
                         src="{{ asset('build/images/Logo-Baznas-Cilacap-tmb 1.png') }}"
-                        class="h-8 me-3"
+                        class="h-6 me-3"
                         alt="Baznas Logo"/>
                     <span
                         class="self-center text-sm font-semibold sm:text-xl whitespace-nowrap text-[#00593b]">E-DISDAY</span>

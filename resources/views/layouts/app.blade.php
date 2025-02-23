@@ -82,7 +82,7 @@
                         <!-- Breadcrumb -->
                         <nav class="w-full sm:w-auto" aria-label="Breadcrumb">
                             <ol
-                                class="flex flex-wrap items-center gap-2 md:gap-3 text-xs sm:text-sm md:text-md">
+                                class="flex flex-wrap items-center gap-0.5 md:gap-1 text-[10px] sm:text-[12px] md:text-md">
                                 <li class="flex items-center">
                                     <a
                                         href="{{ route('dashboard') }}"
@@ -94,8 +94,13 @@
                                 @if (View::hasSection('main_folder'))
                                 <li class="flex items-center">
                                     <a
-                                        href="#"
-                                        class="font-regular text-gray-700 hover:text-blue-600">
+                                        @if (View::hasSection('sub_folder'))
+                                            href="@yield('main_folder-link')"
+                                        @endif
+                                        class="font-regular text-gray-700
+                                        @if (View::hasSection('sub_folder'))
+                                            hover:text-blue-600
+                                        @endif">
                                         @yield('main_folder')
                                     </a>
                                 </li>
@@ -110,7 +115,7 @@
 
                         <!-- Tanggal -->
                         <div
-                            class="w-full sm:w-auto text-xs sm:text-sm md:text-md text-gray-700">
+                            class="w-full sm:w-auto text-[10px] sm:text-[12px] text-gray-700">
                             <p class="text-left">
                                 {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
                             </p>

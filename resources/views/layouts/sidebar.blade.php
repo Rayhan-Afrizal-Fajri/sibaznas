@@ -1,8 +1,8 @@
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-54 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-40 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <div class="flex flex-col text-center items-center pb-2 border-b-2 border-yellow-500 mt-2 mb-8 mx-2 gap-1">
-            <h1 class="text-md text-[#00593b] font-bold text-center">BAZNAS CILACAP</h1>
-            <h3 class="text-sm font-medium">{{ Auth::user()->nama }}</h3>
+            <h1 class="text-sm text-[#00593b] font-bold text-center">BAZNAS CILACAP</h1>
+            <h3 class="text-[12px] font-medium">{{ Auth::user()->nama }}</h3>
             <div class="bg-[#00593b] rounded-md">
                 <h2 class="text-xs text-white mx-1 my-1">{{ Auth::user()->pengurus->jabatan->jabatan }}</h2>
             </div>
