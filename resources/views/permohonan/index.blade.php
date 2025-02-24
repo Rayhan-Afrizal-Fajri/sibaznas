@@ -87,12 +87,12 @@
             }
 
             .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: #00593b; /* Warna scrollbar */
+                background: #888; /* Warna scrollbar */
                 border-radius: 10px; /* Membuat sudut scrollbar lebih rounded */
             }
 
             .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #048359; /* Warna scrollbar saat hover */
+                background: #555; /* Warna scrollbar saat hover */
             }
 
         </style>
