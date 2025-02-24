@@ -100,112 +100,243 @@
         <div class="mb-2 text-[#00593b]">
             Data Permohonan
         </div>
+
         <div class="w-full bg-white shadow px-2 pt-4 pb-3 border border-gray-200 rounded-lg mb-8">
-            <div class="flex flex-col sm:flex-row gap-2 mb-2">
-                <label class="w-full">
-                    <input type="text" id="daterange"
-                        class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 text-xs font-medium text-center ">
-                </label>
-                <label class="flex items-center w-full">
-                    <span
-                        class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
-                        Status FO
-                    </span>
-                    <select
-                        class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="kategori" onchange="this.form.submit()">
-                        <option value="all" @if (request('kategori') == 'all') selected @endif>
-                            Semua
-                        </option>
-                    </select>
-                </label>
-                <label class="flex items-center w-full">
-                    <span
-                        class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
-                        Acc Atasan
-                    </span>
-                    <select
-                        class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="kategori" onchange="this.form.submit()">
-                        <option value="all" @if (request('kategori') == 'all') selected @endif>
-                            Semua
-                        </option>
-                    </select>
-                </label>
-                <label class="flex items-center w-full">
-                    <span
-                        class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
-                        Survey
-                    </span>
-                    <select
-                        class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="kategori" onchange="this.form.submit()">
-                        <option value="all" @if (request('kategori') == 'all') selected @endif>
-                            Semua
-                        </option>
-                    </select>
-                </label>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-2">
-                <label class="flex items-center w-full">
-                    <span
-                        class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
-                        Acc Keu
-                    </span>
-                    <select
-                        class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="kategori" onchange="this.form.submit()">
-                        <option value="all" @if (request('kategori') == 'all') selected @endif>
-                            Semua
-                        </option>
-                    </select>
-                </label>
-                <label class="flex items-center w-full">
-                    <span
-                        class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
-                        LPJ
-                    </span>
-                    <select
-                        class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="kategori" onchange="this.form.submit()">
-                        <option value="all" @if (request('kategori') == 'all') selected @endif>
-                            Semua
-                        </option>
-                    </select>
-                </label>
-                <label class="w-full">
-                    <div class="w-full bg-gray-300 px-3 py-2 rounded-lg flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            class="size-4 text-gray-700">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"
-                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                        </svg>
-                        <span class="text-xs font-light text-gray-700">Refresh Filter</span>
+            <form action="" method="post" id="filterPermohonan">
+                <div class="flex flex-col sm:flex-row gap-2 mb-2">
+                    <label class="w-full">
+                        <input type="text" id="daterange"
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 text-xs font-medium text-center " readonly>
+                    </label>
+                    <label class="flex items-center w-full">
+                        <span
+                            class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
+                            Status FO
+                        </span>
+                        <select
+                            class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
+                            name="kategori" onchange="submitPermohonan();">
+                            <option value="">Semua</option>
+                            <option value="Direncanakan">Direncanakan</option>
+                            <option value="Diajukan">Diajukan</option>
+                        </select>
+                    </label>
+                    <label class="flex items-center w-full">
+                        <span
+                            class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
+                            Acc Atasan
+                        </span>
+                        <select
+                            class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
+                            name="kategori" onchange="submitPermohonan();">
+                            <option value="">Semua</option>
+                            <option value="Belum Direspon">Belum Direspon</option>
+                            <option value="Disetujui">Disetujui</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </select>
+                    </label>
+                    <label class="flex items-center w-full">
+                        <span
+                            class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
+                            Survey
+                        </span>
+                        <select
+                            class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
+                            name="kategori" onchange="submitPermohonan();">
+                            <option value="Semua">Semua</option>
+                            <option value="Perlu">Perlu</option>
+                            <option value="Tidak Perlu">Tidak Perlu</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <label class="flex items-center w-full">
+                        <span
+                            class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
+                            Acc Keu
+                        </span>
+                        <select
+                            class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
+                            name="kategori" onchange="submitPermohonan();">
+                            <option value="">Semua</option>
+                            <option value="Belum Dicairkan">Belum Dicairkan</option>
+                            <option value="Berhasil Dicairkan">Berhasil Dicairkan</option>
+                        </select>
+                    </label>
+                    <label class="flex items-center w-full">
+                        <span
+                            class="bg-white border border-gray-300 border-r-0 text-gray-700 px-3 py-2 text-xs font-medium rounded-l-lg whitespace-nowrap">
+                            LPJ
+                        </span>
+                        <select
+                            class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
+                            name="kategori" onchange="submitPermohonan();">
+                            <option value="">Semua</option>
+                            <option value="Belum LPJ">Belum LPJ</option>
+                            <option value="Sudah LPJ">Sudah LPJ</option>
+                        </select>
+                    </label>
+                    <label class="w-full">
+                        <div class="w-full bg-gray-300 px-3 py-2 rounded-lg flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                class="size-4 text-gray-700">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"
+                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                            <span class="text-xs font-light text-gray-700">Refresh Filter</span>
+                        </div>
+                    </label>
+                    <div class="w-full">
+                        <div class="w-full flex items-center gap-2">
+                            <button id="openModal-addPermohonan"
+                                class="w-full bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="size-4 text-white">
+                                    <path fill-rule="evenodd"
+                                        d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Tambah
+                            </button>
+                            <button
+                                class="w-full bg-white border border-[#00593b] px-3 py-2 text-xs text-[#00593b] font-semibold rounded-lg flex justify-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="size-4 text-[#00593b]">
+                                    <path
+                                        d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                                    <path
+                                        d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
+                                </svg>
+                                Ekspor
+                            </button>
+                        </div>
                     </div>
-                </label>
-                <div class="w-full">
-                    <div class="w-full flex items-center gap-2">
-                        <button id="openModal-addPermohonan"
-                            class="w-full bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="size-4 text-white">
-                                <path fill-rule="evenodd"
-                                    d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            Tambah
-                        </button>
-                        <button
-                            class="w-full bg-white border border-[#00593b] px-3 py-2 text-xs text-[#00593b] font-semibold rounded-lg flex justify-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="size-4 text-[#00593b]">
-                                <path
-                                    d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
-                                <path
-                                    d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
-                            </svg>
-                            Ekspor
-                        </button>
+                </div>
+            </form>
+            <div class="flex items-center gap-1 mt-4 ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="size-4 text-gray-700">
+                    <path fill-rule="evenodd"
+                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <p class="text-[10px] text-gray-700">Menampikan data permohonan pada filter terpilih</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col space-y-4">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div class="overflow-hidden">
+                        <table class="w-100 sm:min-w-full text-[9px] text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
+                            <thead class="text-[9px] sm:text-xs text-gray-700 bg-white">
+                                <tr>
+                                    <th class="px-2 text-center py-3 border w-[40px]">NO</th>
+                                    <th class="px-2 text-center py-3 border w-[20%]">Nomor & Nominal Pengajuan</th>
+                                    <th class="px-2 text-center py-3 border w-[20%]">Program & Sub Program</th>
+                                    <th class="px-2 text-center py-3 border w-[20%]">Survey</th>
+                                    <th class="px-2 text-center py-3 border w-[20%]">Pencairan</th>
+                                    <th class="px-2 text-center py-3 border w-[20%]">LPJ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b cursor-pointer" onclick="window.location.href='{{ route('permohonan.show', 1) }}'">
+                                    <td class="px-2 text-center py-4 border">1</td>
+                            
+                                    <td class="px-2 py-2 border w-[20%]">
+                                        <div class="flex flex-col text-black">
+                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan Selesai diinput FO</p>
+                                            <p class="text-[5px] sm:text-[9px]">13/E-DISDAY/INDIVIDU/II/2025</p>
+                                            <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0 mb-1">
+                                                <p>Nominal Diajukan</p>
+                                                <p class="font-bold">Rp. 500.000</p>
+                                            </div>
+                                            <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                                <p>Tgl Permohonan</p>
+                                                <p class="font-bold">14 Februari 2025</p>
+                                            </div>
+                                            <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                                <p>Tgl Selesai Diinput</p>
+                                                <p class="font-bold">14 Februari 2025</p>
+                                            </div>
+                                            <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                                <div class="flex flex-row gap-1">
+                                                    <p>Pemohon</p>
+                                                    <p class="bg-[#00593b] px-0.5 text-white rounded-sm">Individu</p>
+                                                </div>
+                                                <p class="font-bold">Faiz Abdul Ghoni</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="px-2 py-2 border w-[20%]">
+                                        <div class="flex flex-col text-black">
+                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Disetujui Atasan</p>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Cilacap Cerdas (Pendidikan)</p>
+                                                <p class="font-regular">1.1 Bantuan biaya pendidikan siswa miskin SMP & SMA</p>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Cacatan Tambahan</p>
+                                                <p class="font-regular">Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                
+                                    <td class="px-2 py-2 border w-[20%]">
+                                        <div class="flex flex-col text-black">
+                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Survey</p>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Disetujui</p>
+                                                <p>Kamis, 15 Maret 2025</p>
+                                            </div>
+                                            <a href="#" class="text-blue-700 hover:text-blue-500" target="_blank">Form survey.pdf</a>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Catatan Tambahan</p>
+                                                <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                
+                                    <td class="px-2 py-2 border w-[20%]">
+                                        <div class="flex flex-col text-black">
+                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Dicairkan</p>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Sumber: DANA ZAKAT</p>
+                                                <p>Kamis, 15 Mare 2025</p>
+                                            </div>
+                                            <div class="flex flex-row justify-between">
+                                                <p>Nominal dicairkan</p>
+                                                <p class="font-bold">Rp. 500.000</p>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Catatan Tambahan</p>
+                                                <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                
+                                    <td class="px-2 py-2 border w-[20%]">
+                                        <div class="flex flex-col text-black">
+                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Selesai LPJ</p>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Sudah disalurkan</p>
+                                                <p>Kamis, 15 Mare 2025</p>
+                                            </div>
+                                            <div class="flex flex-row justify-between">
+                                                <p>Bentuk Penyaluran</p>
+                                                <p class="font-bold">Uang Tunai</p>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <p class="font-bold">Catatan Tambahan</p>
+                                                <p>Penyaluran uang tunai bantuan biaya pendidikan</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -456,24 +587,79 @@
                     this.classList.add("hidden");
                 }
             });
+        </script>
 
+        @php
+            $data_first = '2025-01-01';
+            $data_last = '2025-01-31';
+        @endphp
 
-            $('#daterange').daterangepicker({
-                locale: {
-                    format: 'D MMMM YYYY'
-                },
-                ranges: {
-                    'Hari ini': [moment(), moment()],
-                    'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
-                    '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
-                    'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
-                    'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                        'month').endOf('month')],
-                    'Tahun Ini': [moment().startOf('year'), moment().endOf('year')],
-                    'Semua': [moment().subtract(10, 'years'), moment()]
+        <script>
+            // daterange
+            $(function() {
+
+                var start_date = '2025-01-01';
+                var end_date = '2025-01-31';
+
+                var start = moment(start_date);
+                var end = moment(end_date);
+
+                function cb(start, end) {
+                    $('#daterange').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
                 }
+                // moment.locale('id');
+                $('#daterange').daterangepicker({
+                    startDate: start,
+                    endDate: end,
+                    locale: {
+                        format: 'D MMMM YYYY',
+                        separator: ' - ',
+                        applyLabel: 'Pilih',
+                        cancelLabel: 'Batal',
+                        fromLabel: 'Dari',
+                        toLabel: 'Hingga',
+                        customRangeLabel: 'Pilih Tanggal',
+                        weekLabel: 'Mg',
+                        daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+                        monthNames: [
+                            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+                            'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                        ],
+                        firstDay: 1
+                    },
+                    ranges: {
+                        'Hari ini': [moment(), moment()],
+                        'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+                        '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                        'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                        'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                            'month').endOf('month')],
+                        'Tahun Ini': [moment().startOf('year'), moment().endOf('year')],
+                        'Semua': [moment('{{ $data_first }}'), moment('{{ $data_last }}')]
+
+                    }
+                }, function(start, end) {
+                    $('#daterange').val(start.format('Y-MM-DD') + ' - ' + end.format('Y-MM-DD'));
+                    $('#filterFormUmum').submit(); // Mengirimkan formulir saat terjadi perubahan
+                });
+
+                // moment.locale('id');
+                cb(start, end);
+                window.start = start;
+                window.end = end;
+
             });
+
+            function submitFormUpzis() {
+                $('#daterange').val(window.start.format('Y-MM-DD') + ' - ' + window.end.format('Y-MM-DD'));
+                $('#filterFormUmum').submit();
+            }
+
+            function submitFormUmum() {
+                $('#daterange').val(window.start.format('Y-MM-DD') + ' - ' + window.end.format('Y-MM-DD'));
+                $('#filterFormUmum').submit();
+            }
         </script>
     @endsection
 </x-app-layout>
