@@ -27,7 +27,7 @@
             </div>           
             <p class="text-left mt-6 text-2xl font-regular">
                 Efektif, Akuntabel, dan Transparan <br> 
-                SIBAZNAS untuk Manajemen yang Lebih Baik
+                e-DisDay untuk Manajemen yang Lebih Baik
             </p>
     
             <div class="flex items-center mt-6">

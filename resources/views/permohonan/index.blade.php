@@ -76,6 +76,25 @@
             td {
                 vertical-align: top;
             }
+
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 8px; /* Lebar scrollbar diperkecil */
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: #f1f1f1; /* Warna background track scrollbar */
+                border-radius: 10px; /* Membuat sudut track scrollbar lebih rounded */
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #00593b; /* Warna scrollbar */
+                border-radius: 10px; /* Membuat sudut scrollbar lebih rounded */
+            }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #048359; /* Warna scrollbar saat hover */
+            }
+
         </style>
 
         <div class="mb-2 text-[#00593b]">
@@ -191,122 +210,127 @@
                 </div>
             </div>
         </div>
-    
-    {{-- <div class="w-full overflow-x-auto"> --}}
-        <table id="" class="table-fixed w-full overflow-x-scroll text-[9px] text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
-            <thead class="text-xs text-gray-700 bg-white">
-                <tr>
-                    <th class="px-2 text-center py-3 border w-[40px]">NO</th>
-                    <th class="px-2 text-center py-3 border w-[20%]">Nomor & Nominal Pengajuan</th>
-                    <th class="px-2 text-center py-3 border w-[20%]">Program & Sub Program</th>
-                    <th class="px-2 text-center py-3 border w-[20%]">Survey</th>
-                    <th class="px-2 text-center py-3 border w-[20%]">Pencairan</th>
-                    <th class="px-2 text-center py-3 border w-[20%]">LPJ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-white border-b cursor-pointer" onclick="window.location.href='{{ route('permohonan.show', 1) }}'">
-                    <td class="px-2 text-center py-4 border">1</td>
-                    {{-- Nomor dan nominal pengajuan --}}
-                    <td class="px-2 py-2 border w-[20%]">
-                        <div class="flex flex-col text-black">
-                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan Selesai diinput FO</p>
-                            <p>13/E-DISDAY/INDIVIDU/II/2025</p>
-                            <div class="flex flex-row justify-between">
-                                <p>Nominal Diajukan</p>
-                                <p class="font-bold">Rp. 500.000</p>
-                            </div>
-                            <div class="flex flex-row justify-between">
-                                <p>Tgl Permohonan</p>
-                                <p class="font-bold">14 Februari 2025</p>
-                            </div>
-                            <div class="flex flex-row justify-between">
-                                <p>Tgl Selesai Diinput</p>
-                                <p class="font-bold">14 Februari 2025</p>
-                            </div>
-                            <div class="flex flex-row justify-between">
-                                <div class="flex flex-row gap-1">
-                                    <p>Pemohon</p>
-                                    <p class="bg-[#00593b] px-0.5 text-white rounded-sm">Individu</p>
+    <div class="flex flex-col">
+        <div class="-m-1.5 overflow-x-auto">
+          <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="overflow-hidden">
+              <table class="w-100 sm:min-w-full text-[9px] text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
+                <thead class="text-[9px] sm:text-xs text-gray-700 bg-white">
+                    <tr>
+                        <th class="px-2 text-center py-3 border w-[40px]">NO</th>
+                        <th class="px-2 text-center py-3 border w-[20%]">Nomor & Nominal Pengajuan</th>
+                        <th class="px-2 text-center py-3 border w-[20%]">Program & Sub Program</th>
+                        <th class="px-2 text-center py-3 border w-[20%]">Survey</th>
+                        <th class="px-2 text-center py-3 border w-[20%]">Pencairan</th>
+                        <th class="px-2 text-center py-3 border w-[20%]">LPJ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b cursor-pointer" onclick="window.location.href='{{ route('permohonan.show', 1) }}'">
+                        <td class="px-2 text-center py-4 border">1</td>
+                   
+                        <td class="px-2 py-2 border w-[20%]">
+                            <div class="flex flex-col text-black">
+                                <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan Selesai diinput FO</p>
+                                <p class="text-[5px] sm:text-[9px]">13/E-DISDAY/INDIVIDU/II/2025</p>
+                                <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0 mb-1">
+                                    <p>Nominal Diajukan</p>
+                                    <p class="font-bold">Rp. 500.000</p>
                                 </div>
-                                <p class="font-bold">Faiz Abdul Ghoni</p>
+                                <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                    <p>Tgl Permohonan</p>
+                                    <p class="font-bold">14 Februari 2025</p>
+                                </div>
+                                <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                    <p>Tgl Selesai Diinput</p>
+                                    <p class="font-bold">14 Februari 2025</p>
+                                </div>
+                                <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
+                                    <div class="flex flex-row gap-1">
+                                        <p>Pemohon</p>
+                                        <p class="bg-[#00593b] px-0.5 text-white rounded-sm">Individu</p>
+                                    </div>
+                                    <p class="font-bold">Faiz Abdul Ghoni</p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    {{-- Program dan sub program --}}
-                    <td class="px-2 py-2 border w-[20%]">
-                        <div class="flex flex-col text-black">
-                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Disetujui Atasan</p>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Cilacap Cerdas (Pendidikan)</p>
-                                <p class="font-regular">1.1 Bantuan biaya pendidikan siswa miskin SMP & SMA</p>
+                        </td>
+                        
+                        <td class="px-2 py-2 border w-[20%]">
+                            <div class="flex flex-col text-black">
+                                <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Disetujui Atasan</p>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Cilacap Cerdas (Pendidikan)</p>
+                                    <p class="font-regular">1.1 Bantuan biaya pendidikan siswa miskin SMP & SMA</p>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Cacatan Tambahan</p>
+                                    <p class="font-regular">Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                </div>
                             </div>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Cacatan Tambahan</p>
-                                <p class="font-regular">Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                        </td>
+                       
+                        <td class="px-2 py-2 border w-[20%]">
+                            <div class="flex flex-col text-black">
+                                <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Survey</p>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Disetujui</p>
+                                    <p>Kamis, 15 Maret 2025</p>
+                                </div>
+                                <a href="#" class="text-blue-700 hover:text-blue-500" target="_blank">Form survey.pdf</a>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Catatan Tambahan</p>
+                                    <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    {{-- Survey --}}
-                    <td class="px-2 py-2 border w-[20%]">
-                        <div class="flex flex-col text-black">
-                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Survey</p>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Disetujui</p>
-                                <p>Kamis, 15 Maret 2025</p>
+                        </td>
+                    
+                        <td class="px-2 py-2 border w-[20%]">
+                            <div class="flex flex-col text-black">
+                                <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Dicairkan</p>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Sumber: DANA ZAKAT</p>
+                                    <p>Kamis, 15 Mare 2025</p>
+                                </div>
+                                <div class="flex flex-row justify-between">
+                                    <p>Nominal dicairkan</p>
+                                    <p class="font-bold">Rp. 500.000</p>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Catatan Tambahan</p>
+                                    <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                                </div>
                             </div>
-                            <a href="#" class="text-blue-700 hover:text-blue-500" target="_blank">Form survey.pdf</a>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Catatan Tambahan</p>
-                                <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
+                        </td>
+                      
+                        <td class="px-2 py-2 border w-[20%]">
+                            <div class="flex flex-col text-black">
+                                <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Selesai LPJ</p>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Sudah disalurkan</p>
+                                    <p>Kamis, 15 Mare 2025</p>
+                                </div>
+                                <div class="flex flex-row justify-between">
+                                    <p>Bentuk Penyaluran</p>
+                                    <p class="font-bold">Uang Tunai</p>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p class="font-bold">Catatan Tambahan</p>
+                                    <p>Penyaluran uang tunai bantuan biaya pendidikan</p>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    {{-- Pencairan --}}
-                    <td class="px-2 py-2 border w-[20%]">
-                        <div class="flex flex-col text-black">
-                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Dicairkan</p>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Sumber: DANA ZAKAT</p>
-                                <p>Kamis, 15 Mare 2025</p>
-                            </div>
-                            <div class="flex flex-row justify-between">
-                                <p>Nominal dicairkan</p>
-                                <p class="font-bold">Rp. 500.000</p>
-                            </div>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Catatan Tambahan</p>
-                                <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
-                            </div>
-                        </div>
-                    </td>
-                    {{-- LPJ --}}
-                    <td class="px-2 py-2 border w-[20%]">
-                        <div class="flex flex-col text-black">
-                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Selesai LPJ</p>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Sudah disalurkan</p>
-                                <p>Kamis, 15 Mare 2025</p>
-                            </div>
-                            <div class="flex flex-row justify-between">
-                                <p>Bentuk Penyaluran</p>
-                                <p class="font-bold">Uang Tunai</p>
-                            </div>
-                            <div class="flex flex-col">
-                                <p class="font-bold">Catatan Tambahan</p>
-                                <p>Penyaluran uang tunai bantuan biaya pendidikan</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    {{-- </div> --}}
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     <!-- Modal tambah permohonan -->
     <div id="modal-addPermohonan" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
-        <div class="bg-white p-4 rounded-md shadow-lg sm:w-[672px] max-h-[90vh] overflow-y-auto">
+        <div class="bg-white p-4 rounded-md shadow-lg sm:w-[672px] max-h-[90vh] custom-scrollbar overflow-y-auto">
             <div class="flex justify-between items-center border-b-[1.5px] border-gray-500">
                 <h2 class="text-sm font-semibold text-gray-800 uppercase">Tambah Permohonan e-DisDay</h2>
                 <button id="closeModal">
