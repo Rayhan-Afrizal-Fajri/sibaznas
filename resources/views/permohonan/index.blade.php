@@ -242,7 +242,6 @@
                             <tbody>
                                 <tr class="bg-white border-b cursor-pointer" onclick="window.location.href='{{ route('permohonan.show', 1) }}'">
                                     <td class="px-2 text-center py-4 border">1</td>
-                            
                                     <td class="px-2 py-2 border w-[20%]">
                                         <div class="flex flex-col text-black">
                                             <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan Selesai diinput FO</p>
@@ -336,7 +335,6 @@
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
