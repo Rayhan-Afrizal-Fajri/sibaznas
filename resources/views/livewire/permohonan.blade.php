@@ -428,7 +428,7 @@
             </div>
 
             <!-- Form -->
-            @include('modal.tambah-permohonan')
+            @include('modal.modal_tambah_permohonan')
         </div>
     </div>
 
