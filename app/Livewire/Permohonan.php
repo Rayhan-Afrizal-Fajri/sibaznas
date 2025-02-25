@@ -76,16 +76,24 @@ class Permohonan extends Component
             })
             // filter fo
             ->when($this->filters_fo != 'Semua' && $this->filters_fo != '', function ($query) {
-                return $query->where('tujuan', $this->filters_fo);
+                return $query->where('permohonan_status_input', $this->filters_fo);
             })
             ->when($this->filters_atasan != 'Semua' && $this->filters_atasan != '', function ($query) {
-                return $query->where('tujuan', $this->filters_atasan);
+                if ($this->filters_atasan == 'Belum Dicek') {
+                    return $query->where('permohonan_status_input', 'Selesai Input');
+                } else {
+                    return $query->where('permohonan_status_atasan', $this->filters_atasan);
+                };
             })
             ->when($this->filters_survey != 'Semua' && $this->filters_survey != '', function ($query) {
-                return $query->where('tujuan', $this->filters_survey);
+                return $query->where('survey_pilihan', $this->filters_survey);
             })
             ->when($this->filters_pencairan != 'Semua' && $this->filters_pencairan != '', function ($query) {
-                return $query->where('tujuan', $this->filters_pencairan);
+                if ($this->filters_pencairan == 'Belum Dicairkan') {
+                    return $query->where('permohonan_status_atasan', 'Diterima');
+                } else {
+                    return $query->where('pencairan_status', $this->filters_pencairan);
+                };
             })
             ->when($this->filters_lpj != 'Semua' && $this->filters_lpj != '', function ($query) {
                 return $query->where('tujuan', $this->filters_lpj);
