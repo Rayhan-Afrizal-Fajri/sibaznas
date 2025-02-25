@@ -78,23 +78,81 @@
             }
 
             .custom-scrollbar::-webkit-scrollbar {
-                width: 8px; /* Lebar scrollbar diperkecil */
+                width: 8px;
+                /* Lebar scrollbar diperkecil */
             }
 
             .custom-scrollbar::-webkit-scrollbar-track {
-                background: #f1f1f1; /* Warna background track scrollbar */
-                border-radius: 10px; /* Membuat sudut track scrollbar lebih rounded */
+                background: #f1f1f1;
+                /* Warna background track scrollbar */
+                border-radius: 10px;
+                /* Membuat sudut track scrollbar lebih rounded */
             }
 
             .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: #888; /* Warna scrollbar */
-                border-radius: 10px; /* Membuat sudut scrollbar lebih rounded */
+                background: #888;
+                /* Warna scrollbar */
+                border-radius: 10px;
+                /* Membuat sudut scrollbar lebih rounded */
             }
 
             .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #555; /* Warna scrollbar saat hover */
+                background: #555;
+                /* Warna scrollbar saat hover */
             }
 
+            /* Mengatur font seluruh DataTables */
+            .dataTables_wrapper {
+                font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                font-size: 12px;
+            }
+
+            /* Mengatur ukuran font untuk tabel */
+            .dataTable {
+                font-family: inherit;
+                font-size: inherit;
+            }
+
+            /* Mengatur ukuran font untuk elemen Search dan Show Entries */
+            .dataTables_length label,
+            .dataTables_filter label {
+                font-size: 12px;
+            }
+
+            /* Mengatur ukuran font untuk pagination */
+            .dataTables_info,
+            .dataTables_paginate {
+                font-size: 12px;
+            }
+
+            /* Mengatur ukuran font untuk tombol pagination */
+            .dataTables_paginate .paginate_button {
+                font-size: 12px;
+            }
+
+            /* Mengatur ukuran dropdown "Show Entries" */
+            .dataTables_length select {
+                width: 50px !important;
+                /* Lebar dropdown */
+                height: 28px !important;
+                /* Tinggi dropdown */
+                font-size: 12px !important;
+                /* Ukuran teks */
+                padding: 2px 5px !important;
+                /* Padding dalam dropdown */
+            }
+
+            /* Mengatur ukuran input "Search" */
+            .dataTables_filter input {
+                width: 120px !important;
+                /* Lebar input */
+                height: 28px !important;
+                /* Tinggi input */
+                font-size: 12px !important;
+                /* Ukuran teks */
+                padding: 2px 5px !important;
+                /* Padding dalam input */
+            }
         </style>
 
         <div class="mb-2 text-[#00593b]">
@@ -545,5 +603,12 @@
                 $('#filterFormUmum').submit();
             }
         </script>
+        @if ($filter_permohonan == 'on')
+            <livewire:permohonan :c_filter_daterange="$c_filter_daterange" :c_filters_fo="$c_filters_fo" :c_filters_atasan="$c_filters_atasan" :c_filters_survey="$c_filters_survey" :c_filters_pencairan="$c_filters_pencairan"
+                :c_filters_lpj="$c_filters_lpj" :filter_permohonan="$filter_permohonan">
+        @else
+            <livewire:permohonan :filter_permohonan="$filter_permohonan">
+        @endif
+        
     @endsection
 </x-app-layout>
