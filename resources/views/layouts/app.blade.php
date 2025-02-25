@@ -50,7 +50,8 @@
 
         <div class="flex flex-col">
             <!-- Page Content -->
-            @include('layouts.navigation') @include('layouts.sidebar')
+            @include('layouts.navigation')
+            @include('layouts.sidebar')
             <main class="p-2 sm:ml-40">
                 <div class="p-4 mt-12">
                     <div class="flex flex-wrap justify-between gap-y-2 sm:flex-row flex-col">

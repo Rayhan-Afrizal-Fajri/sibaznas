@@ -188,7 +188,7 @@
                     </label>
                     <div class="w-full">
                         <div class="w-full flex items-center gap-2">
-                            <button id="openModal-addPermohonan"
+                            <button id="openModal-addPermohonan" type="button"
                                 class="w-full bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                     class="size-4 text-white">
@@ -341,122 +341,6 @@
                 </div>
             </div>
         </div>
-    <div class="flex flex-col">
-        <div class="-m-1.5 overflow-x-auto">
-            <div class="p-1.5 min-w-full inline-block align-middle">
-                <div class="overflow-hidden">
-                    <table class="w-100 sm:min-w-full text-[9px] text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
-                        <thead class="text-[9px] sm:text-xs text-gray-700 bg-white">
-                            <tr>
-                                <th class="px-2 text-center py-3 border w-[40px]">NO</th>
-                                <th class="px-2 text-center py-3 border w-[20%]">Nomor & Nominal Pengajuan</th>
-                                <th class="px-2 text-center py-3 border w-[20%]">Program & Sub Program</th>
-                                <th class="px-2 text-center py-3 border w-[20%]">Survey</th>
-                                <th class="px-2 text-center py-3 border w-[20%]">Pencairan</th>
-                                <th class="px-2 text-center py-3 border w-[20%]">LPJ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-white border-b cursor-pointer" onclick="window.location.href='{{ route('permohonan.show', 1) }}'">
-                                <td class="px-2 text-center py-4 border">1</td>
-                        
-                                <td class="px-2 py-2 border w-[20%]">
-                                    <div class="flex flex-col text-black">
-                                        <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan Selesai diinput FO</p>
-                                        <p class="text-[5px] sm:text-[9px]">13/E-DISDAY/INDIVIDU/II/2025</p>
-                                        <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0 mb-1">
-                                            <p>Nominal Diajukan</p>
-                                            <p class="font-bold">Rp. 500.000</p>
-                                        </div>
-                                        <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
-                                            <p>Tgl Permohonan</p>
-                                            <p class="font-bold">14 Februari 2025</p>
-                                        </div>
-                                        <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
-                                            <p>Tgl Selesai Diinput</p>
-                                            <p class="font-bold">14 Februari 2025</p>
-                                        </div>
-                                        <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
-                                            <div class="flex flex-row gap-1">
-                                                <p>Pemohon</p>
-                                                <p class="bg-[#00593b] px-0.5 text-white rounded-sm">Individu</p>
-                                            </div>
-                                            <p class="font-bold">Faiz Abdul Ghoni</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                
-                                <td class="px-2 py-2 border w-[20%]">
-                                    <div class="flex flex-col text-black">
-                                        <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Disetujui Atasan</p>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Cilacap Cerdas (Pendidikan)</p>
-                                            <p class="font-regular">1.1 Bantuan biaya pendidikan siswa miskin SMP & SMA</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Cacatan Tambahan</p>
-                                            <p class="font-regular">Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            
-                                <td class="px-2 py-2 border w-[20%]">
-                                    <div class="flex flex-col text-black">
-                                        <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Survey</p>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Disetujui</p>
-                                            <p>Kamis, 15 Maret 2025</p>
-                                        </div>
-                                        <a href="#" class="text-blue-700 hover:text-blue-500" target="_blank">Form survey.pdf</a>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Catatan Tambahan</p>
-                                            <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            
-                                <td class="px-2 py-2 border w-[20%]">
-                                    <div class="flex flex-col text-black">
-                                        <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Sudah Dicairkan</p>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Sumber: DANA ZAKAT</p>
-                                            <p>Kamis, 15 Mare 2025</p>
-                                        </div>
-                                        <div class="flex flex-row justify-between">
-                                            <p>Nominal dicairkan</p>
-                                            <p class="font-bold">Rp. 500.000</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Catatan Tambahan</p>
-                                            <p>Bantuan biaya pendidikan pembayaran SPP bulan januari - maret</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            
-                                <td class="px-2 py-2 border w-[20%]">
-                                    <div class="flex flex-col text-black">
-                                        <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Selesai LPJ</p>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Sudah disalurkan</p>
-                                            <p>Kamis, 15 Mare 2025</p>
-                                        </div>
-                                        <div class="flex flex-row justify-between">
-                                            <p>Bentuk Penyaluran</p>
-                                            <p class="font-bold">Uang Tunai</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="font-bold">Catatan Tambahan</p>
-                                            <p>Penyaluran uang tunai bantuan biaya pendidikan</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- Modal tambah permohonan -->
@@ -475,92 +359,92 @@
             <form action="#" method="POST" class="mt-4 text-sm">
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Jenis Permohonan</label>
-                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label  class="block mb-1 text-sm font-bold text-black">Jenis Permohonan</label>
+                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option selected value="Individu">Individu</option>
                             <option value="opsi 2">opsi 2</option>
                           </select>
                     </div>
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Nomor Permohonan</label>
-                        <input type="text" readonly class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="13/E-DISDAY/INDIVIDU/II/2025" required>
+                        <label  class="block mb-1 text-sm font-bold text-black">Nomor Permohonan</label>
+                        <input type="text" readonly class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " value="13/E-DISDAY/INDIVIDU/II/2025" required>
                     </div>
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Nama Pemohon</label>
-                        <input type="text" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ferriyan Ilyasa" required />
+                        <label  class="block mb-1 text-sm font-bold text-black">Nama Pemohon</label>
+                        <input type="text" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="Ferriyan Ilyasa" required />
                     </div>
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">No HP Pemohon</label>
-                        <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="081578447350" required />
+                        <label  class="block mb-1 text-sm font-bold text-black">No HP Pemohon</label>
+                        <input type="number" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="081578447350" required />
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label  class="block mb-2 text-sm font-bold text-black dark:text-white">Alamat Pemohon</label>
-                    <input type="text" id="address" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required />
-                </div>
-                <div class="mb-4">
-                    <hr class="border-gray-500 rounded-lg border-[1.5px]">    
-                </div> 
-                <div class="grid gap-4 mb-4 md:grid-cols-2">
-                    <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Nomor Surat</label>
-                        <input type="text" required class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="001/SuratPermohonanBantuan" required>
-                    </div>
-                    <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Tanggal Surat</label>
-                        <input type="date" required class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="02/23/2025" required>
-                    </div>
-                    <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">File Scan Surat</label>
-                        <input type="file" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                    </div>
-                    <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Tanggal Input</label>
-                        <input type="number" readonly class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }} (Today)" value="{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}" required />
-                    </div>
+                    <label  class="block mb-2 text-sm font-bold text-black">Alamat Pemohon</label>
+                    <input type="text" id="address" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="john.doe@company.com" required />
                 </div>
                 <div class="mb-4">
                     <hr class="border-gray-500 rounded-lg border-[1.5px]">    
                 </div> 
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Asnaf</label>
-                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label  class="block mb-1 text-sm font-bold text-black">Nomor Surat</label>
+                        <input type="text" required class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="001/SuratPermohonanBantuan" required>
+                    </div>
+                    <div>
+                        <label  class="block mb-1 text-sm font-bold text-black">Tanggal Surat</label>
+                        <input type="date" required class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="02/23/2025" required>
+                    </div>
+                    <div>
+                        <label  class="block mb-1 text-sm font-bold text-black">File Scan Surat</label>
+                        <input type="file" id="name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " required />
+                    </div>
+                    <div>
+                        <label  class="block mb-1 text-sm font-bold text-black">Tanggal Input</label>
+                        <input type="number" readonly class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }} (Today)" value="{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}" required />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <hr class="border-gray-500 rounded-lg border-[1.5px]">    
+                </div> 
+                <div class="grid gap-4 mb-4 md:grid-cols-2">
+                    <div>
+                        <label  class="block mb-1 text-sm font-bold text-black">Asnaf</label>
+                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option selected value="miskin">Miskin</option>
                             <option value="opsi 2">opsi 2</option>
                           </select>
                     </div>
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Program</label>
-                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label  class="block mb-1 text-sm font-bold text-black">Program</label>
+                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option selected value="CILACAP CERDAS (Pendidikan)">CILACAP CERDAS (Pendidikan)</option>
                             <option value="opsi 2">opsi 2</option>
                           </select>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Sub Program</label>
-                    <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label  class="block mb-1 text-sm font-bold text-black">Sub Program</label>
+                    <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                         <option selected value="1.1 Bantuan Biaya Pendidikan">1.1 Bantuan Biaya Pendidikan</option>
                         <option value="opsi 2">opsi 2</option>
                     </select>
                 </div>
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Nominal Diajukan</label>
-                        <input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Rp 500.000" required>
+                        <label  class="block mb-1 text-sm font-bold text-black">Nominal Diajukan</label>
+                        <input type="text" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 " placeholder="Rp 500.000" required>
                     </div>
                     <div>
-                        <label  class="block mb-1 text-sm font-bold text-black dark:text-white">Bentuk Bantuan</label>
-                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label  class="block mb-1 text-sm font-bold text-black">Bentuk Bantuan</label>
+                        <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option selected value="Uang Tunai">Uang Tunai</option>
                             <option value="opsi 2">opsi 2</option>
                           </select>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan / Catatan Tambahan</label>
-                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bantuan biaya pendidikan pembayaran SPP"></textarea>
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Keterangan / Catatan Tambahan</label>
+                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Bantuan biaya pendidikan pembayaran SPP"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-4">
