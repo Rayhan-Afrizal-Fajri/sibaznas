@@ -6,7 +6,7 @@
             <div class="flex flex-col sm:flex-row gap-2 mb-2">
                 <label class="w-full">
                     <input type="text" id="daterange"
-                        class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 text-xs font-medium text-center "
+                        class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 text-xs font-medium text-center cursor-pointer"
                         readonly name="filter_daterange">
                 </label>
                 <label class="flex items-center w-full">
@@ -428,7 +428,7 @@
             </div>
 
             <!-- Form -->
-            @include('modal.tambah-permohonan')
+            @include('modal.modal_tambah_permohonan')
         </div>
     </div>
 
@@ -450,11 +450,11 @@
         });
     </script>
 
-<script>
-    function openInNewTab(url) {
-        window.open(url, '_blank');
-    }
-</script>
+    <script>
+        function openInNewTab(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 
     @php
         $data_first = App\Models\Permohonan::orderBy('created_at', 'asc')->first();
