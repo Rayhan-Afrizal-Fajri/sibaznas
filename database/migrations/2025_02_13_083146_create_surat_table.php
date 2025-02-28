@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('surat', function (Blueprint $table) {
             $table->uuid('surat_id')->primary();
-            $table->string('surat_url');
-            $table->string('surat_nomor');
-            $table->string('surat_tgl');
-            $table->string('surat_judul');
-            $table->string('surat_keterangan');
+            $table->string('surat_url')->nullable();
+            $table->string('surat_nomor')->nullable();
+            $table->string('surat_tgl')->nullable();
+            $table->string('surat_judul')->nullable();
+            $table->string('surat_keterangan')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

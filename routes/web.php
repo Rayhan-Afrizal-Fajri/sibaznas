@@ -18,6 +18,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -25,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
     Route::post('/permohonan_post', [PermohonanController::class, 'permohonan_post']);
     Route::get('/filter_permohonan/{c_filter_daterange}/{c_filters_fo}/{c_filters_atasan}/{c_filters_survey}/{c_filters_pencairan}/{c_filters_lpj}', [PermohonanController::class, 'filter_permohonan'])->name('permohonan.filter');
-    // Route::get('/detail_permohonan/{permohonan_id}', [PermohonanController::class, 'show'])->name('permohonan.detail');
-    Route::get('/detail_permohonan/1', [PermohonanController::class, 'show'])->name('permohonan.detail');
+    Route::get('/detail-permohonan/{permohonan_id}', [PermohonanController::class, 'show'])->name('permohonan.detail');
+    // Route::get('/detail_permohonan/1', [PermohonanController::class, 'show'])->name('permohonan.detail');
 });
 
 // Route::resource('permohonan', PermohonanController::class);

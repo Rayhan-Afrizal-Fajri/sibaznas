@@ -36,11 +36,9 @@
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-
-    <!-- jQuery & Select2 JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased">
@@ -52,6 +50,7 @@
         <main class="p-2 sm:ml-40">
             <div class="p-4 mt-12">
                 <div class="flex flex-wrap justify-between gap-y-2 sm:flex-row flex-col">
+
                     <!-- Breadcrumb -->
                     <nav class="w-full sm:w-auto" aria-label="Breadcrumb">
                         <ol class="flex flex-wrap items-center gap-2 md:gap-3 text-xs sm:text-sm md:text-md">
@@ -64,7 +63,7 @@
                             <li class="text-gray-400">/</li>
                             @if (View::hasSection('main_folder'))
                                 <li class="flex items-center">
-                                    <a href="#" class="font-regular text-gray-700 hover:text-blue-600">
+                                    <a href="{{ route('permohonan.index') }}" class="font-regular text-gray-700 hover:text-blue-600">
                                         @yield('main_folder')
                                     </a>
                                 </li>
@@ -133,6 +132,9 @@
             return prefix == undefined ? rupiah : (rupiah ? rupiah : '');
         }
     </script>
+
+
+    @livewireScripts
 </body>
 
 </html>

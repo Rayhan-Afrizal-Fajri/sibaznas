@@ -94,7 +94,7 @@
                 </div>
                 <div class="w-full">
                     <div class="w-full flex items-center gap-2">
-                        <button id="openModal-addPermohonan" form="none"
+                        <button wire:click="modal_tambah_permohonan" id="openModal-addPermohonan" form="none"
                             class="w-full bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-4 text-white">
@@ -302,7 +302,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr class="bg-white border-b" class="bg-white border-b" onclick="openInNewTab('/detail_permohonan/1');"
+                            <tr class="bg-white border-b" class="abg-white border-b" onclick="openInNewTab('/detail_permohonan/1');"
                                 style="cursor: pointer;">
 
                                 <td class="px-2 text-center py-4 border">1</td>
@@ -413,42 +413,7 @@
         </div>
     </div>
 
-    <!-- Modal tambah permohonan -->
-    <div id="modal-addPermohonan"
-        class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
-        <div class="bg-white p-4 rounded-md shadow-lg sm:w-[672px] max-h-[90vh] custom-scrollbar overflow-y-auto">
-            <div class="flex justify-between items-center border-b-[1.5px] border-gray-500">
-                <h2 class="text-sm font-semibold text-gray-800 uppercase">Tambah Permohonan e-DisDay</h2>
-                <button id="closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="size-4 text-gray-500 hover:text-black">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Form -->
-            @include('modal.modal_tambah_permohonan')
-        </div>
-    </div>
-
-    <!-- JavaScript untuk Modal -->
-    <script>
-        document.getElementById("openModal-addPermohonan").addEventListener("click", function() {
-            document.getElementById("modal-addPermohonan").classList.remove("hidden");
-        });
-
-        document.getElementById("closeModal").addEventListener("click", function() {
-            document.getElementById("modal-addPermohonan").classList.add("hidden");
-        });
-
-        // Tutup modal jika klik di luar modal
-        document.getElementById("modal-addPermohonan").addEventListener("click", function(event) {
-            if (event.target === this) {
-                this.classList.add("hidden");
-            }
-        });
-    </script>
+    @include('modal.modal_tambah_permohonan')
 
     <script>
         function openInNewTab(url) {

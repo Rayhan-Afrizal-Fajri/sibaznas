@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Permohonan extends Model
 {
@@ -11,50 +12,19 @@ class Permohonan extends Model
 
     protected $table = 'permohonan';
     protected $primaryKey = 'permohonan_id';
-    public $incrementing = true;
     public $timestamps = true;
+    public $incrementing = false; // Nonaktifkan auto-increment
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'surat_id',
-        'program_id',
-        'sub_program_id',
-        'asnaf_id',
-        'mustahik_id',
-        'upz_id',
-        'permohonan_nomor',
-        'permohonan_jenis',
-        'permohonan_nama_pemohon',
-        'permohonan_alamat_pemohon',
-        'permohonan_nohp_pemohon',
-        'permohonan_tgl',
-        'permohonan_nominal',
-        'permohonan_bentuk_bantuan',
-        'permohonan_keterangan',
-        'permohonan_petugas_input',
-        'permohonan_timestamp_input',
-        'permohonan_status_input',
-        'permohonan_catatan_input',
-        'permohonan_petugas_atasan',
-        'permohonan_timestamp_atasan',
-        'permohonan_status_atasan',
-        'permohonan_catatan_atasan',
-        'survey_pilihan',
-        'survey_tgl',
-        'survey_petugas_survey',
-        'survey_hasil',
-        'survey_status',
-        'survey_form_url',
-        'survey_timestamp',
-        'acc_nominal',
-        'acc_timestamp',
-        'acc_catatan',
-        'pencairan_sumberdana',
-        'pencairan_petugas_keuangan',
-        'pencairan_nominal',
-        'pencairan_timestamp',
-        'pencairan_status',
-        'pencairan_catatan'
-    ];
+    protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->permohonan_id = (string) Str::uuid(); // Pastikan UUID dibuat
+        });
+    }
 
     public function surat()
     {
