@@ -49,22 +49,22 @@
         <!-- Page Content -->
         @include('layouts.navigation')
         @include('layouts.sidebar')
-        <main class="p-2 sm:ml-40">
-            <div class="p-4 mt-12">
+        <main class="p-2 sm:ml-44">
+            <div class="p-4 mt-8">
                 <div class="flex flex-wrap justify-between gap-y-2 sm:flex-row flex-col">
                     <!-- Breadcrumb -->
                     <nav class="w-full sm:w-auto" aria-label="Breadcrumb">
                         <ol class="flex flex-wrap items-center gap-2 md:gap-3 text-xs sm:text-sm md:text-md">
                             <li class="flex items-center">
                                 <a href="{{ route('dashboard') }}"
-                                    class="font-regular text-gray-700 hover:text-blue-600">
+                                    class="text-xs text-gray-700 hover:text-blue-600">
                                     Dashboard
                                 </a>
                             </li>
                             <li class="text-gray-400">/</li>
                             @if (View::hasSection('main_folder'))
                                 <li class="flex items-center">
-                                    <a href="#" class="font-regular text-gray-700 hover:text-blue-600">
+                                    <a href="#" class="text-xs font-regular text-gray-700 hover:text-blue-600">
                                         @yield('main_folder')
                                     </a>
                                 </li>
