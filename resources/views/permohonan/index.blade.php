@@ -153,19 +153,58 @@
                 padding: 2px 5px !important;
                 /* Padding dalam input */
             }
+
+            #sub-program-select {
+                width: 100% !important;
+            }
+
+            .select2-container {
+                width: 100% !important;
+            }
+
+            /* Mengatur ukuran dropdown Select2 */
+            .select2-container--default .select2-selection--single {
+                height: 30px !important;
+                /* Sesuaikan tinggi */
+                font-size: 12px !important;
+                /* Sesuaikan ukuran font */
+            }
+
+            /* Mengatur tinggi dropdown */
+            .select2-dropdown {
+                font-size: 12px !important;
+                /* Sesuaikan ukuran font */
+            }
+
+            /* Mengatur tinggi hasil pencarian */
+            .select2-results__option {
+                font-size: 12px !important;
+                /* Sesuaikan ukuran font */
+                padding: 5px 10px !important;
+                /* Sesuaikan padding */
+            }
+
+            /* Mengatur tinggi input pencarian */
+            .select2-search__field {
+                font-size: 12px !important;
+                /* Sesuaikan ukuran font */
+                height: 25px !important;
+                /* Sesuaikan tinggi */
+            }
         </style>
+
 
         <div class="mb-2 text-[#00593b]">
             Data Permohonan
         </div>
 
-        
+
         @if ($filter_permohonan == 'on')
             <livewire:permohonan :c_filter_daterange="$c_filter_daterange" :c_filters_fo="$c_filters_fo" :c_filters_atasan="$c_filters_atasan" :c_filters_survey="$c_filters_survey" :c_filters_pencairan="$c_filters_pencairan"
                 :c_filters_lpj="$c_filters_lpj" :filter_permohonan="$filter_permohonan">
-        @else
-            <livewire:permohonan :filter_permohonan="$filter_permohonan">
+            @else
+                <livewire:permohonan :filter_permohonan="$filter_permohonan">
         @endif
-        
+
     @endsection
 </x-app-layout>

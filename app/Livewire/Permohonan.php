@@ -4,13 +4,16 @@ namespace App\Livewire;
 
 use App\Models\Permohonan as ModelsPermohonan;
 use App\Models\Surat;
+use App\Models\Upz;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 
 class Permohonan extends Component
 {
+    use WithFileUploads;
     // filter
     public $filter_permohonan;
     public $filter_daterange;
@@ -44,11 +47,18 @@ class Permohonan extends Component
     public $surat_url;
     public $asnaf_id;
     public $program_id;
-    public $sub_program_id = [];
+    public $sub_program_id; 
+    public $sub_programs = [];
     public $permohonan_nominal;
     public $permohonan_bentuk_bantuan;
     public $permohonan_catatan_input;
 
+    protected $listeners = ['updateSubProgram'];
+
+    public function updateSubProgram($value)
+    {
+        $this->sub_program_id = $value; // Simpan nilai yang dipilih
+    }
     public function mount()
     {
         if ($this->filter_permohonan == 'on') {
@@ -69,10 +79,10 @@ class Permohonan extends Component
 
     public function updatedProgramId($value)
     {
-        // Ambil sub_programs berdasarkan program_id yang dipilih
-        $this->sub_program_id = DB::table('sub_program')
-            ->where('program_id', $value)
-            ->get();
+        $this->sub_programs = DB::table('sub_program')
+        ->where('program_id', $value)
+        ->get()
+        ->toArray();
     }
 
     public function render()
@@ -154,6 +164,9 @@ class Permohonan extends Component
 
     public function modal_tambah_permohonan()
     {
+    }
+
+    public function updatedPermohonanJenis($value) {
         if (date('m') == '01') {
             $romawi = 'I';
         } elseif (date('m') == '02') {
@@ -180,7 +193,7 @@ class Permohonan extends Component
             $romawi = 'XII';
         }
 
-        if ($this->permohonan_jenis == 'Individu') {
+        if ($value == 'Individu') {
             $a = ModelsPermohonan::whereYear('created_at', date('Y'))
                 ->where('permohonan_jenis', 'Individu')
                 ->latest()
@@ -215,7 +228,7 @@ class Permohonan extends Component
             } else {
                 $this->permohonan_nomor = $urut + 1 . '/' . 'E-DISDAY' . '/INDIVIDU/' . $romawi . '/' . date('Y');
             }
-        } else if ($this->permohonan_jenis == 'UPZ') {
+        } else if ($value == 'UPZ') {
             $a = ModelsPermohonan::whereYear('created_at', date('Y'))
                 ->where('permohonan_jenis', 'UPZ')
                 ->latest()
@@ -244,6 +257,7 @@ class Permohonan extends Component
                     $urut = $urut2 . (int)$urutt[3];
                 }
             }
+            $this->reset('permohonan_nomor');
 
             if (($urut + 1) < 10) {
                 $this->permohonan_nomor = '0' . $urut + 1 . '/' . 'E-DISDAY' . '/UPZ/' . $romawi . '/' . date('Y');
@@ -252,28 +266,54 @@ class Permohonan extends Component
             }
         }
 
-        
+        $this->dispatch('$refresh');
+    }
+
+    public function hydrate()
+    {
+        $this->dispatch('loadContactDeviceSelect2');
+        $this->dispatch('select2');
     }
 
     public function tambah_permohonan()
     {
-        $permohonan_id = Str::uuid();
-        $surat_id = Str::uuid();
+        
+        $path = $this->surat_url->store('scan_surat', 'public');
 
-        Permohonan::create([
-            'permohonan_id' => $permohonan_id,
+        $surat = Surat::create([
+            'surat_id' => Str::uuid(),
+            'surat_judul' => $this->surat_judul,
+            'surat_nomor' => $this->surat_nomor,
+            'surat_tgl' => $this->surat_tgl,
+            'surat_keterangan' => null,
+            'surat_url' => 'aaaaa'
+        ]);
+    
+        $upz_id = null;
+        if ($this->permohonan_jenis === 'UPZ') {
+            $upz = Upz::create([
+                'upz_id' => Str::uuid(),
+                'nohp' => $this->nohp,
+                'alamat' => $this->alamat,
+                'pj_nama' => $this->pj_nama,
+                'pj_jabatan' => $this->pj_jabatan,
+                'pj_nohp' => $this->pj_nohp,
+                'keterangan' => $this->keterangan,
+            ]);
+
+            $upz_id = $upz->upz_id;
+        }
+
+    
+        $permohonan = ModelsPermohonan::create([
+            'permohonan_id' => Str::uuid(),
             'permohonan_jenis' => $this->permohonan_jenis,
             'permohonan_nomor' => $this->permohonan_nomor,
             'permohonan_nama_pemohon' => $this->permohonan_nama_pemohon,
             'permohonan_nohp_pemohon' => $this->permohonan_nohp_pemohon,
             'permohonan_alamat_pemohon' => $this->permohonan_alamat_pemohon,
-            'upz_id' => $this->upz,
-            'nohp' => $this->nohp,
-            'alamat' => $this->alamat,
-            'pj_nama' => $this->pj_nama,
-            'pj_jabatan' => $this->pj_jabatan,
-            'pj_nohp' => $this->pj_nohp,
-            'keterangan' => $this->keterangan,
+            'upz_id' => $upz_id, 
+            'surat_id' => $surat->surat_id, 
             'asnaf_id' => $this->asnaf_id,
             'program_id' => $this->program_id,
             'sub_program_id' => $this->sub_program_id,
@@ -281,16 +321,12 @@ class Permohonan extends Component
             'permohonan_bentuk_bantuan' => $this->permohonan_bentuk_bantuan,
             'permohonan_catatan_input' => $this->permohonan_catatan_input,
             'permohonan_status_input' => 'Belum Selesai Input',
-            'permohonan_petugas_input' => Auth::user()->baznas_pengurus_id
+            'permohonan_petugas_input' => 'abcd1234',
+            'permohonan_tgl' => date('Y-m-d'),
+            'permohonan_timestamp_input' => date('Y-m-d H:i:s'),
         ]);
 
-        Surat::create([
-            'surat_id' => $surat_id,
-            'surat_judul' => $this->surat_judul,
-            'surat_nomor' => $this->surat_nomor,
-            'surat_tgl' => $this->surat_tgl,
-            'surat_url' => $this->surat_url
-        ]);
+        
 
         if ($this->permohonan_jenis == "Individu") {
             $pemohon =$this->permohonan_nama_pemohon;
@@ -300,7 +336,7 @@ class Permohonan extends Component
             $nohp =$this->nohp;
         } 
 
-        return redirect('/detail-permohonan/' . $permohonan_id);
+        return redirect('/detail-permohonan/' . $permohonan->permohonan_id);
     }
     
 }

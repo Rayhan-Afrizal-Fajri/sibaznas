@@ -15,15 +15,15 @@ return new class extends Migration
 
         Schema::create('upz', function (Blueprint $table) {
             $table->uuid('upz_id')->primary();
-            $table->string('upz');
-            $table->string('alamat');
-            $table->string('nohp');
-            $table->string('pj_nama');
-            $table->string('pj_jabatan');
-            $table->string('pj_nohp');
-            $table->string('keterangan');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->string('upz')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('nohp')->nullable();
+            $table->string('pj_nama')->nullable();
+            $table->string('pj_jabatan')->nullable();
+            $table->string('pj_nohp')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

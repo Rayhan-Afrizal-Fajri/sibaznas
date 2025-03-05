@@ -15,11 +15,11 @@ return new class extends Migration
 
         Schema::create('lampiran', function (Blueprint $table) {
             $table->uuid('lampiran_id')->primary();
-            $table->foreignUuid('permohonan_id')->index();
+            $table->foreignUuid('permohonan_id')->index()->nullable();
             $table->foreign('permohonan_id')->references('permohonan_id')->on('permohonan');
-            $table->enum('jenis', ["Permohonan","Survey","Pencairan","LPJ"]);
-            $table->string('keterangan');
-            $table->string('url');
+            $table->enum('jenis', ["Permohonan","Survey","Pencairan","LPJ"])->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('url')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

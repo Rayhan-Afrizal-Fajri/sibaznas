@@ -15,9 +15,9 @@ return new class extends Migration
 
         Schema::create('daftar_mustahik', function (Blueprint $table) {
             $table->uuid('daftar_mustahik_id')->primary();
-            $table->foreignUuid('permohonan_id')->index();
+            $table->foreignUuid('permohonan_id')->index()->nullable();
             $table->foreign('permohonan_id')->references('permohonan_id')->on('permohonan');
-            $table->enum('mustahik_id', ["Permohonan","Survey","Pencairan","LPJ"]);
+            $table->enum('mustahik_id', ["Permohonan","Survey","Pencairan","LPJ"])->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

@@ -74,8 +74,8 @@ class PermohonanController extends Controller
         ));
     }
     
-    public function show($id_permohonan = 1)
+    public function show($permohonan_id)
     {
-        return view('permohonan.show');
+        return view('permohonan.show', ['permohonan_id' => $permohonan_id]);
     }
 }
