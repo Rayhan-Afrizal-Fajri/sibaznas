@@ -1,5 +1,4 @@
 <div x-data="{ open: false }" class="">
-    
 
     <div
         id="modal-EditProgram"

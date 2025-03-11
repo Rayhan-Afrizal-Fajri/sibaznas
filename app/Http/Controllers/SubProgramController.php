@@ -49,7 +49,7 @@ class SubProgramController extends Controller
 
         try {
             SubProgram::create($validated);
-            return redirect()->route('program.index');
+            return redirect()->route('program.index')->with('success', 'Data sub program berhasil ditambahkan.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Program gagal ditambah']);
         }
@@ -74,16 +74,21 @@ class SubProgramController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SubProgram $subProgram)
+    public function update(Request $request)
     {
-        $validated = $this->validateSubProgram($request, $subProgram->sub_program_id);
+        $request->validate([
+            'sub_program' => 'required|string|max:255',
+        ]);
+        $sub_program = SubProgram::findOrFail($request->sub_program_id);
 
         try {
-            $subProgram->update($validated);
-
-            return redirect()->back();
+            $sub_program->update([
+                'sub_program' => $request->sub_program,
+            ]);
+            // SubProgram::update($validated);
+            return redirect()->route('program.index')->with('success', 'Data sub program berhasil diperbarui.');
         } catch (\Exception $e) {
-            return back()->withErrors('data sub program gagal diubah : ' . $e->getMessage());
+            return redirect()->route('program.index')->with('error', 'Terjadi kesalahan saat memperbarui sub program!'.$e->getMessage());
         }
     }
 
