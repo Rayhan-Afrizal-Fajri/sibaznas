@@ -183,7 +183,7 @@
                                     }
 
                                 @endphp
-                                <tr class="bg-white border-b" onclick="openInNewTab('/detail_permohonan/{{ $a->permohonan_id }}');"
+                                <tr class="bg-white border-b"  onclick="window.location.href='{{ route('permohonan.detail', $a->permohonan_id) }}';"
                                     style="cursor: pointer;">
                                     <td class="px-2 text-center py-4 border">1</td>
                                     <td class="px-2 py-2 border w-[20%]">

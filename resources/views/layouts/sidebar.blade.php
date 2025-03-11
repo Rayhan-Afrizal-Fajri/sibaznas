@@ -1,4 +1,4 @@
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-48 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-48 h-full pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <div class="flex flex-col text-center items-center pb-1 border-b-2 border-yellow-500 mt-2 mb-8 mx-2 gap-1">
             <h1 class="text-md text-[#00593b] font-semibold text-center">BAZNAS CILACAP</h1>

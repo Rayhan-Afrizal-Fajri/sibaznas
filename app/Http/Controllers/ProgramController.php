@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use App\Models\SubProgram;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,9 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //
+        $programs = Program::all();
+        // $subProgram = SubProgram::all();
+        return view('program.index', compact('programs'));
     }
 
     /**
@@ -27,12 +30,12 @@ class ProgramController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $validated = $this->validateProgram($request);
         try {
             Program::create($validated);
-            return redirect();
+            return redirect()->route('program.index')->with('success', 'Program berhasil ditambahkan.');
         } catch (\Exception $e) {
             return back()->withErrors('data program gagal ditambahkan : ' . $e->getMessage());
         }
@@ -57,35 +60,51 @@ class ProgramController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Program $program): RedirectResponse
+    public function update(Request $request)
     {
-        $validated = $this->validateProgram($request, $program->program_id);
-
+        $request->validate([
+            'program' => 'required|string|max:255',
+        ]);
+        
+        $program = Program::findOrFail($request->program_id);
+        // dd($request->program_id, $program);
         try {
-            $program->update($validated);
-            return redirect();
+            $program->update([
+                'program' => $request->program,
+            ]);
+            return redirect()->route('program.index')->with('success', 'Program berhasil diperbarui!');
         } catch (\Exception $e) {
-            return back()->withErrors('data program gagal diubah : '.$e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui program!'.$e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Program $program): RedirectResponse
+    public function destroy(Program $program)
     {
         try {
             $program->delete();
-            return redirect();
+            return redirect()->route('program.index')->with('success', 'Program berhasil dihapus!');
         } catch (\Exception $e) {
-            return back()->withErrors('data program gagal dihapus : '.$e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus program!'.$e->getMessage());
         }
     }
 
 
-    private function validateProgram(Request $request, ?int $id = null): array {
+    private function validateProgram(Request $request, ?string $id = null): array {
         return $request->validate([
-            'program'. ($id ? ", $id" : ''),
+            'program' => 'required|string|max:255|unique:program,program' . ($id ? ",$id" : ''),
+        ]);
+    }
+
+    public function getSubProgram($program_id)
+    {
+        $program = Program::find($program_id);
+        $subPrograms = SubProgram::where('program_id', $program_id)->get();
+        return response()->json([
+            'program' => $program,
+            'subPrograms' => $subPrograms
         ]);
     }
 }

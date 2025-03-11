@@ -1,7 +1,10 @@
 <x-app-layout>
     @section('content')
 
-        Halo
+    <div x-data="{ message: 'Hello, Alpine!' }">
+        <p x-text="message"></p>
+    </div>
+    
 
     @endsection
 </x-app-layout>

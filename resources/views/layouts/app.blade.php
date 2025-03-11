@@ -1,98 +1,131 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 ">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.css">
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link
+            href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
+            rel="stylesheet"/>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.css">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- jQuery (Wajib, sebelum DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- jQuery (Wajib, sebelum DataTables) -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
-    <!-- Tambahkan Bootstrap & Date Range Picker -->
-    <!-- jQuery harus dipanggil dulu -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.js"></script>
+        <!-- DataTables CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+        <!-- Tambahkan Bootstrap & Date Range Picker -->
+        <!-- jQuery harus dipanggil dulu -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.js"></script>
 
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script
+            src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+        <!-- Select2 CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+            rel="stylesheet"/>
+        <script
+            src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-    @livewireStyles
-</head>
+        <script
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+            defer="defer"></script>
 
-<body class="font-sans antialiased">
+        {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> --}}
+        @livewireStyles
+    </head>
 
-    <div class="flex flex-col">
-        <!-- Page Content -->
-        @include('layouts.navigation')
-        @include('layouts.sidebar')
-        <main class="p-2 sm:ml-44">
-            <div class="p-4 mt-8">
-                <div class="flex flex-wrap justify-between gap-y-2 sm:flex-row flex-col">
+    <body
+        class="font-sans antialiased"
+        x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+        x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))">
 
-                    <!-- Breadcrumb -->
-                    <nav class="w-full sm:w-auto" aria-label="Breadcrumb">
-                        <ol class="flex flex-wrap items-center gap-2 md:gap-3 text-xs sm:text-sm md:text-md">
-                            <li class="flex items-center">
-                                <a href="{{ route('dashboard') }}"
-                                    class="text-xs text-gray-700 hover:text-blue-600">
+        @include('layouts.preloader')
+
+        <div class="flex h-screen overflow-hidden">
+            @include('layouts.side')
+
+            <!-- Page Content -->
+            <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+                @include('layouts.overlay')
+                @include('layouts.header')
+                <main class="">
+                    <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+                        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+                            <h2
+                              class="text-xl font-semibold text-gray-800 dark:text-white/90"
+                              x-text="pageName"
+                            ></h2>
+                          
+                            <nav>
+                              <ol class="flex items-center gap-1.5">
+                                <li>
+                                  <a
+                                    class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
+                                    href="{{ route('dashboard') }}"
+                                  >
                                     Dashboard
-                                </a>
-                            </li>
-                            <li class="text-gray-400">/</li>
-                            @if (View::hasSection('main_folder'))
-                                <li class="flex items-center">
-                                    <a href="{{ route('permohonan.index') }}" class="font-regular text-gray-700 hover:text-blue-600">
-                                        @yield('main_folder')
-                                    </a>
+                                    <svg
+                                      class="stroke-current"
+                                      width="17"
+                                      height="16"
+                                      viewBox="0 0 17 16"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
+                                        stroke=""
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      />
+                                    </svg>
+                                  </a>
                                 </li>
-                                @endif @if (View::hasSection('sub_folder'))
-                                    <li class="text-gray-400">/</li>
-                                    <li aria-current="page">
-                                        <span class="font-regular text-gray-500">@yield('sub_folder')</span>
-                                    </li>
+                                @if(View::hasSection('main_folder'))
+                                <li
+                                    class="text-sm text-gray-800 dark:text-white/90"
+                                >@yield('main_folder')</li>
                                 @endif
-                        </ol>
-                    </nav>
-
-                    <!-- Tanggal -->
-                    <div class="w-full sm:w-auto text-[10px] sm:text-[12px] text-gray-700">
-                        <p class="text-left">
-                            {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
-                        </p>
+                              </ol>
+                            </nav>
+                          </div>                          
+                            @yield('content')
                     </div>
-                </div>
-                <!-- Container Hijau di Belakang -->
-                <div class="mt-4">
-                    <!-- Container Putih di Depan -->
-                    <div class="bg-white shadow-lg rounded-lg border-t-4 p-4 border-[#00593b]">
-                        @yield('content')
-                    </div>
-                </div>
+                </main>
             </div>
-        </main>
-    </div>
+        </div>
 
     {{-- <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script> --}}
     <script>

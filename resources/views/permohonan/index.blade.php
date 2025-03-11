@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('main_folder', 'Permohonan')
-    @section('main_folder-link', '#')
+    {{-- @section('main_folder-link', '#') --}}
 
     @section('content')
 
