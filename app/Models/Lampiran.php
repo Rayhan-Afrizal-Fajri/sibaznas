@@ -12,13 +12,10 @@ class Lampiran extends Model
     protected $table = 'lampiran';
     protected $primaryKey = 'lampiran_id';
     public $timestamps = true;
+    public $incrementing = false; // Nonaktifkan auto-increment
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'permohonan_id',
-        'jenis',
-        'keterangan',
-        'url'
-    ];
+    protected $guarded = [];
 
     public function permohonan()
     {

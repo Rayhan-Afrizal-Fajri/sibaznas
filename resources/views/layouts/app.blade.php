@@ -42,6 +42,7 @@
 </head>
 
 <body class="font-sans antialiased">
+    
 
     <div class="flex flex-col">
         <!-- Page Content -->
@@ -135,6 +136,7 @@
 
 
     @livewireScripts
+    
 </body>
 
 </html>

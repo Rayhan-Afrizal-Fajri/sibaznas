@@ -4,7 +4,7 @@
         class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
         <div class="bg-white p-4 rounded-md shadow-lg sm:w-[672px] max-h-[90vh] custom-scrollbar overflow-y-auto">
             <div class="flex justify-between items-center border-b-[1.5px] border-gray-500">
-                <h2 class="text-sm font-semibold text-gray-800 uppercase">Tambah Permohonan e-DisDay</h2>
+                <h2 class="text-sm font-semibold text-gray-800 uppercase">Tambah Permohonan</h2>
                 <button id="closeModal">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="size-4 text-gray-500 hover:text-black">
@@ -15,7 +15,7 @@
 
             <!-- Form -->
             <div>
-                <div class="grid gap-4 mb-4 md:grid-cols-2">
+                <div class="grid gap-4 mb-4 mt-4 md:grid-cols-2">
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Jenis Permohonan</label>
                         <select wire:model.live="permohonan_jenis" id="countries"
@@ -26,7 +26,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-1 text-sm font-bold text-black">Nomor Permohonan</label>
+                        <label class="block mb-1  text-sm font-bold text-black">Nomor Permohonan</label>
                         <input wire:model.live="permohonan_nomor" wire:key="permohonan-nomor-{{ now() }}"
                             type="text"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
@@ -178,7 +178,7 @@
                         @endforeach
                     </select>
                     {{-- </div> --}}
-                    @dump($sub_program_id)
+                    {{-- @dump($sub_program_id) --}}
                 </div>
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>

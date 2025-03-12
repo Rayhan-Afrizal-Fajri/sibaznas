@@ -107,7 +107,8 @@ class Permohonan extends Component
 
         $filter_daterange = $start_date . ' - ' . $end_date;
 
-        $data = DB::table('permohonan')->select('permohonan.*')
+        $data = DB::table('permohonan')->leftJoin('upz', 'upz.upz_id', '=', 'permohonan.upz_id')
+        ->select('permohonan.*', 'upz.*')
             ->when($filter_daterange != '', function ($query) use ($start_date, $end_date) {
                 // filter bulan dan tahun for pengajuan_detail
                 return $query->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
