@@ -150,6 +150,7 @@
                             </button>
                         </div>
                     </div>
+                    
                     <table
                         {{-- id="myTable" --}}
                         class="w-100 sm:min-w-full text-sm text-left text-gray-500 border border-gray-300 shadow-md rounded-lg">
@@ -175,44 +176,35 @@
                         </tbody>
                     </table>
                 </div>
-                <div
-                    class="w-full bg-white border shadow px-4 pb-10 pt-4 rounded-lg flex flex-col items-center justify-center gap-2">
+                <div class="w-full bg-white border shadow px-4 pb-10 pt-4 rounded-lg flex flex-col items-center justify-center gap-2  overflow-x-auto">
                     <span class="w-full text-center font-bold mb-4">Daftar Sub Program</span>
-
-                    <div
-                        class="w-full flex items-center justify-center gap-2 bg-white shadow border px-2 py-4 rounded-lg subProgramLabel">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="size-5">
-                            <path
-                                fill-rule="evenodd"
-                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
-                                clip-rule="evenodd"/>
+                
+                    <div class="w-full flex items-center justify-center gap-2 bg-white shadow border px-2 py-4 rounded-lg subProgramLabel">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd"/>
                         </svg>
-                        <span class=" text-center font-regular">Pilih program terlebih dahulu</span>
+                        <span class="text-center font-regular">Pilih program terlebih dahulu</span>
                     </div>
-
-                    <table
-                        {{-- id="subProgramTable" --}}
-                        class="w-100 sm:min-w-full text-sm text-left text-gray-500 border border-gray-300 shadow-md rounded-lg hidden subProgramTable">
-                        <thead class="text-[12px] sm:text-sm text-gray-700 bg-white">
-                            <tr>
-                                <th class="px-2 text-center py-3 border w-[40px]">NO</th>
-                                <th class="px-2 text-center py-3 flex justify-between items-center border-b">
-                                    Nama Sub Program
-                                    <button
-                                        id="openModal-addSubProgram"
-                                        class="bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
-                                        Tambah
-                                    </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="subProgramRow"></tbody>
-                    </table>
+                
+                    <!-- Tambahkan Wrapper untuk Responsiveness -->
+                    <div class="w-full">
+                        <table class="w-full min-w-[500px] text-sm text-left text-gray-500 border border-gray-300 shadow-md rounded-lg hidden subProgramTable">
+                            <thead class="text-[12px] sm:text-sm text-gray-700 bg-white">
+                                <tr>
+                                    <th class="px-2 text-center py-3 border w-[40px]">NO</th>
+                                    <th class="px-2 text-center py-3 flex justify-between items-center border-b">
+                                        Nama Sub Program
+                                        <button id="openModal-addSubProgram" class="bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
+                                            Tambah
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="subProgramRow"></tbody>
+                        </table>
+                    </div>
                 </div>
+                
             </div>
         </div>
 
