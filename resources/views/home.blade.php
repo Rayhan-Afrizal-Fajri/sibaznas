@@ -21,7 +21,7 @@
             {{-- navigation --}}
             <nav x-data="{ open: false }" class="bg-white">
                 <!-- Primary Navigation Menu -->
-                <div class="flex flex-col max-w-7xl mx-auto pt-6 px-6 sm:px-20">
+                <div class="flex flex-col max-w-7xl mx-auto pt-6 px-6 sm:px-8">
                     <div class="flex flex-col sm:flex-row items-center justify-between h-28">
                         <div class="flex items-center justify-center gap-2 sm:gap-6">
                             <!-- Logo -->
