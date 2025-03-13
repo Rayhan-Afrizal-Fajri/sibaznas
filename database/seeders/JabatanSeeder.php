@@ -18,7 +18,7 @@ class JabatanSeeder extends Seeder
             ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Distribusi dan Dayaguna')->value('divisi_id'), 'jabatan' => 'Wakil Ketua II', 'created_at' => now(), 'updated_at' => now()],
             ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Perencanaan Keuangan dan Pelaporan')->value('divisi_id'), 'jabatan' => 'Wakil Ketua III', 'created_at' => now(), 'updated_at' => now()],
             ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Bidang Adm. SDM dan Umum')->value('divisi_id'), 'jabatan' => 'Wakil Ketua IV', 'created_at' => now(), 'updated_at' => now()],
-            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Ketua')->value('divisi_id'), 'jabatan' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
+            ['jabatan_id' => Str::uuid(), 'divisi_id' => DB::table('divisi')->where('divisi', 'Tenaga Bantu')->value('divisi_id'), 'jabatan' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

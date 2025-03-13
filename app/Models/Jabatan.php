@@ -3,16 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Jabatan extends Model
 {
     protected $table = 'jabatan';
     protected $primaryKey = 'jabatan_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = true;
 
     protected $fillable = [
+        'jabatan_id',
         'divisi_id',
         'jabatan',
     ];
+
+    protected static function boot() {
+        parent::boot();
+        static::creating(function ($jabatan) {
+            $jabatan->jabatan_id = Str::uuid();
+        });
+    }
 
     public function divisi() {
         return $this->belongsTo(Divisi::class, 'divisi_id', 'divisi_id');

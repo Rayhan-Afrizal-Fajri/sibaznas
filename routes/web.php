@@ -3,7 +3,10 @@
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\SubProgramController;      
+use App\Http\Controllers\SubProgramController;     
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\PengurusController; 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/program', ProgramController::class)->names('program');
     Route::resource('/sub_program', SubProgramController::class)->names('sub_program');
     // Route::get('/get-sub-program/{program_id}', [ProgramController::class, 'getSubProgram']);
+
+    Route::resource('/divisi', DivisiController::class)->names('divisi');
+    Route::resource('/pengurus', PengurusController::class)->names('pengurus');
 
 
     Route::get('/get-sub-program/{program_id}', function ($program_id) {
