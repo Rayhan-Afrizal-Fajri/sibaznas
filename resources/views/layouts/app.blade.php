@@ -168,6 +168,7 @@
 
 
     @livewireScripts
+    
 </body>
 
 </html>

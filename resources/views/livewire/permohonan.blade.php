@@ -149,8 +149,10 @@
                         </thead>
                         <tbody>
                             @foreach($data as $a)
+                            {{-- {{ dd($a) }} --}}
                                 @php
-                                    if ($a->pencairan_status_input == 'Selesai Input') {
+
+                                    if ($a->pencairan_status == 'Selesai Input') {
                                         $bg_fo = 'bg-[#00593b]';
                                         $ket = 'Pengajuan Selesai diinput FO';
                                     } else {
@@ -182,6 +184,14 @@
                                         $ket_pencairan = 'Blm Dicairkan';
                                     }
 
+                                    if ($a->permohonan_jenis == 'Individu') {
+                                        $bg_jenis = 'bg-[#00593b]';
+                                        $nama = $a->permohonan_nama_pemohon;
+                                    } else {
+                                        $bg_jenis = 'bg-[#3B82F6]';
+                                        $nama = $this->nama_upz($a->permohonan_upz_id);
+                                    }
+
                                 @endphp
                                 <tr class="bg-white border-b"  onclick="window.location.href='{{ route('permohonan.detail', $a->permohonan_id) }}';"
                                     style="cursor: pointer;">
@@ -200,19 +210,19 @@
                                             <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
                                                 <p>Tgl Permohonan</p>
                                                 <p class="font-bold">
-                                                    {{ Carbon\Carbon::parse($a->permohonan_tgl)->isoFormat('D MMM YYYY') }}
+                                                    {{ Carbon\Carbon::parse($a->permohonan_tgl)->isoFormat('D MMMM YYYY') }}
                                                 </p>
                                             </div>
                                             <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
                                                 <p>Tgl Selesai Diinput</p>
                                                 <p class="font-bold">
-                                                    {{ Carbon\Carbon::parse($a->permohonan_timestamp_input)->isoFormat('D MMM YYYY') }}
+                                                    {{ Carbon\Carbon::parse($a->permohonan_timestamp_input)->isoFormat('D MMMM YYYY') }}
                                                 </p>
                                             </div>
                                             <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
                                                 <div class="flex flex-row gap-1">
                                                     <p>Pemohon</p>
-                                                    <p class="{{ $bg }} px-0.5 text-white rounded-sm">
+                                                    <p class="{{ $bg_jenis }} px-0.5 text-white rounded-sm">
                                                         {{ $a->permohonan_jenis }}</p>
                                                 </div>
                                                 <p class="font-bold">{{ $nama }}</p>
@@ -235,7 +245,7 @@
                                             </div>
                                             <div class="flex flex-col">
                                                 <p class="font-bold">Catatan Tambahan</p>
-                                                <p class="font-regular">{{ $a->permohonan_catatan_atasan }}</p>
+                                                <p class="font-regular">{{ $a->permohonan_catatan_atasan ?? '-'}} </p>
                                             </div>
                                         </div>
                                     </td>
@@ -247,7 +257,7 @@
                                                 {{ $ket_survey }}</p>
                                             <div class="flex flex-col">
                                                 <p class="font-bold">Disetujui</p>
-                                                <p>{{ Carbon\Carbon::parse($a->survey_tgl)->isoFormat('D MMM YYYY') }}
+                                                <p>{{ Carbon\Carbon::parse($a->survey_tgl)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
                                                 </p>
                                             </div>
                                             <a href="#" class="text-blue-700 hover:text-blue-500"
@@ -266,7 +276,7 @@
                                                 {{ $ket_pencairan }}</p>
                                             <div class="flex flex-col">
                                                 <p class="font-bold">Sumber: {{ $a->pencairan_sumberdana }}</p>
-                                                <p>{{ Carbon\Carbon::parse($a->pencairan_timestamp)->isoFormat('D MMM YYYY') }}
+                                                <p>{{ Carbon\Carbon::parse($a->pencairan_timestamp)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
                                                 </p>
                                             </div>
                                             <div class="flex flex-row justify-between">
@@ -276,36 +286,36 @@
                                             </div>
                                             <div class="flex flex-col">
                                                 <p class="font-bold">Catatan Tambahan</p>
-                                                <p>{{ $a->pencairan_catatan }}</p>
+                                                <p>{{ $a->pencairan_catatan ?? '-' }}</p>
                                             </div>
                                         </div>
                                     </td>
 
                                     <td class="px-2 py-2 border w-[20%]">
                                         <div class="flex flex-col text-black">
-                                            <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">
-                                                Selesai
+                                            <p class="bg-[#f59e0b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">
+                                                Blm Selesai
                                                 LPJ</p>
                                             <div class="flex flex-col">
-                                                <p class="font-bold">Sudah disalurkan</p>
-                                                <p>Kamis, 15 Mare 2025</p>
+                                                <p class="font-bold">-</p>
+                                                <p>-</p>
                                             </div>
                                             <div class="flex flex-row justify-between">
                                                 <p>Bentuk Penyaluran</p>
-                                                <p class="font-bold">{{ $a->permohonan_bentuk_bantuan }}</p>
+                                                <p class="font-bold">-</p>
                                             </div>
                                             <div class="flex flex-col">
                                                 <p class="font-bold">Catatan Tambahan</p>
-                                                <p>Penyaluran uang tunai bantuan biaya pendidikan</p>
+                                                <p>-</p>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr class="bg-white border-b" class="abg-white border-b" onclick="openInNewTab('/detail_permohonan/1');"
+                            <tr class="bg-white border-b" class="abg-white border-b" onclick="openInNewTab('/detail_permohonan_1/1');"
                                 style="cursor: pointer;">
 
-                                <td class="px-2 text-center py-4 border">1</td>
+                                <td class="px-2 text-center py-4 border">2</td>
                                 <td class="px-2 py-2 border w-[20%]">
                                     <div class="flex flex-col text-black">
                                         <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">Pengajuan
