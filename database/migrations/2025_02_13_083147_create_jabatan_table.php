@@ -15,7 +15,6 @@ return new class extends Migration
 
         Schema::create('jabatan', function (Blueprint $table) {
             $table->uuid('jabatan_id')->primary();
-            //$table->foreign('jabatan_id')->references('jabatan_id')->on('pengurus');
             $table->foreignUuid('divisi_id')->index();
             $table->foreign('divisi_id')->references('divisi_id')->on('divisi');
             $table->string('jabatan')->unique();

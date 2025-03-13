@@ -20,11 +20,11 @@ class DivisiSeeder extends Seeder
     public function run(): void
     {
         DB::table('divisi')->insert([
-            ['divisi_id' => Str::uuid(), 'divisi' => 'Bidang Pengumpulan', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => Str::uuid(), 'divisi' => 'Bidang Distribusi dan Dayaguna', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => Str::uuid(), 'divisi' => 'Bidang Perencanaan Keuangan dan Pelaporan', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => Str::uuid(), 'divisi' => 'Bidang Adm. SDM dan Umum', 'created_at' => now(), 'updated_at' => now()],
-            ['divisi_id' => Str::uuid(), 'divisi' => 'Ketua', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => Str::uuid(), 'kode_divisi' => 1, 'divisi' => 'Bidang Pengumpulan', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => Str::uuid(), 'kode_divisi' => 2, 'divisi' => 'Bidang Distribusi dan Dayaguna', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => Str::uuid(), 'kode_divisi' => 3, 'divisi' => 'Bidang Perencanaan Keuangan dan Pelaporan', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => Str::uuid(), 'kode_divisi' => 4, 'divisi' => 'Bidang Adm. SDM dan Umum', 'created_at' => now(), 'updated_at' => now()],
+            ['divisi_id' => Str::uuid(), 'kode_divisi' => 5, 'divisi' => 'Tenaga Bantu', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

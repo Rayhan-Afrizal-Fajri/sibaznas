@@ -17,7 +17,7 @@ class PengurusController extends Controller
     public function index(): View
     {
         $pengurus = Pengurus::all();
-        return view('', compact('pengurus'));
+        return view('pengurus.index', compact('pengurus'));
     }
 
     /**
@@ -32,7 +32,7 @@ class PengurusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $validated = $this->validatePengurus($request);
 
@@ -63,7 +63,7 @@ class PengurusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pengurus $pengurus): RedirectResponse
+    public function update(Request $request, Pengurus $pengurus)
     {
         $validated = $this->validatePengurus($request, $pengurus->pengurus_id);
         
