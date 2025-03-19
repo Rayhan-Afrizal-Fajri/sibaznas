@@ -21,10 +21,10 @@ return new class extends Migration
             $table->foreign('pengurus_id')->references('pengurus_id')->on('pengurus');
             $table->string('driver_id')->nullable();
             $table->string('nik');
-            $table->string('kk');
+            $table->string('kk')->nullable();
             $table->string('nama');
             $table->integer('jenis_kelamin');
-            $table->integer('tempat_lahir');
+            $table->string('tempat_lahir');
             $table->date('tgl_lahir');
             $table->string('email')->unique();
             $table->string('nohp')->unique();

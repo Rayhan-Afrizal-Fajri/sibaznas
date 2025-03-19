@@ -92,11 +92,11 @@ class ProgramController extends Controller
     }
 
 
-    private function validateProgram(Request $request, ?string $id = null): array {
-        return $request->validate([
-            'program' => 'required|string|max:255|unique:program,program' . ($id ? ",$id" : ''),
-        ]);
-    }
+        private function validateProgram(Request $request, ?string $id = null): array {
+            return $request->validate([
+                'program' => 'required|string|max:255|unique:program,program' . ($id ? ",$id" : ''),
+            ]);
+        }
 
     public function getSubProgram($program_id)
     {

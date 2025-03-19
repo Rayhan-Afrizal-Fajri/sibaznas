@@ -24,16 +24,6 @@ class PengurusSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'pengurus_id' => Str::uuid(),
-                'jabatan_id' => DB::table('jabatan')->where('jabatan', 'Wakil Ketua II')->value('jabatan_id'),
-                'sk_nomor' => 'SK-002',
-                'sk_url' => 'uploads/sk_002.pdf',
-                'tgl_mulai' => '2023-06-01',
-                'tgl_selesai' => '2025-06-01',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
         ]);
     }
 }

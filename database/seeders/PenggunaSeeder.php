@@ -24,9 +24,9 @@ class PenggunaSeeder extends Seeder
                 'kk' => '3201123456789012',
                 'nama' => 'Rayhan Afrizal',
                 'jenis_kelamin' => 1,
-                'tempat_lahir' => 1,
-                'tgl_lahir' => '1990-05-20',
-                'email' => 'budi@example.com',
+                'tempat_lahir' => 'Banyumas',
+                'tgl_lahir' => '2005-09-23',
+                'email' => 'rayhan@example.com',
                 'nohp' => '0895392167815',
                 'password' => Hash::make('0895392167815'), // Menggunakan Hash::make() untuk Bcrypt
                 'alamat' => 'Jl. Merdeka No. 10',
