@@ -43,7 +43,8 @@
                                 id="sub_program"
                                 name="sub_program"
                                 required="required"
-                                class="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-green-300"></div>
+                                class="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-green-300">
+                        </div>
 
                             <!-- Tombol Aksi -->
                             <div class="flex justify-end gap-2">
