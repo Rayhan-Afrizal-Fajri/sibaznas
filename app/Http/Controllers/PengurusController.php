@@ -121,10 +121,14 @@ class PengurusController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pengurus $pengurus): View
+    public function edit(Pengurus $pengurus)
     {
         $jabatan = Jabatan::all();
-        return view('', compact('pengurus', 'jabatan'));
+        // return view('', compact('pengurus', 'jabatan'));
+        return response()->json([
+            'pengurus' => $pengurus,
+            'jabatan' => $jabatan
+        ]);
     }
 
     /**
