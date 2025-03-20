@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div>
     {{-- The whole world belongs to you. --}}
     <nav class="flex flex-col sm:flex-row" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
@@ -460,3 +461,5 @@
 
     </div>
 </div>
+=======
+>>>>>>> Stashed changes
