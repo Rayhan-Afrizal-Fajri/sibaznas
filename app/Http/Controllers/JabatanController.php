@@ -30,11 +30,18 @@ class JabatanController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $this->validateJabatan($request);
+        $validated = $request->validate([
+            'divisi_id' => 'required',
+            'jabatan' => 'required',
+        ]);
 
-        Jabatan::create($validated);
+        try {
+            Jabatan::create($validated);
 
-        return redirect()->route('jabatan.index')->with('success', 'Data jabatan berhasil ditambahkan.');
+            return redirect()->route('divisi.index')->with('success', 'Data jabatan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Jabatan gagal ditambahkan' . $e->getMessage());
+        }
     }
 
     /**
@@ -50,11 +57,18 @@ class JabatanController extends Controller
      */
     public function update(Request $request, Jabatan $jabatan): RedirectResponse
     {
-        $validated = $this->validateJabatan($request, $jabatan->id);
-
+        $validated = $request->validate([
+            // 'divisi_id' => 'required',
+            'jabatan' => 'required',
+        ]);
+        try {
+            
         $jabatan->update($validated);
 
-        return redirect()->route('jabatan.index')->with('success', 'Data jabatan berhasil diperbarui.');
+        return redirect()->route('divisi.index')->with('success', 'Data jabatan berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->route('divisi.index')->with('error', 'Jabatan gagal diperbarui'.$e->getMessage());
+        }
     }
 
     /**
@@ -62,8 +76,12 @@ class JabatanController extends Controller
      */
     public function destroy(Jabatan $jabatan): RedirectResponse
     {
-        $jabatan->delete();
-        return redirect()->route('jabatan.index')->with('success', 'Data jabatan berhasil dihapus.');
+        try {
+            $jabatan->delete();
+            return redirect()->route('divisi.index')->with('success', 'Data jabatan berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('divisi.index')->with('error', 'Data jabatan gagal dihapus.'. $e->getMessage());
+        }
     }
 
     /**
@@ -72,7 +90,7 @@ class JabatanController extends Controller
     private function validateJabatan(Request $request, ?int $id = null): array
     {
         return $request->validate([
-            'divisi_id' => 'required|exists:divisi,id',
+            'divisi_id' => 'required',
             'jabatan'   => 'required|string|unique:jabatan,jabatan' . ($id ? ",$id" : ''),
         ]);
     }

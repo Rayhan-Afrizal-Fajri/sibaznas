@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\SubProgram;
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,8 +72,14 @@ Route::middleware('auth')->group(function () {
     // Route::get('/get-sub-program/{program_id}', [ProgramController::class, 'getSubProgram']);
 
     Route::resource('/divisi', DivisiController::class)->names('divisi');
+    Route::resource('/jabatan', JabatanController::class)->names('jabatan');
     Route::resource('/pengurus', PengurusController::class)->names('pengurus');
 
+
+    Route::get('/get-jabatan/{divisi_id}', function ($divisi_id) {
+        $jabatans = Jabatan::where('divisi_id', $divisi_id)->get();
+        return response()->json($jabatans);
+    });
 
     Route::get('/get-sub-program/{program_id}', function ($program_id) {
         $subPrograms = SubProgram::where('program_id', $program_id)->get();

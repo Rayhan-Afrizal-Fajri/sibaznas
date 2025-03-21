@@ -146,7 +146,26 @@
                                     <td class="px-2 text-center py-4 border"> {{ $data->tgl_selesai }} </td>
                                     <td class="px-2 text-center py-4 border w-30">
                                         <div class=" flex items-center justify-center gap-4">
-                                            <button {{-- data-id="$sub.sub_program_id" data-editprogramname="$programName" data-subprogram="$sub.sub_program" class="openModal-EditSubProgram" --}}> 
+                                            <button class="openModal-EditPengurus"
+                                            data-id="{{ $data->pengurus_id }}"
+                                            data-pengguna_id ="{{ $data->pengguna->pengguna_id }}"
+                                            data-pengguna_nama ="{{ $data->pengguna->nama }}"
+                                            data-pengguna_wilayah ="{{ $data->pengguna->wilayah_id }}"
+                                            data-pengguna_nik ="{{ $data->pengguna->nik }}"
+                                            data-pengguna_alamat ="{{ $data->pengguna->alamat }}"
+                                            data-pengguna_rt ="{{ $data->pengguna->rt }}"
+                                            data-pengguna_rw ="{{ $data->pengguna->rw }}"
+                                            data-divisi ="{{ $data->jabatan->divisi->divisi }}"
+                                            data-jabatan ="{{ $data->jabatan_id }}"
+                                            data-sk_nomor ="{{ $data->sk_nomor }}"
+                                            data-tgl_mulai ="{{ $data->tgl_mulai }}"
+                                            data-tgl_selesai ="{{ $data->tgl_selesai }}"
+                                            data-pengguna_tempat_lahir ="{{ $data->pengguna->tempat_lahir }}"
+                                            data-pengguna_tgl_lahir ="{{ $data->pengguna->tgl_lahir }}"
+                                            data-pengguna_jenis_kelamin ="{{ $data->pengguna->jenis_kelamin }}"
+                                            data-pengguna_nohp ="{{ $data->pengguna->nohp }}"
+                                            data-pengguna_email ="{{ $data->pengguna->email }}"
+                                            > 
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-yellow-400">
                                                     <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                                 </svg>
@@ -173,6 +192,7 @@
     </div>
 
     @include('modal.pengurus.create')
+    @include('modal.pengurus.edit')
 
     <script>
         $(document).ready(function() {
@@ -180,6 +200,78 @@
                 $('#modal-addPengurus').removeClass('hidden');
             });
         });
+
+        $(document).ready(function() {
+            $('.openModal-EditPengurus').click(function() {
+                var pengurusId = $(this).data('id');
+                var penggunaNama = $(this).data('pengguna_nama');
+                var penggunaId = $(this).data('pengguna_id');
+                var penggunaWilayah = $(this).data('pengguna_wilayah');
+                var penggunaNik = $(this).data('pengguna_nik');
+                var penggunaAlamat = $(this).data('pengguna_alamat');
+                var penggunaRt = $(this).data('pengguna_rt');
+                var penggunaRw = $(this).data('pengguna_rw');
+                var penggunaDivisi = $(this).data('divisi');
+                var pengurusJabatanId = $(this).data('jabatan');
+                var pengurusSkNomor = $(this).data('sk_nomor');
+                var pengurusTglMulai = $(this).data('tgl_mulai');
+                var pengurusTglSelesai = $(this).data('tgl_selesai');
+                var penggunaTempatLahir = $(this).data('pengguna_tempat_lahir');
+                var penggunaTglLahir = $(this).data('pengguna_tgl_lahir');
+                var penggunaJenisKelamin = $(this).data('pengguna_jenis_kelamin');
+                var penggunaNohp = $(this).data('pengguna_nohp');
+                var penggunaEmail = $(this).data('pengguna_email');
+
+                $('#editPengurusId').val(pengurusId);
+                $('#editNama').val(penggunaNama);
+                $('#editEmail').val(penggunaEmail);
+                $('#editNik').val(penggunaNik);
+                $('#editTempatLahir').val(penggunaTempatLahir);
+                $('#editTglLahir').val(penggunaTglLahir);
+                $('input[name="editJenisKelamin"][value="' + penggunaJenisKelamin + '"]').prop('checked', true);
+                $('#editNohp').val(penggunaNohp);
+                $('#editAlamat').val(penggunaAlamat);
+                $('#editRt').val(penggunaRt);
+                $('#editRw').val(penggunaRw);
+                $('#editWilayah').val(penggunaWilayah).change();
+                $('#editJabatan').val(pengurusJabatanId).change();
+                $('#editSkNomor').val(pengurusSkNomor);
+                $('.editTglMulai').val(pengurusTglMulai);
+                $('.editTglSelesai').val(pengurusTglSelesai);
+                $('#modal-editPengurus').removeClass('hidden'); // Tampilkan modal
+
+                // $.ajax({
+                //     url: "/pengurus/" + pengurusId + "/edit",
+                //     type: "GET",
+                //     success: function(data) {
+                //         // Jika ada pengguna terkait, isi data dari pengguna
+                //         if (data.pengurus.pengguna) {   
+                //             $('#editNama').val(data.pengurus.pengguna.nama);
+                //             $('#editEmail').val(data.pengurus.pengguna.email);
+                //             $('#editNik').val(data.pengurus.pengguna.nik);
+                //             $('#editTempatLahir').val(data.pengurus.pengguna.tempat_lahir);
+                //             $('#editTglLahir').val(data.pengurus.pengguna.tgl_lahir);
+                //             $('input[name="editJenisKelamin"][value="' + data.pengurus.pengguna.jenis_kelamin + '"]').prop('checked', true);
+                //             $('#editNohp').val(data.pengurus.pengguna.nohp);
+                //             $('#editAlamat').val(data.pengurus.pengguna.alamat);
+                //             $('#editRt').val(data.pengurus.pengguna.rt);
+                //             $('#editRw').val(data.pengurus.pengguna.rw);
+                //             $('#editWilayah').val(data.pengurus.pengguna.wilayah_id);
+                //         }
+
+                //         // Isi data dari pengurus
+                //         $('#editJabatan').val(data.pengurus.jabatan_id);
+                //         $('#editSkNomor').val(data.pengurus.sk_nomor);
+                //         $('.editTglMulai').val(data.pengurus.tgl_mulai);
+                //         $('.editTglSelesai').val(data.pengurus.tgl_selesai);
+                //         // $('#modal-editPengurus #status').val(data.pengurus.status);
+
+                //         $('#modal-editPengurus').removeClass('hidden'); // Tampilkan modal
+                //     }
+                // });
+            });
+        });
+
 
         // Fungsi untuk menutup modal berdasarkan ID modal yang dikirim
     function closeModal(modalId) {

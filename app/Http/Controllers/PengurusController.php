@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PengurusController extends Controller
 {
@@ -123,11 +124,10 @@ class PengurusController extends Controller
      */
     public function edit(Pengurus $pengurus)
     {
-        $jabatan = Jabatan::all();
-        // return view('', compact('pengurus', 'jabatan'));
+        $pengurus->load('pengguna'); // Pastikan relasi pengguna dimuat
+
         return response()->json([
-            'pengurus' => $pengurus,
-            'jabatan' => $jabatan
+            'pengurus' => $pengurus
         ]);
     }
 
@@ -136,12 +136,81 @@ class PengurusController extends Controller
      */
     public function update(Request $request, Pengurus $pengurus)
     {
-        $validated = $this->validatePengurus($request, $pengurus->pengurus_id);
-        
+        // dd($request->tgl_mulai, $request->tgl_selesai, $request->tgl_lahir);
+
+        DB::beginTransaction();
+
         try {
-            $pengurus->update($validated);
+            // Ambil data pengurus berdasarkan ID
+            $pengurus = Pengurus::findOrFail($request->pengurus_id);
+            $pengguna = Pengguna::where('pengurus_id', $pengurus->pengurus_id)->firstOrFail();
+
+            // Proses upload file jika ada perubahan
+            if ($request->hasFile('foto_url')) {
+                $fotoPath = $request->file('foto_url')->store('foto', 'public');
+                // Hapus foto lama jika ada
+                if ($pengguna->foto_url) {
+                    Storage::disk('public')->delete($pengguna->foto_url);
+                }
+            } else {
+                $fotoPath = $pengguna->foto_url;
+            }
+
+            if ($request->hasFile('ttd_url')) {
+                $ttdPath = $request->file('ttd_url')->store('ttd', 'public');
+                if ($pengguna->ttd_url) {
+                    Storage::disk('public')->delete($pengguna->ttd_url);
+                }
+            } else {
+                $ttdPath = $pengguna->ttd_url;
+            }
+
+            if ($request->hasFile('sk_url')) {
+                $skPath = $request->file('sk_url')->store('sk', 'public');
+                if ($pengurus->sk_url) {
+                    Storage::disk('public')->delete($pengurus->sk_url);
+                }
+            } else {
+                $skPath = $pengurus->sk_url;
+            }
+
+            // Konversi format tanggal ke 'YYYY-MM-DD'
+            // $tglMulai = Carbon::createFromFormat('Y/m/d', $request->tgl_mulai)->format('Y-m-d');
+            // $tglSelesai = Carbon::createFromFormat('Y/m/d', $request->tgl_selesai)->format('Y-m-d');
+            // $tglLahir = Carbon::createFromFormat('Y/m/d', $request->tgl_lahir)->format('Y-m-d');
+
+            // Update data pengurus
+            $pengurus->update([
+                'jabatan_id' => $request->jabatan_id,
+                'sk_nomor' => $request->sk_nomor,
+                'sk_url' => $skPath,
+                'tgl_mulai' => $request['tgl_mulai'],
+                'tgl_selesai' => $request['tgl_selesai'],
+            ]);
+
+            // Update data pengguna
+            $pengguna->update([
+                'nama' => $request['nama'],
+                'email' => $request['email'],
+                'nohp' => $request['nohp'],
+                'foto_url' => $fotoPath,
+                'ttd_url' => $ttdPath,
+                'nik' => $request['nik'],
+                'tempat_lahir' => $request['tempat_lahir'],
+                'tgl_lahir' => $request['tgl_lahir'],
+                'jenis_kelamin' => $request['editJenisKelamin'],
+                'alamat' => $request['alamat'],
+                'rt' => $request['rt'],
+                'rw' => $request['rw'],
+                'wilayah_id' => $request['wilayah_id'],
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('pengurus.index')->with('success', 'Data Pengurus berhasil diperbarui');
         } catch (\Exception $e) {
-            return back()->withErrors('Gagal memperbarui data: '. $e->getMessage());
+            DB::rollBack();
+            return redirect()->route('pengurus.index')->with('error', 'Data Pengurus gagal diperbarui: ' . $e->getMessage());
         }
     }
 
