@@ -231,7 +231,9 @@ class PengurusController extends Controller
      */
     public function destroy(Pengurus $pengurus): RedirectResponse
     {
+        $pengguna = Pengguna::where('pengurus_id', $pengurus->pengurus_id)->first();
         try {
+            $pengguna->delete();
             $pengurus->delete();
             return redirect()->route('')->with('success', 'Data pengurus berhasil dihapus.');
         } catch (\Exception $e) {
