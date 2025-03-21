@@ -94,7 +94,7 @@
                         </td>
                     </tr>
                     @php
-                        if ($detail_permohonan->permohonan_jenis == 'Individu') {
+                        if ($detail_permohonan->permohonan_jenis == 'BAZNAS') {
                             $bg_jenis = 'bg-[#00593b]';
                             $nama = $detail_permohonan->permohonan_nama_pemohon;
                             $nohp = $detail_permohonan->permohonan_nohp_pemohon;
@@ -283,7 +283,7 @@
     </div>
     <div class="flex sm:items-center justify-between">
         <p class="text-xs font-bold">C. Lampiran</p>
-        <button id="openModal-tambahLampiran{{ $detail_permohonan->permohonan_id }}"
+        <button id="openModal-tambahLampiran-{{ $detail_permohonan->permohonan_id }}"
             class="flex items-center gap-1 text-[9px] sm:text-xs font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white p-[2px] rounded-[4px] sm:rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="size-3">

@@ -12,28 +12,10 @@ class Mustahik extends Model
     protected $table = 'mustahik';
     protected $primaryKey = 'mustahik_id';
     public $timestamps = true;
+    public $incrementing = false; // Nonaktifkan auto-increment
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'wilayah_id',
-        'asnaf_id',
-        'pasien_pj_id',
-        'diagnosa',
-        'nik',
-        'kk',
-        'nama',
-        'jenis_kelamin',
-        'tempat_lahir',
-        'tgl_lahir',
-        'email',
-        'nohp',
-        'alamat',
-        'rt',
-        'rw',
-        'foto_url',
-        'ktp_url',
-        'kk_url'
-    ];
-
+    protected $guarded = [];
     public function wilayah()
     {
         return $this->belongsTo(Wilayah::class, 'wilayah_id', 'wilayah_id');

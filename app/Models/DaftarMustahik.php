@@ -12,11 +12,10 @@ class DaftarMustahik extends Model
     protected $table = 'daftar_mustahik';
     protected $primaryKey = 'daftar_mustahik_id';
     public $timestamps = true;
+    public $incrementing = false; // Nonaktifkan auto-increment
+    protected $keyType = 'string';
 
-    protected $fillable = [
-        'permohonan_id',
-        'mustahik_id'
-    ];
+    protected $guarded = [];
 
     public function permohonan()
     {
