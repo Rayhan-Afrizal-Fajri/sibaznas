@@ -61,11 +61,10 @@
             </button>
             <!-- Hamburger Toggle BTN -->
 
-            <a href="index.html" class="lg:hidden">
-                <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo"/>
-                <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo"/>
+            <a href="{{ route('dashboard') }}" class="lg:hidden">
+                <h1 class="text-xl text-[#00593b] font-bold">e-Disday</h1>
             </a>
-            <div class="lg:hidden">
+            {{-- <div class="lg:hidden">
                 <!-- User Area -->
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button1" aria-expanded="false" data-dropdown-toggle="user-dropdown1" data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
@@ -94,13 +93,72 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
+            
         </div>
 
         <div
             class="shadow-theme-md hidden sm:block w-full items-center justify-between gap-4 px-5 py-4 lg:flex lg:justify-end lg:px-0 lg:shadow-none">
+            <div class="sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <!-- Gambar Profil atau Inisial -->
+                            @if(Auth::user()->foto_url)
+                            <img
+                                src="{{ 'storage/'.Auth::user()->foto_url }}"
+                                alt="Avatar"
+                                class="w-10 h-10 rounded-full object-cover">
+                            @else
+                            <div
+                                class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold">
+                                {{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}
+                            </div>
+                            @endif
 
-            <!-- User Area -->
+                            <!-- Nama & Email -->
+                            <div class="flex flex-col ms-3 text-left">
+                                <span class="text-gray-700 font-semibold">{{ Auth::user()->nama }}</span>
+                                <span class="text-gray-500 text-xs">{{ Auth::user()->pengurus->jabatan->jabatan }}</span>
+                            </div>
+
+                            <!-- Icon Dropdown -->
+                            <div class="ms-2">
+                                <svg
+                                    class="fill-current h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewbox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </button>
+
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link
+                                :href="route('logout')"
+                                onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
+            </div>
+            {{-- <!-- User Area -->
             <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->foto_url ? asset('storage/' . Auth::user()->foto_url) : asset('build/AdminLTE-4.0.0-beta3/src/assets/img/default-150x150.png') }}" alt="user photo">
@@ -127,7 +185,7 @@
                         </form>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
             <!-- User Area -->
         </div>
     </div>

@@ -73,14 +73,14 @@
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))">
 
-        @include('layouts.preloader')
+        {{-- @include('layouts.preloader') --}}
 
         <div class="flex h-screen overflow-hidden">
             @include('layouts.side')
 
             <!-- Page Content -->
             <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-                @include('layouts.overlay')
+                {{-- @include('layouts.overlay') --}}
                 @include('layouts.header')
                 <main class="">
                     <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">

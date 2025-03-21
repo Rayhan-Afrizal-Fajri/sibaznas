@@ -70,8 +70,9 @@ class PengurusController extends Controller
             }
 
             // Konversi format tanggal ke 'YYYY-MM-DD'
-            $tglMulai = Carbon::createFromFormat('m/d/Y', $request->tgl_mulai)->format('Y-m-d');
-            $tglSelesai = Carbon::createFromFormat('m/d/Y', $request->tgl_selesai)->format('Y-m-d');
+                $tglMulai = !empty($request->tgl_mulai) ? Carbon::parse($request->tgl_mulai)->format('Y-m-d') : null;
+                $tglSelesai = !empty($request->tgl_selesai) ? Carbon::parse($request->tgl_selesai)->format('Y-m-d') : null;
+                $tglLahir = !empty($request->tgl_lahir) ? Carbon::parse($request->tgl_lahir)->format('Y-m-d') : null;
 
             // Simpan data pengurus
             $pengurus = Pengurus::create([
@@ -81,6 +82,16 @@ class PengurusController extends Controller
                 'tgl_mulai' => $tglMulai,
                 'tgl_selesai' => $tglSelesai,
             ]);
+
+            //jika user menambah wilayah baru pada saat add pengurus
+            if($request->wilayah) {
+                Wilayah::create([
+                    'wilayah' => $request->wilayah,
+                ]);
+                $wilayah_id = Wilayah::where('wilayah', $request->wilayah)->first()->wilayah_id;
+            } else {
+                $wilayah_id = $request->wilayah_id;
+            }
 
             // Simpan data pengguna
             Pengguna::create([
@@ -92,12 +103,12 @@ class PengurusController extends Controller
                 'pengurus_id' => $pengurus->pengurus_id,
                 'nik' => $request['nik'],
                 'tempat_lahir' => $request['tempat_lahir'],
-                'tgl_lahir' => Carbon::createFromFormat('m/d/Y', $request['tgl_lahir'])->format('Y-m-d'),
+                'tgl_lahir' => $tglLahir,
                 'jenis_kelamin' => $request['jenis_kelamin'],
                 'alamat' => $request['alamat'],
                 'rt' => $request['rt'],
                 'rw' => $request['rw'],
-                'wilayah_id' => $request['wilayah_id'],
+                'wilayah_id' => $wilayah_id,
                 'password' => Hash::make($request['nohp']), // Set password default
                 //'status' => 'aktif',
             ]);
@@ -175,17 +186,18 @@ class PengurusController extends Controller
             }
 
             // Konversi format tanggal ke 'YYYY-MM-DD'
-            // $tglMulai = Carbon::createFromFormat('Y/m/d', $request->tgl_mulai)->format('Y-m-d');
-            // $tglSelesai = Carbon::createFromFormat('Y/m/d', $request->tgl_selesai)->format('Y-m-d');
-            // $tglLahir = Carbon::createFromFormat('Y/m/d', $request->tgl_lahir)->format('Y-m-d');
+            $tglMulai = !empty($request->tgl_mulai) ? Carbon::parse($request->tgl_mulai)->format('Y-m-d') : null;
+            $tglSelesai = !empty($request->tgl_selesai) ? Carbon::parse($request->tgl_selesai)->format('Y-m-d') : null;
+            $tglLahir = !empty($request->tgl_lahir) ? Carbon::parse($request->tgl_lahir)->format('Y-m-d') : null;
+
 
             // Update data pengurus
             $pengurus->update([
                 'jabatan_id' => $request->jabatan_id,
                 'sk_nomor' => $request->sk_nomor,
                 'sk_url' => $skPath,
-                'tgl_mulai' => $request['tgl_mulai'],
-                'tgl_selesai' => $request['tgl_selesai'],
+                'tgl_mulai' => $tglMulai,
+                'tgl_selesai' => $tglSelesai,
             ]);
 
             // Update data pengguna
@@ -197,7 +209,7 @@ class PengurusController extends Controller
                 'ttd_url' => $ttdPath,
                 'nik' => $request['nik'],
                 'tempat_lahir' => $request['tempat_lahir'],
-                'tgl_lahir' => $request['tgl_lahir'],
+                'tgl_lahir' => $tglLahir,
                 'jenis_kelamin' => $request['editJenisKelamin'],
                 'alamat' => $request['alamat'],
                 'rt' => $request['rt'],

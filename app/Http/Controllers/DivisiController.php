@@ -73,9 +73,10 @@ class DivisiController extends Controller
      */
     public function destroy(Divisi $divisi)
     {
+        // dd($divisi);
         try {
             $divisi->delete();
-            return redirect()->route('divisi.index')->with('success', 'Divi berhasil dihapus!');
+            return redirect()->route('divisi.index')->with('success', 'Divisi berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus program!'.$e->getMessage());
         }

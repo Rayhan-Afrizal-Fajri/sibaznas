@@ -32,9 +32,9 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('rt');
             $table->string('rw');
-            $table->string('foto_url');
-            $table->string('ttd_url');
-            $table->enum('status', [""]);
+            $table->string('foto_url')->nullable();
+            $table->string('ttd_url')->nullable();
+            $table->enum('status', ["aktif", 'nonaktif']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

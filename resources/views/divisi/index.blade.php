@@ -132,8 +132,9 @@
                                 Edit
                             </button>
                             <!-- Form untuk menghapus program -->
-                            <form id="deleteDivisiForm" method="POST" action="">
-                                @csrf @method('DELETE')
+                            <form id="deleteDivisiForm" method="POST">
+                                @csrf
+                                @method('DELETE')
                                 {{-- <input type="hidden" id="deleteJabatanId" name="program_id"> --}}
                                 <button
                                     type="submit"
@@ -236,6 +237,7 @@
                     // var programId = $(this).data("id");
                     // var programName = $(this).data("program");
                     $("#editDeleteDivisiContainer").removeClass("hidden");
+                    $("#deleteDivisiForm").attr("action", "/divisi/" + divisiId);
 
                     $('.divisi-row').removeClass("bg-gray-300 bg-white");
                     $(this).addClass("bg-gray-300");

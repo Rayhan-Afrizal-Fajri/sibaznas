@@ -213,7 +213,7 @@
             <!-- Tanggal Mulai & Selesai -->
             <div class="mb-4">
                 <div
-                    id="date-range-picker"
+                    id="date-range-picker-edit"
                     date-rangepicker="date-rangepicker"
                     class="flex items-center">
                     <div class="relative">
@@ -231,7 +231,7 @@
                         </div>
                         <input
                             readonly="readonly"
-                            id="datepicker-range-start"
+                            id="datepicker-range-start-edit"
                             name="tgl_mulai"
                             type="text"
                             class="editTglMulai border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
@@ -253,7 +253,7 @@
                         </div>
                         <input
                             readonly="readonly"
-                            id="datepicker-range-end"
+                            id="datepicker-range-end-edit"
                             name="tgl_selesai"
                             type="text"
                             class="editTglSelesai border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "

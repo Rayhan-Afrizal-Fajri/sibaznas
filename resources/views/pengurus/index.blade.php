@@ -191,8 +191,8 @@
         </div>
     </div>
 
-    @include('modal.pengurus.create')
     @include('modal.pengurus.edit')
+    @include('modal.pengurus.create')
 
     <script>
         $(document).ready(function() {
@@ -274,9 +274,10 @@
 
 
         // Fungsi untuk menutup modal berdasarkan ID modal yang dikirim
-    function closeModal(modalId) {
+        function closeModal(modalId) {
                 $("#" + modalId).addClass("hidden");
         }
+
     </script>
     
     @endsection

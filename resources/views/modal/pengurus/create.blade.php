@@ -1,6 +1,6 @@
 <div
     id="modal-addPengurus"
-    class=" hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 ">
+    class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 ">
     <div
         class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-[80vh] overflow-y-auto">
         <!-- Header -->
@@ -161,15 +161,41 @@
             <div class="mb-4">
                 <label for="wilayah" class="block text-sm font-medium text-gray-700">Wilayah</label>
                 <select
-                    id="wilayah"
+                    id="wilayahId"
                     name="wilayah_id"
                     class="mt-1 w-full p-2 border rounded-md focus:ring focus:ring-green-300 text-sm">
-                    <option selected="selected">Pilih Wilayah</option>
+                    <option selected="selected" value="pilih" disabled>Pilih Wilayah</option>
                     @foreach ($wilayah as $data)
                     <option value="{{ $data->wilayah_id }}">{{ $data->wilayah }}</option>
                     @endforeach
+                    <option value="tambah">Lainnya</option> <!-- Opsi Tambah -->
                 </select>
+                <input
+                    type="text"
+                    id="wilayah"
+                    name="wilayah"
+                    class="hidden mt-1 w-full p-2 border rounded-md focus:ring focus:ring-green-300 text-sm"
+                    placeholder="Masukkan Wilayah Baru">
             </div>
+
+            <script>
+                $(document).ready(function() {
+                    $("#wilayahId").change(function() {
+                        if ($(this).val() === "tambah") {
+                            $(this).addClass("hidden");
+                            $("#wilayah").removeClass("hidden").focus();
+                        }
+                    });
+
+                    $("#wilayah").blur(function() {
+                        if ($(this).val() === "") {
+                            $(this).addClass("hidden");
+                            $("#wilayahId").removeClass("hidden").val("pilih");
+                        }
+                    });
+                });
+            </script>
+
 
             <!-- Upload Foto -->
             <div class="mb-4">
@@ -230,7 +256,7 @@
                         </div>
                         <input
                             readonly="readonly"
-                            id="datepicker-range-start"
+                            {{-- id="datepicker-range-start" --}}
                             name="tgl_mulai"
                             type="text"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
@@ -252,7 +278,7 @@
                         </div>
                         <input
                             readonly="readonly"
-                            id="datepicker-range-end"
+                            {{-- id="datepicker-range-end" --}}
                             name="tgl_selesai"
                             type="text"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "

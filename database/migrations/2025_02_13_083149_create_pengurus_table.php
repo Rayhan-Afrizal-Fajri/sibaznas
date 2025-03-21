@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('jabatan_id');
             $table->foreign('jabatan_id')->references('jabatan_id')->on('jabatan');
             $table->string('sk_nomor');
-            $table->string('sk_url');
+            $table->string('sk_url')->nullable();
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');
             $table->enum('status', [""]); //kosongi

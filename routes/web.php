@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
     });
     // Route::get('/get-sub-program/{program_id}', [ProgramController::class, 'getSubProgram']);
 
+    
+
     Route::resource('/divisi', DivisiController::class)->names('divisi');
     Route::resource('/jabatan', JabatanController::class)->names('jabatan');
     Route::resource('/pengurus', PengurusController::class)->names('pengurus');
