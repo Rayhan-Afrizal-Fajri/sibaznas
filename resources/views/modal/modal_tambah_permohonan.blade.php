@@ -23,7 +23,7 @@
                             <select name="permohonan_jenis" x-model="jenis" @change="updateNomorPermohonan"
                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
                                 <option value="">Pilih jenis permohonan</option>
-                                <option value="Individu">Individu</option>
+                                <option value="BAZNAS">BAZNAS</option>
                                 <option value="UPZ">UPZ</option>
                             </select>
                         </div>
@@ -35,8 +35,8 @@
                         </div>
                     </div>
                 
-                    <!-- Form untuk Individu -->
-                    <div x-show="jenis === 'Individu'">
+                    <!-- Form untuk BAZNAS -->
+                    <div x-show="jenis === 'BAZNAS'">
                         <div class="grid gap-4 mb-4 md:grid-cols-2">
                             <div>
                                 <label class="block mb-1 text-sm font-bold text-black">Nama Pemohon</label>

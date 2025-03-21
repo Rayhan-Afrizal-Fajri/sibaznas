@@ -23,9 +23,9 @@
                         <select name="permohonan_jenis_edit" id="jenis_permohonan"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
                             <option value="">Pilih jenis permohonan</option>
-                            <option value="Individu"
-                                {{ old('permohonan_jenis_edit', $detail_permohonan->permohonan_jenis) == 'Individu' ? 'selected' : '' }}>
-                                Individu</option>
+                            <option value="BAZNAS"
+                                {{ old('permohonan_jenis_edit', $detail_permohonan->permohonan_jenis) == 'BAZNAS' ? 'selected' : '' }}>
+                                BAZNAS</option>
                             <option value="UPZ"
                                 {{ old('permohonan_jenis_edit', $detail_permohonan->jenipermohonan_jenis) == 'UPZ' ? 'selected' : '' }}>
                                 UPZ
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div id="individuFields" style="display: none;">
+                <div id="BAZNASFields" style="display: none;">
                     <div class="grid gap-4 mb-4 md:grid-cols-2">
                         <div>
                             <label class="block mb-1 text-sm font-bold text-black">Nama Pemohon</label>
@@ -237,12 +237,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let selectJenis = document.getElementById("jenis_permohonan");
-        let individuFields = document.getElementById("individuFields");
+        let BAZNASFields = document.getElementById("BAZNASFields");
         let upzFields = document.getElementById("upzFields");
 
         function toggleFields() {
             let value = selectJenis.value;
-            individuFields.style.display = value === "Individu" ? "block" : "none";
+            BAZNASFields.style.display = value === "BAZNAS" ? "block" : "none";
             upzFields.style.display = value === "UPZ" ? "block" : "none";
         }
 

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\DaftarMustahik;
 use App\Models\Lampiran;
 use App\Models\Mustahik;
+use App\Models\Pengurus;
 use App\Models\Permohonan;
 use App\Models\Surat;
 use App\Models\Upz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -16,6 +18,7 @@ class DetailPermohonanController extends Controller
 {
     public function index($permohonan_id)
     {
+        // dd(session('activeTab'));
         $detail_permohonan = Permohonan::leftJoin('upz', 'upz.upz_id', '=', 'permohonan.upz_id')
         ->join('surat', 'surat.surat_id', '=', 'permohonan.surat_id')
         ->where('permohonan.permohonan_id', $permohonan_id)
@@ -29,16 +32,37 @@ class DetailPermohonanController extends Controller
         ->get();
 
         $lampiran = Lampiran::where('permohonan_id', $permohonan_id)
+        ->where('jenis', 'Permohonan')
+        ->select('lampiran.*')
+        ->get();
+
+        $lampiran_survey = Lampiran::where('permohonan_id', $permohonan_id)
+        ->where('jenis', 'Survey')
+        ->select('lampiran.*')
+        ->get();
+
+        $lampiran_pencairan = Lampiran::where('permohonan_id', $permohonan_id)
+        ->where('jenis', 'Pencairan')
         ->select('lampiran.*')
         ->get();
 
         // dd($detail_permohonan);
+        $petugas_survey = Pengurus::join('jabatan', 'jabatan.jabatan_id', '=', 'pengurus.jabatan_id')
+        ->join('divisi', 'divisi.divisi_id', '=', 'jabatan.divisi_id')
+        ->join('pengguna', 'pengguna.pengurus_id', '=', 'pengurus.pengurus_id')
+        ->where('divisi.divisi_id', '041a203d-80bb-45ef-acc8-0c0edeafd747') // Pastikan where menggunakan divisi.divisi_id
+        ->select('pengguna.pengurus_id', 'pengguna.nama')
+        ->get();
+
 
 
         return view('permohonan.show', ['permohonan_id' => $permohonan_id,
         'detail_permohonan' => $detail_permohonan,
         'daftar_mustahik' => $daftar_mustahik,
-        'lampiran' => $lampiran]);
+        'lampiran' => $lampiran,
+        'petugas_survey' => $petugas_survey,
+        'lampiran_survey' => $lampiran_survey,
+        'lampiran_pencairan' => $lampiran_pencairan,]);
     }
 
     public function destroy($id)
@@ -90,6 +114,38 @@ class DetailPermohonanController extends Controller
         
     }
 
+    public function destroy_lampiran_pencairan($id)
+    {
+        try {
+            $lampiran = Lampiran::findOrFail($id);
+            $lampiran->delete();
+
+            session()->flash('success', 'Data berhasil dihapus!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Data gagal dihapus!');
+            return redirect()->back();
+        }
+
+        
+    }
+
+    public function destroy_lampiran_survey($id)
+    {
+        try {
+            $lampiran = Lampiran::findOrFail($id);
+            $lampiran->delete();
+
+            session()->flash('success', 'Data berhasil dihapus!');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Data gagal dihapus!');
+            return redirect()->back();
+        }
+
+        
+    }
+
     public function update(Request $request, $id)
     {
         $permohonan = Permohonan::findOrFail($id);
@@ -102,7 +158,7 @@ class DetailPermohonanController extends Controller
         $permohonan->permohonan_bentuk_bantuan = $request->permohonan_bentuk_bantuan_edit;
         $permohonan->permohonan_catatan_input = $request->permohonan_catatan_input_edit;
 
-        if ($request->permohonan_jenis_edit == 'Individu') {
+        if ($request->permohonan_jenis_edit == 'BAZNAS') {
             $permohonan->permohonan_nama_pemohon = $request->permohonan_nama_pemohon_edit;
             $permohonan->permohonan_nohp_pemohon = $request->permohonan_nohp_pemohon_edit;
             $permohonan->permohonan_alamat_pemohon = $request->permohonan_alamat_pemohon_edit;
@@ -242,12 +298,51 @@ class DetailPermohonanController extends Controller
         Lampiran::create([
             'lampiran_id' => Str::uuid(),
             'permohonan_id' => $id,
+            'keterangan' => $request->keterangan,
             'url' => $file_lampiran,
             'jenis' => 'Permohonan'
         ]);
 
         session()->flash('success', 'Lampiran berhasil ditambahkan!');
         return redirect()->back();
+    }
+
+    public function tambah_lampiran_survey(Request $request, $id)
+    {
+        $ext = $request->file('url')->extension();
+        $file_lampiran = Str::uuid()->toString() . '.' . $ext;
+        $request->file('url')->move(public_path('lampiran_survey'), $file_lampiran);
+
+        Lampiran::create([
+            'lampiran_id' => Str::uuid(),
+            'permohonan_id' => $id,
+            'url' => $file_lampiran,
+            'jenis' => 'Survey',
+            'keterangan' => $request->keterangan,
+        ]);
+
+        session()->flash('success', 'Lampiran berhasil ditambahkan!');
+        return redirect()->route('permohonan.detail', $id)
+        ->with('activeTab', $request->tab);
+    }
+
+    public function tambah_lampiran_pencairan(Request $request, $id)
+    {
+        $ext = $request->file('url')->extension();
+        $file_lampiran = Str::uuid()->toString() . '.' . $ext;
+        $request->file('url')->move(public_path('lampiran_pencairan'), $file_lampiran);
+
+        Lampiran::create([
+            'lampiran_id' => Str::uuid(),
+            'permohonan_id' => $id,
+            'url' => $file_lampiran,
+            'jenis' => 'Pencairan',
+            'keterangan' => $request->keterangan,
+        ]);
+
+        session()->flash('success', 'Lampiran berhasil ditambahkan!');
+        return redirect()->route('permohonan.detail', $id)
+        ->with('activeTab', $request->tab);
     }
 
     public function update_lampiran(Request $request, $id)
@@ -265,6 +360,144 @@ class DetailPermohonanController extends Controller
 
         session()->flash('success', 'Lampiran berhasil diubah!');
         return redirect()->back();
+    }
+
+    public function update_lampiran_survey(Request $request, $id)
+    {
+        $lampiran = Lampiran::findOrFail($id);
+        $lampiran->keterangan = $request->keterangan_edit;
+        if ($request->hasFile('url_edit')) {
+            // Simpan file baru
+            $file = $request->file('url_edit');
+            $filePath = $file->store('lampiran_survey', 'public');
+            $lampiran->url = $filePath;
+        }
+
+        $lampiran->save();
+
+        session()->flash('success', 'Lampiran berhasil diubah!');
+        return redirect()->route('permohonan.detail', $request->permohonan_id)
+        ->with('activeTab', $request->tab);
+    }
+
+    public function update_lampiran_pencairan(Request $request, $id)
+    {
+        $lampiran = Lampiran::findOrFail($id);
+        $lampiran->keterangan = $request->keterangan_edit;
+        if ($request->hasFile('url_edit')) {
+            // Simpan file baru
+            $file = $request->file('url_edit');
+            $filePath = $file->store('lampiran_pencairan', 'public');
+            $lampiran->url = $filePath;
+        }
+
+        $lampiran->save();
+
+        session()->flash('success', 'Lampiran berhasil diubah!');
+        return redirect()->route('permohonan.detail', $request->permohonan_id)
+        ->with('activeTab', $request->tab);
+    }
+
+    public function acc(Request $request)
+    {
+        // dd($request->tab);
+        $permohonan = Permohonan::find($request->permohonan_id);
+        $permohonan->update([
+        'permohonan_timestamp_atasan' => $request->permohonan_timestamp_atasan,
+        'survey_pilihan' => $request->survey_pilihan,
+        'permohonan_catatan_atasan' => $request->permohonan_catatan_atasan,
+        'permohonan_status_atasan' => 'Diterima',
+        'permohonan_petugas_atasan' => Auth::user()->pengurus_id,
+        'survey_petugas_survey' => $request->survey_petugas_survey ?? null,
+    ]);
+    
+    session()->flash('success', 'Pengajuan berhasil di ACC!');
+    return redirect()->route('permohonan.detail', $request->permohonan_id)
+    ->with('activeTab', $request->tab);
+
+
+    }
+
+    public function pencairan(Request $request)
+    {
+        // dd($request->tab);
+        $permohonan = Permohonan::find($request->permohonan_id);
+        $permohonan->update([
+        'pencairan_timestamp' => $request->pencairan_timestamp,
+        'pencairan_nominal' => $request->pencairan_nominal,
+        'pencairan_catatan' => $request->pencairan_catatan,
+        'pencairan_status' => 'Berhasil Dicairkan',
+        'pencairan_petugas_keuangan' => Auth::user()->pengurus_id,
+    ]);
+    
+    session()->flash('success', 'Pencairan berhasil dicairkan!');
+    return redirect()->route('permohonan.detail', $request->permohonan_id)
+    ->with('activeTab', $request->tab);
+
+
+    }
+
+    public function tolak_pencairan(Request $request)
+    {
+        // dd($request->tab);
+        $permohonan = Permohonan::find($request->permohonan_id);
+        $permohonan->update([
+        'pencairan_timestamp' => $request->pencairan_timestamp,
+        'pencairan_nominal' => null,
+        'pencairan_catatan' => $request->pencairan_catatan,
+        'pencairan_status' => 'Ditolak',
+        'pencairan_petugas_keuangan' => Auth::user()->pengurus_id,
+    ]);
+    
+    session()->flash('success', 'Pencairan berhasil ditolak!');
+    return redirect()->route('permohonan.detail', $request->permohonan_id)
+    ->with('activeTab', $request->tab);
+
+
+    }
+
+    public function tolak(Request $request)
+    {
+        // dd($request->tab);
+
+        $permohonan = Permohonan::find($request->permohonan_id);
+        $permohonan->update([
+        'permohonan_timestamp_atasan' => $request->permohonan_timestamp_atasan,
+        'survey_pilihan' => null,
+        'permohonan_catatan_atasan' => $request->permohonan_catatan_atasan,
+        'permohonan_status_atasan' => 'Ditolak',
+        'permohonan_petugas_atasan' => Auth::user()->pengurus_id,
+        'survey_petugas_survey' => null,
+    ]);
+    
+    session()->flash('success', 'Pengajuan berhasil di ACC!');
+    return redirect()->route('permohonan.detail', $request->permohonan_id)
+    ->with('activeTab', $request->tab);
+
+
+    }
+
+    public function survey(Request $request)
+    {
+        // dd($request->survey_form_url);
+        $ext = $request->file('survey_form_url')->extension();
+        $file_scan_name = Str::uuid()->toString() . '.' . $ext;
+        $request->file('survey_form_url')->move(public_path('survey'), $file_scan_name);
+
+        $permohonan = Permohonan::find($request->permohonan_id);
+        $permohonan->update([
+        'survey_tgl' => $request->survey_tgl,
+        'survey_hasil' => $request->survey_hasil,
+        'survey_form_url' => $file_scan_name,
+        'survey_status' => 'Selesai',
+        'survey_petugas_survey' => Auth::user()->pengurus_id,
+    ]);
+    
+    session()->flash('success', 'Survey telah selesai!');
+    return redirect()->route('permohonan.detail', $request->permohonan_id)
+    ->with('activeTab', $request->tab);
+
+
     }
 
 }

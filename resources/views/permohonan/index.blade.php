@@ -407,7 +407,7 @@
                                                 $ket_pencairan = 'Blm Dicairkan';
                                             }
 
-                                            if ($a->permohonan_jenis == 'Individu') {
+                                            if ($a->permohonan_jenis == 'BAZNAS') {
                                                 $bg_jenis = 'bg-[#00593b]';
                                                 $nama = $a->permohonan_nama_pemohon;
                                             } else {
@@ -547,7 +547,7 @@
                                                 <p class="bg-[#00593b] text-white px-1 py-0.5 mb-1 rounded-sm w-fit">
                                                     Pengajuan
                                                     Selesai diinput FO</p>
-                                                <p class="text-[5px] sm:text-[9px]">13/E-DISDAY/INDIVIDU/II/2025</p>
+                                                <p class="text-[5px] sm:text-[9px]">13/E-DISDAY/BAZNAS/II/2025</p>
                                                 <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0 mb-1">
                                                     <p>Nominal Diajukan</p>
                                                     <p class="font-bold">Rp. 500.000</p>
@@ -563,7 +563,7 @@
                                                 <div class="flex flex-col sm:flex-row justify-between mb-1 sm:mb-0">
                                                     <div class="flex flex-row gap-1">
                                                         <p>Pemohon</p>
-                                                        <p class="bg-[#00593b] px-0.5 text-white rounded-sm">Individu</p>
+                                                        <p class="bg-[#00593b] px-0.5 text-white rounded-sm">BAZNAS</p>
                                                     </div>
                                                     <p class="font-bold">Faiz Abdul Ghoni</p>
                                                 </div>

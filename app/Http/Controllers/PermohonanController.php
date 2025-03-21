@@ -7,6 +7,7 @@ use App\Models\SubProgram;
 use App\Models\Surat;
 use App\Models\Upz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
@@ -193,13 +194,13 @@ class PermohonanController extends Controller
             'permohonan_bentuk_bantuan' => $request->permohonan_bentuk_bantuan,
             'permohonan_catatan_input' => $request->permohonan_catatan_input,
             'permohonan_status_input' => 'Belum Selesai Input',
-            'permohonan_petugas_input' => 'abcd1234',
+            'permohonan_petugas_input' => Auth::user()->pengurus_id,
             'permohonan_tgl' => date('Y-m-d'),
             'permohonan_timestamp_input' => date('Y-m-d H:i:s'),
         ]);
 
         // Tentukan pemohon berdasarkan jenis permohonan
-        if ($request->permohonan_jenis == "Individu") {
+        if ($request->permohonan_jenis == "BAZNAS") {
             $pemohon = $request->permohonan_nama_pemohon;
             $nohp = $request->permohonan_nohp_pemohon;
         } elseif ($request->permohonan_jenis == "UPZ") {
@@ -208,7 +209,7 @@ class PermohonanController extends Controller
         }
 
         // Redirect ke halaman detail permohonan
-        return redirect('/detail-permohonan/' . $permohonan->permohonan_id)
+        return redirect()->route('permohonan.detail', $permohonan->permohonan_id)
             ->with('success', 'Permohonan berhasil ditambahkan!');
     }
 

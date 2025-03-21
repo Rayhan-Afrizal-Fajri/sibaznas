@@ -1,5 +1,5 @@
 <!-- Modal tambah permohonan -->
-<form action="{{ route('permohonan.tambah-mustahik') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('permohonan.tambah-mustahik', $detail_permohonan->permohonan_id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div id="modal-tambahMustahik-{{ $detail_permohonan->permohonan_id }}"
         class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
