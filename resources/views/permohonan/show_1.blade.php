@@ -3,6 +3,58 @@
     route('permohonan.index')) @section('sub_folder', 'Detail Permohonan')
     @section('content')
 
+    @php
+        $permohonan_status_input = "Selesai Input";
+        $permohonan_status_atasan = "Ditolak";
+        $survey_status = "Selesai";
+        $pencairan_status = "Berhasil Dicairkan";
+        $iconAcc = '<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="size-4 text-[#00593b]">
+                    <path
+                        fill-rule="evenodd"
+                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                        clip-rule="evenodd"/>
+                </svg>';
+        $iconPending = '<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="size-4 text-yellow-400">
+                    <path
+                        fill-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                        clip-rule="evenodd"/>
+                </svg>';
+                $iconRejected = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-red-600">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+                                </svg>
+                            ';
+
+        if($permohonan_status_input == "Selesai Input"){
+           $iconPermohonan = $iconAcc;
+        } else {
+            $iconPermohonan = $iconPending;
+        }
+        if ($permohonan_status_atasan == "Diterima"){
+            $iconAtasan = $iconAcc;
+        } else {
+            $iconAtasan = $iconRejected;
+        }
+        if ($survey_status == "Selesai"){
+            $iconSurvey = $iconAcc;
+        } else {
+            $iconSurvey = $iconPending;
+        }
+        if ($pencairan_status == "Berhasil Dicairkan"){
+            $iconPencairan = $iconAcc;
+        } else {
+            $iconPencairan = $iconPending;
+        }
+    @endphp
+
     <div>
         {{-- The whole world belongs to you. --}}
         <nav
@@ -19,16 +71,7 @@
                 aria-controls="permohonan"
                 role="tab">
                 1. Data Permohonan
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="size-4 text-[#00593b]">
-                    <path
-                        fill-rule="evenodd"
-                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                        clip-rule="evenodd"/>
-                </svg>
+                {!!$iconPermohonan!!}
             </button>
             <button
                 type="button"
@@ -39,16 +82,7 @@
                 aria-controls="persetujuan-atasan"
                 role="tab">
                 2. Persetujuan Atasan
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="size-4 text-[#00593b]">
-                    <path
-                        fill-rule="evenodd"
-                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                        clip-rule="evenodd"/>
-                </svg>
+                {!!$iconAtasan!!}
             </button>
             <button
                 type="button"
@@ -59,16 +93,7 @@
                 aria-controls="survey"
                 role="tab">
                 3. Survey
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="size-4 text-yellow-400">
-                    <path
-                        fill-rule="evenodd"
-                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                        clip-rule="evenodd"/>
-                </svg>
+                {!!$iconSurvey!!}
             </button>
             <button
                 type="button"
@@ -79,6 +104,7 @@
                 aria-controls="pencairan-keuangan"
                 role="tab">
                 4. Pencairan Keuangan
+                {!!$iconPencairan!!}
             </button>
             <button
                 type="button"

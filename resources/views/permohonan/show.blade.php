@@ -5,54 +5,78 @@
         {{-- The whole world belongs to you. --}}
         @if ($detail_permohonan)
             @php
+            $iconAcc = '<svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="size-4 text-[#00593b]">
+                            <path
+                                fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                clip-rule="evenodd"/>
+                            </svg>
+                        ';
+            $iconPending = '<svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="size-4 text-yellow-400">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                                    clip-rule="evenodd"/>
+                                </svg>
+                            ';
+            $iconRejected = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 text-red-600">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+                                </svg>
+                            ';
 
-                if ($detail_permohonan->permohonan_status_input == 'Selesai Input') {
-                    $bg_fo = 'bg-[#00593b]';
-                    $ket = 'Pengajuan Selesai diinput FO';
-                    $text = 'text-[#00593b]';
-                } else {
-                    $bg_fo = 'bg-yellow-400';
-                    $ket = 'Pengajuan Blm Selesai diinput FO';
-                    $text = 'text-yellow-400';
-                }
-
-                if ($detail_permohonan->permohonan_status_atasan == 'Diterima') {
-                    $bg_atasan = 'bg-[#00593b]';
-                    $ket_atasan = 'Sudah Disetujui Atasan';
-                    $text = 'text-[#00593b]';
-                } elseif ($detail_permohonan->permohonan_status_atasan == 'Ditolak') {
-                    $bg_atasan = 'bg-[#dc2626]';
-                    $ket_atasan = 'Ditolak Atasan';
-                    $text = 'text-[#00593b]';
-                } else {
-                    $bg_atasan = 'bg-yellow-400';
-                    $ket_atasan = 'Blm Direspon Atasan';
-                    $text = 'text-yellow-400';
-                }
-
-                if ($detail_permohonan->survey_status == 'Selesai') {
-                    $bg_survey = 'bg-[#00593b]';
-                    $ket_survey = 'Sudah Survey';
-                    $text = 'text-[#00593b]';
-                } else {
-                    $bg_survey = 'bg-yellow-400';
-                    $ket_survey = 'Blm Survey';
-                    $text = 'text-yellow-400';
-                }
-
-                if ($detail_permohonan->pencairan_status == 'Berhasil Dicairkan') {
-                    $bg_pencairan = 'bg-[#00593b]';
-                    $ket_pencairan = 'Sudah Dicairkan';
-                    $text = 'text-[#00593b]';
-                } elseif ($detail_permohonan->pencairan_status == 'Ditolak') {
-            $bg_pencairan = 'bg-[#dc2626]';
-            $ket_pencairan = 'Pencairan Ditolak';
-        } 
-                else {
-                    $bg_pencairan = 'bg-yellow-400';
-                    $ket_pencairan = 'Blm Dicairkan';
-                    $text = 'text-yellow-400';
-                }
+            if ($detail_permohonan->permohonan_status_input == 'Selesai Input') {
+                $bg_fo = 'bg-[#00593b]';
+                $ket = 'Pengajuan Selesai diinput FO';
+                $iconPermohonan = $iconAcc;
+            } else {
+                $bg_fo = 'bg-yellow-400';
+                $ket = 'Pengajuan Blm Selesai diinput FO';
+                $iconPermohonan = $iconPending;
+            }
+            if ($detail_permohonan->permohonan_status_atasan == 'Diterima') {
+                $bg_atasan = 'bg-[#00593b]';
+                $ket_atasan = 'Sudah Disetujui Atasan';
+                $iconAtasan = $iconAcc;
+            } else if ($detail_permohonan->permohonan_status_atasan == 'Ditolak') {
+                $bg_atasan = 'bg-[#dc2626]';
+                $ket_atasan = 'Ditolak Atasan';
+                $iconAtasan = $iconRejected;
+            } else {
+                $bg_atasan = 'bg-yellow-400';
+                $ket_atasan = 'Blm Direspon Atasan';
+                $iconAtasan = $iconPending;
+            }
+            if ($detail_permohonan->survey_status == 'Selesai') {
+                $bg_survey = 'bg-[#00593b]';
+                $ket_survey = 'Sudah Survey';
+                $iconSurvey = $iconAcc;
+            } else {
+                $bg_survey = 'bg-yellow-400';
+                $ket_survey = 'Blm Survey';
+                $iconSurvey = $iconPending;
+            }
+            if ($detail_permohonan->pencairan_status == 'Berhasil Dicairkan') {
+                $bg_pencairan = 'bg-[#00593b]';
+                $ket_pencairan = 'Sudah Dicairkan';
+                $iconPencairan = $iconAcc;
+            } else if ($detail_permohonan->pencairan_status == 'Ditolak') {
+                $bg_pencairan = 'bg-[#dc2626]';
+                $ket_pencairan = 'Pencairan Ditolak';
+                $iconPencairan = $iconRejected;
+            } 
+            else {
+                $bg_pencairan = 'bg-yellow-400';
+                $ket_pencairan = 'Blm Dicairkan';
+                $iconPencairan = $iconPending;
+            }
 
             @endphp
 
@@ -65,47 +89,27 @@
                     id="permohonan-item" aria-selected="true" data-hs-tab="#permohonan" aria-controls="permohonan"
                     role="tab">
                     1. Data Permohonan
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="size-4 {{ $text }}">
-                        <path fill-rule="evenodd"
-                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                            clip-rule="evenodd" />
-                    </svg>
+                    {!! $iconPermohonan !!}
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold rounded-t-md border-b border-gray-200 hs-tab-active:border-gray-200 hs-tab-active:border-t hs-tab-active:border-l hs-tab-active:border-r hs-tab-active:border-[#00593b] hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 py-2 px-1 inline-flex items-center gap-x-2 text-xs whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="persetujuan-atasan-item" aria-selected="false" data-hs-tab="#persetujuan-atasan"
                     aria-controls="persetujuan-atasan" role="tab">
                     2. Persetujuan Atasan
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="size-4 {{ $text }}">
-                        <path fill-rule="evenodd"
-                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                            clip-rule="evenodd" />
-                    </svg>
+                    {!! $iconAtasan !!}
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold rounded-t-md border-b border-gray-200 hs-tab-active:border-gray-200 hs-tab-active:border-t hs-tab-active:border-l hs-tab-active:border-r hs-tab-active:border-[#00593b] hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 py-2 px-1 inline-flex items-center gap-x-2 text-xs whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="survey-item" aria-selected="false" data-hs-tab="#survey" aria-controls="survey" role="tab">
                     3. Survey
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="size-4 {{ $text }}">
-                        <path fill-rule="evenodd"
-                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                            clip-rule="evenodd" />
-                    </svg>
+                    {!! $iconSurvey !!}
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold rounded-t-md border-b border-gray-200 hs-tab-active:border-gray-200 hs-tab-active:border-t hs-tab-active:border-l hs-tab-active:border-r hs-tab-active:border-[#00593b] hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 py-2 px-1 inline-flex items-center gap-x-2 text-xs whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="pencairan-keuangan-item" aria-selected="false" data-hs-tab="#pencairan-keuangan"
                     aria-controls="pencairan-keuangan" role="tab">
                     4. Pencairan Keuangan
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                    class="size-4 {{ $text }}">
-                    <path fill-rule="evenodd"
-                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                        clip-rule="evenodd" />
-                </svg>
+                    {!! $iconPencairan !!}
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold rounded-t-md border-b border-gray-200 hs-tab-active:border-gray-200 hs-tab-active:border-t hs-tab-active:border-l hs-tab-active:border-r hs-tab-active:border-[#00593b] hs-tab-active:border-b-transparent hs-tab-active:text-blue-600 py-2 px-1 inline-flex items-center gap-x-2 text-xs whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"

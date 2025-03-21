@@ -62,6 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-sub-programs', [ProgramController::class, 'getSubPrograms'])->name('get.sub_programs');
     Route::get('/get-subprograms/{programId}', [PermohonanController::class, 'getSubPrograms']);
     Route::get('/get-permohonan-nomor', [PermohonanController::class, 'getNomorPermohonan']);
+    
+    Route::get('/show-1', function() {
+        return view('permohonan.show_1');
+    });
 
     Route::resource('/program', ProgramController::class)->names('program');
     Route::resource('/sub_program', SubProgramController::class)->names('sub_program');
