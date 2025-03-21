@@ -1,8 +1,30 @@
+@if (session('success'))
+    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
+        class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+        class="fixed top-5 right-5 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        {{ session('error') }}
+    </div>
+@endif
+
+
 <div class="flex flex-col gap-4">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between">
         <p class="text-xs font-bold">A. Detail Permohonan</p>
         <div class="flex items-center gap-1 mt-1z sm:mt-0">
-            <button wire:click="modal_hapus_permohonan('{{ $detail_permohonan->permohonan_id }}')" id="openModal-hapusPermohonan"
+            <button onclick="hapusPermohonan('{{ $detail_permohonan->permohonan_id }}')"
                 class="flex items-center gap-1 text-[9px] sm:text-xs p-[2px] rounded-md font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="size-3">
@@ -11,7 +33,8 @@
                 </svg>
                 Hapus
             </button>
-            <button wire:click="modal_ubah_permohonan('{{ $detail_permohonan->permohonan_id }}')" id="openModal-ubahPermohonan" class="flex items-center gap-1 text-[9px] sm:text-xs p-[2px] rounded-md font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white">
+            <button id="openModal-ubahPermohonan-{{ $detail_permohonan->permohonan_id }}"
+                class="flex items-center gap-1 text-[9px] sm:text-xs p-[2px] rounded-md font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="size-3">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -34,12 +57,23 @@
                 <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
                     role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-hover-event">
                     <div class="p-1 space-y-0.5">
-                        <a wire:click="permohonan_selesai('{{ $detail_permohonan->permohonan_id }}')" type="button" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
-                            Selesai
-                        </a>
-                        <a wire:click="permohonan_batal('{{ $detail_permohonan->permohonan_id }}')" type="button" class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
-                            Belum Selesai
-                        </a>
+                        <form action="{{ route('permohonan.selesai', $detail_permohonan->permohonan_id) }}"
+                            method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit"
+                                class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                Selesai
+                            </button>
+                        </form>
+
+                        <form action="{{ route('permohonan.batal', $detail_permohonan->permohonan_id) }}" method="POST"
+                            style="display:inline;">
+                            @csrf
+                            <button type="submit"
+                                class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                Belum Selesai
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -56,7 +90,8 @@
                     <tr>
                         <td class="px-2 py-3 border font-bold">Tanggal Permohonan</td>
                         <td class="px-2 py-3 border font-medium">
-                            {{ Carbon\Carbon::parse($detail_permohonan->permohonan_tgl)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</td>
+                            {{ Carbon\Carbon::parse($detail_permohonan->permohonan_tgl)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
+                        </td>
                     </tr>
                     @php
                         if ($detail_permohonan->permohonan_jenis == 'Individu') {
@@ -66,24 +101,27 @@
                             $alamat = $detail_permohonan->permohonan_alamat_pemohon;
                         } else {
                             $bg_jenis = 'bg-[#3B82F6]';
-                            $nama = $this->nama_upz($detail_permohonan->permohonan_upz_id);
-                            $nohp = $this->nohp($detail_permohonan->permohonan_upz_id);
+                            $nama = \App\Models\Permohonan::getNamaUPZ($detail_permohonan->permohonan_upz_id);
+                            $nohp = \App\Models\Permohonan::getNoHP($detail_permohonan->permohonan_upz_id);
+                            $alamat = \App\Models\Permohonan::getAlamat($detail_permohonan->permohonan_upz_id);
                         }
                     @endphp
                     <tr>
                         <td class="px-2 py-3 border font-bold">Data Pemohon</td>
                         <td class="px-2 py-3 border font-medium">
                             <div>
-                                <span class="text-white px-1 py-[1px] {{ $bg_jenis }} rounded-[3px]">{{ $detail_permohonan->permohonan_jenis }}</span>
+                                <span
+                                    class="text-white px-1 py-[1px] {{ $bg_jenis }} rounded-[3px]">{{ $detail_permohonan->permohonan_jenis }}</span>
                                 <p class="font-bold mt-1">{{ $nama }}</p>
                                 <p class="font-medium mt-1">{{ $nohp }}</p>
-                                <p class="font-medium mt-1">{{ $alamat}}</p>
+                                <p class="font-medium mt-1">{{ $alamat }}</p>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Nominal</td>
-                        <td class="px-2 py-3 border font-medium">Rp{{ number_format($detail_permohonan->permohonan_nominal), 0, '.', '.' }}</td>
+                        <td class="px-2 py-3 border font-medium">
+                            Rp{{ number_format((float) $detail_permohonan->permohonan_nominal, 0, '.', '.') }}</td>
                     </tr>
                     @php
                         if ($detail_permohonan->permohonan_bentuk_bantuan == 'Uang Tunai') {
@@ -92,27 +130,32 @@
                             $bg_bentuk = 'bg-[#3B82F6]';
                         }
                     @endphp
-                                                                                                                                          
+
                     <tr>
                         <td class="px-2 py-3 border font-bold">Bentuk</td>
                         <td class="px-2 py-3 border font-medium">
-                            <span class="text-white px-1 py-[1px] {{ $bg_bentuk }} rounded-[3px]">{{ $detail_permohonan->permohonan_bentuk_bantuan }}</span>
+                            <span
+                                class="text-white px-1 py-[1px] {{ $bg_bentuk }} rounded-[3px]">{{ $detail_permohonan->permohonan_bentuk_bantuan }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Asnaf</td>
-                        <td class="px-2 py-3 border font-medium">{{ $this->asnaf($detail_permohonan->asnaf_id) }}</td>
+                        <td class="px-2 py-3 border font-medium">
+                            {{ \App\Models\Permohonan::getAsnaf($detail_permohonan->asnaf_id) }}</td>
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Program & Sub Program</td>
                         <td class="px-2 py-3 border font-medium">
-                            <p class="font-bold">{{ $this->program($detail_permohonan->program_id) }}</p>
-                            <p class="font-medium">{{ $this->sub_program($detail_permohonan->program_id) }}</p>
+                            <p class="font-bold">
+                                {{ \App\Models\Permohonan::getProgram($detail_permohonan->program_id) }}</p>
+                            <p class="font-medium">
+                                {{ \App\Models\Permohonan::getSubProgram($detail_permohonan->program_id) }}</p>
                         </td>
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Keterangan</td>
-                        <td class="px-2 py-3 border font-medium">{{ $detail_permohonan->permohonan_catatan_input }}</td>
+                        <td class="px-2 py-3 border font-medium">{{ $detail_permohonan->permohonan_catatan_input }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -133,11 +176,14 @@
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Tanggal Surat</td>
-                        <td class="px-2 py-3 border font-medium">{{ Carbon\Carbon::parse($detail_permohonan->surat_tgl)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</td>
+                        <td class="px-2 py-3 border font-medium">
+                            {{ Carbon\Carbon::parse($detail_permohonan->surat_tgl)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="px-2 py-3 border font-bold">Tanggal Input</td>
-                        <td class="px-2 py-3 border font-medium">{{ Carbon\Carbon::parse($detail_permohonan->permohonan_timestamp_input)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</i>
+                        <td class="px-2 py-3 border font-medium">
+                            {{ Carbon\Carbon::parse($detail_permohonan->permohonan_timestamp_input)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</i>
                         </td>
                     </tr>
                 </tbody>
@@ -146,7 +192,7 @@
     </div>
     <div class="flex sm:items-center justify-between">
         <p class="text-xs font-bold">B. Daftar Mustahik</p>
-        <button wire:click="modal_tambah_mustahik('{{ $detail_permohonan->permohonan_id }}')" id="openModal-tambahMustahik"
+        <button id="openModal-tambahMustahik-{{ $detail_permohonan->permohonan_id }}"
             class="flex items-center gap-1 text-[9px] sm:text-xs font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white p-[2px] rounded-[4px] sm:rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="size-3">
@@ -173,59 +219,71 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b text-xs">
-                            <td class="px-2 text-left py-4 border">1</td>
-                            <td class="px-2 text-left border">Suryadi</td>
-                            <td class="px-2 text-left border">
-                                NIK : 330122050699001 <br>
-                                KK : 3301222402240004
-                            </td>
-                            <td class="px-2 text-left border">Cilacap, 2 Februari 2001</td>
-                            <td class="px-2 text-left border">Jalan Merbabu No 234 Cilacap</td>
-                            <td class="px-2 text-left border">
-                                No hp : 081548751463 <br>
-                                E-mail : suryadi@gmail.com
-                            </td>
-                            <td class="px-2 text-left border">Miskin</td>
-                            <td class="px-2 text-center border">
-                                <div class="hs-dropdown relative inline-flex">
-                                    <button id="hs-dropdown-default" type="button"
-                                        class="hs-dropdown-toggle py-[3px] px-[6px] inline-flex items-center gap-x-1 text-[9px] font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                        aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                        Aksi
-                                        <svg class="hs-dropdown-open:rotate-180 size-3"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
-                                    </button>
+                        @forelse ($daftar_mustahik as $a)
+                            <tr class="bg-white border-b text-xs">
+                                <td class="px-2 text-left py-4 border">{{ $loop->iteration }}</td>
+                                <td class="px-2 text-left border">{{ $a->nama }}</td>
+                                <td class="px-2 text-left border">
+                                    NIK : {{ $a->nik }} <br>
+                                    KK : {{ $a->kk }}
+                                </td>
+                                <td class="px-2 text-left border">{{ $a->tempat_lahir }},
+                                    {{ Carbon\Carbon::parse($a->tgl_lahir)->isoFormat('D MMMM YYYY') }}</td>
+                                <td class="px-2 text-left border">{{ $a->alamat }}</td>
+                                <td class="px-2 text-left border">
+                                    No hp : {{ $a->nohp }} <br>
+                                    E-mail : {{ $a->email }}
+                                </td>
+                                <td class="px-2 text-left border">
+                                    {{ \App\Models\Permohonan::getAsnaf($a->asnaf_id) }}
+                                </td>
+                                <td class="px-2 text-center border">
+                                    <div class="hs-dropdown relative inline-flex">
+                                        <button id="hs-dropdown-default" type="button"
+                                            class="hs-dropdown-toggle py-[3px] px-[6px] inline-flex items-center gap-x-1 text-[9px] font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                            Aksi
+                                            <svg class="hs-dropdown-open:rotate-180 size-3"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m6 9 6 6 6-6" />
+                                            </svg>
+                                        </button>
 
-                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                                        role="menu" aria-orientation="vertical"
-                                        aria-labelledby="hs-dropdown-default">
-                                        <div class="p-1 space-y-0.5">
-                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#">
-                                                Edit
-                                            </a>
-                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#">
-                                                Hapus
-                                            </a>
+                                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                                            role="menu" aria-orientation="vertical"
+                                            aria-labelledby="hs-dropdown-default">
+                                            <div class="p-1 space-y-0.5">
+                                                <button id="openModal-ubahMustahik-{{ $a->mustahik_id }}"
+                                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                                    Ubah
+                                                </button>
+                                                <button onclick="hapusMustahik('{{ $a->mustahik_id }}')"
+                                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                                    Hapus
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-gray-500 py-4">
+                                    Data tidak ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
     <div class="flex sm:items-center justify-between">
         <p class="text-xs font-bold">C. Lampiran</p>
-        <button wire:click="modal_tambah_lampiran('{{ $detail_permohonan->permohonan_id }}')" id="openModal-tambahLampiran"
+        <button id="openModal-tambahLampiran{{ $detail_permohonan->permohonan_id }}"
             class="flex items-center gap-1 text-[9px] sm:text-xs font-regular border-[1px] border-[#00593b] text-[#00593b] hover:bg-[#00593b] hover:border-transparent hover:text-white p-[2px] rounded-[4px] sm:rounded-md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" class="size-3">
@@ -249,47 +307,58 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b text-xs">
-                            <td class="px-2 text-left py-4 border">1</td>
-                            <td class="px-2 text-left border">SKTM</td>
-                            <td class="px-2 text-left border">
-                                <a href="#" target="_blank"
-                                    class="text-blue-700 hover:text-blue-600">SKTM.pdf</a>
-                            </td>
-                            <td class="px-2 text-left border">Kamis, 15 Februari 2025 <i>(13:53:11)</i></td>
-                            <td class="px-2 text-center border">
-                                <div class="hs-dropdown relative inline-flex">
-                                    <button id="hs-dropdown-default" type="button"
-                                        class="hs-dropdown-toggle py-[3px] px-[6px] inline-flex items-center gap-x-1 text-[9px] font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                        aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                                        Aksi
-                                        <svg class="hs-dropdown-open:rotate-180 size-3"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
-                                    </button>
+                        @forelse ($lampiran as $a)
+                            <tr class="bg-white border-b text-xs">
+                                <td class="px-2 text-left py-4 border">{{ $loop->iteration }}</td>
+                                <td class="px-2 text-left border">{{ $a->keterangan }}</td>
+                                <td class="px-2 text-left border">
+                                    <a href="{{ $a->url }}" target="_blank"
+                                        class="text-blue-700 hover:text-blue-600">{{ $a->url }}</a>
+                                </td>
+                                <td class="px-2 text-left border">
+                                    {{ Carbon\Carbon::parse($a->created_at)->isoFormat('D MMMM YYYY') }}
+                                </td>
+                                <td class="px-2 text-center border">
+                                    <div class="hs-dropdown relative inline-flex">
+                                        <button id="hs-dropdown-default" type="button"
+                                            class="hs-dropdown-toggle py-[3px] px-[6px] inline-flex items-center gap-x-1 text-[9px] font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                            Aksi
+                                            <svg class="hs-dropdown-open:rotate-180 size-3"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m6 9 6 6 6-6" />
+                                            </svg>
+                                        </button>
 
-                                    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                                        role="menu" aria-orientation="vertical"
-                                        aria-labelledby="hs-dropdown-default">
-                                        <div class="p-1 space-y-0.5">
-                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#">
-                                                Edit
-                                            </a>
-                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                                                href="#">
-                                                Hapus
-                                            </a>
+                                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                                            role="menu" aria-orientation="vertical"
+                                            aria-labelledby="hs-dropdown-default">
+                                            <div class="p-1 space-y-0.5">
+                                                <button id="openModal-ubahLampiran-{{ $a->lampiran_id }}"
+                                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                                    Ubah
+                                                </button>
+                                                <button onclick="hapusLampiran('{{ $a->lampiran_id }}')"
+                                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                                                    Hapus
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-gray-500 py-4">
+                                    Data tidak ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
@@ -298,72 +367,191 @@
 @include('modal.modal_ubah_permohonan')
 @include('modal.modal_hapus_permohonan')
 @include('modal.modal_tambah_mustahik')
+@include('modal.modal_ubah_mustahik')
 @include('modal.modal_tambah_lampiran')
+@include('modal.modal_ubah_lampiran')
 
 <script>
-    document.getElementById("openModal-ubahPermohonan").addEventListener("click", function() {
-        document.getElementById("modal-ubahPermohonan").classList.remove("hidden");
+    document.querySelectorAll("[id^='openModal-ubahPermohonan-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("openModal-ubahPermohonan-", "");
+            document.getElementById("modal-ubahPermohonan-" + permohonanId).classList.remove("hidden");
+        });
     });
 
-    document.getElementById("closeModal").addEventListener("click", function() {
-        document.getElementById("modal-ubahPermohonan").classList.add("hidden");
+    document.querySelectorAll("[id^='closeModal-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("closeModal-", "");
+            document.getElementById("modal-ubahPermohonan-" + permohonanId).classList.add("hidden");
+        });
     });
 
     // Tutup modal jika klik di luar modal
-    document.getElementById("modal-ubahPermohonan").addEventListener("click", function(event) {
-        if (event.target === this) {
-            this.classList.add("hidden");
-        }
+    document.querySelectorAll("[id^='modal-ubahPermohonan-']").forEach(modal => {
+        modal.addEventListener("click", function(event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
     });
 </script>
 
 <script>
-    document.getElementById("openModal-hapusPermohonan").addEventListener("click", function() {
-        document.getElementById("modal-hapusPermohonan").classList.remove("hidden");
+    document.querySelectorAll("[id^='openModal-ubahMustahik-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("openModal-ubahMustahik-", "");
+            document.getElementById("modal-ubahMustahik-" + permohonanId).classList.remove("hidden");
+        });
     });
 
-    document.getElementById("closeModal").addEventListener("click", function() {
-        document.getElementById("modal-hapusPermohonan").classList.add("hidden");
+    document.querySelectorAll("[id^='closeModal-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("closeModal-", "");
+            document.getElementById("modal-ubahMustahik-" + permohonanId).classList.add("hidden");
+        });
     });
 
     // Tutup modal jika klik di luar modal
-    document.getElementById("modal-hapusPermohonan").addEventListener("click", function(event) {
-        if (event.target === this) {
-            this.classList.add("hidden");
-        }
+    document.querySelectorAll("[id^='modal-ubahMustahik-']").forEach(modal => {
+        modal.addEventListener("click", function(event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
     });
 </script>
 
 <script>
-    document.getElementById("openModal-tambahMustahik").addEventListener("click", function() {
-        document.getElementById("modal-tambahMustahik").classList.remove("hidden");
+    document.querySelectorAll("[id^='openModal-tambahMustahik-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("openModal-tambahMustahik-", "");
+            document.getElementById("modal-tambahMustahik-" + permohonanId).classList.remove("hidden");
+        });
     });
 
-    document.getElementById("closeModal").addEventListener("click", function() {
-        document.getElementById("modal-tambahMustahik").classList.add("hidden");
+    document.querySelectorAll("[id^='closeModal-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("closeModal-", "");
+            document.getElementById("modal-tambahMustahik-" + permohonanId).classList.add("hidden");
+        });
     });
 
     // Tutup modal jika klik di luar modal
-    document.getElementById("modal-tambahMustahik").addEventListener("click", function(event) {
-        if (event.target === this) {
-            this.classList.add("hidden");
-        }
+    document.querySelectorAll("[id^='modal-tambahMustahik-']").forEach(modal => {
+        modal.addEventListener("click", function(event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
     });
 </script>
 
 <script>
-    document.getElementById("openModal-tambahLampiran").addEventListener("click", function() {
-        document.getElementById("modal-tambahLampiran").classList.remove("hidden");
+    document.querySelectorAll("[id^='openModal-tambahLampiran-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("openModal-tambahLampiran-", "");
+            document.getElementById("modal-tambahLampiran-" + permohonanId).classList.remove("hidden");
+        });
     });
 
-    document.getElementById("closeModal").addEventListener("click", function() {
-        document.getElementById("modal-tambahLampiran").classList.add("hidden");
+    document.querySelectorAll("[id^='closeModal-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("closeModal-", "");
+            document.getElementById("modal-tambahLampiran-" + permohonanId).classList.add("hidden");
+        });
     });
 
     // Tutup modal jika klik di luar modal
-    document.getElementById("modal-tambahLampiran").addEventListener("click", function(event) {
-        if (event.target === this) {
-            this.classList.add("hidden");
-        }
+    document.querySelectorAll("[id^='modal-tambahLampiran-']").forEach(modal => {
+        modal.addEventListener("click", function(event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
     });
+</script>
+
+<script>
+    document.querySelectorAll("[id^='openModal-ubahLampiran-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("openModal-ubahLampiran-", "");
+            document.getElementById("modal-ubahLampiran-" + permohonanId).classList.remove("hidden");
+        });
+    });
+
+    document.querySelectorAll("[id^='closeModal-']").forEach(button => {
+        button.addEventListener("click", function() {
+            let permohonanId = this.id.replace("closeModal-", "");
+            document.getElementById("modal-ubahLampiran-" + permohonanId).classList.add("hidden");
+        });
+    });
+
+    // Tutup modal jika klik di luar modal
+    document.querySelectorAll("[id^='modal-ubahLampiran-']").forEach(modal => {
+        modal.addEventListener("click", function(event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+<script>
+    function hapusPermohonan(id) {
+        if (!confirm("Yakin ingin menghapus permohonan ini?")) return;
+
+        fetch(`/permohonan/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<script>
+    function hapusMustahik(id) {
+        if (!confirm("Yakin ingin menghapus data ini?")) return;
+
+        fetch(`/mustahik/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+    }
+</script>
+
+<script>
+    function hapusLampiran(id) {
+        if (!confirm("Yakin ingin menghapus data ini?")) return;
+
+        fetch(`/lampiran/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error("Error:", error));
+    }
 </script>

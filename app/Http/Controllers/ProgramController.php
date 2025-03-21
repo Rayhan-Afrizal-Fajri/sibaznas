@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Program;
 use App\Models\SubProgram;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class ProgramController extends Controller
 {
@@ -106,5 +107,14 @@ class ProgramController extends Controller
             'program' => $program,
             'subPrograms' => $subPrograms
         ]);
+    }
+
+    public function getSubPrograms(Request $request)
+    {
+        $sub_programs = DB::table('sub_program')
+            ->where('program_id', $request->program_id)
+            ->get();
+
+        return response()->json($sub_programs);
     }
 }

@@ -16,7 +16,7 @@
                     </span>
                     <select
                         class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="fo_lv" onchange="submitPermohonan();" wire:model="filters_fo"
+                        name="fo_lv" onchange="submitPermohonan();" name="filters_fo"
                         wire:loading.attr="disabled">
                         <option value="">Semua</option>
                         <option value="Selesai Input">Selesai Input</option>
@@ -30,7 +30,7 @@
                     </span>
                     <select
                         class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="atasan_lv" onchange="submitPermohonan();" wire:model="filters_atasan"
+                        name="atasan_lv" onchange="submitPermohonan();" name="filters_atasan"
                         wire:loading.attr="disabled">
                         <option value="">Semua</option>
                         <option value="Belum Dicek">Belum Dicek</option>
@@ -44,7 +44,7 @@
                     </span>
                     <select
                         class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="survey_lv" onchange="submitPermohonan();" wire:model="filters_survey"
+                        name="survey_lv" onchange="submitPermohonan();" name="filters_survey"
                         wire:loading.attr="disabled">
                         <option value="Semua">Semua</option>
                         <option value="Tidak Perlu">Tidak Perlu</option>
@@ -60,7 +60,7 @@
                     </span>
                     <select
                         class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="pencairan_lv" onchange="submitPermohonan();" wire:model="filters_pencairan"
+                        name="pencairan_lv" onchange="submitPermohonan();" name="filters_pencairan"
                         wire:loading.attr="disabled">
                         <option value="">Semua</option>
                         <option value="Belum Dicairkan">Belum Dicairkan</option>
@@ -74,7 +74,7 @@
                     </span>
                     <select
                         class="border border-gray-300 px-3 py-2 text-xs w-full rounded-r-lg focus:ring-2 focus:ring-blue-400 focus:outline-none flex-grow flex-1"
-                        name="lpj_lv" onchange="submitPermohonan();" wire:model="filters_lpj"
+                        name="lpj_lv" onchange="submitPermohonan();" name="filters_lpj"
                         wire:loading.attr="disabled">
                         <option value="">Semua</option>
                         <option value="Belum LPJ">Belum LPJ</option>

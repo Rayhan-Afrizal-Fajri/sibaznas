@@ -1,6 +1,7 @@
 <!-- Modal tambah permohonan -->
-<form wire:submit.prevent="tambah_permohonan">
-    <div wire:ignore.self id="modal-addPermohonan"
+<form action="{{ route('permohonan.store') }}" method="POST" enctype="multipart/form-data" x-data="currencyFormatter">
+    @csrf
+    <div id="modal-addPermohonan"
         class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
         <div class="bg-white p-4 rounded-md shadow-lg sm:w-[672px] max-h-[90vh] custom-scrollbar overflow-y-auto">
             <div class="flex justify-between items-center border-b-[1.5px] border-gray-500">
@@ -14,97 +15,89 @@
             </div>
 
             <!-- Form -->
-            <div>
-                <div class="grid gap-4 mb-4 mt-4 md:grid-cols-2">
-                    <div>
-                        <label class="block mb-1 text-sm font-bold text-black">Jenis Permohonan</label>
-                        <select wire:model.live="permohonan_jenis" id="countries"
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
-                            <option value="">Pilih jenis permohonan</option>
-                            <option value="Individu">Individu</option>
-                            <option value="UPZ">UPZ</option>
-                        </select>
+            <div class="mt-5">
+                <div x-data="permohonanData()">
+                    <div class="grid gap-4 mb-4 mt-4 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-1 text-sm font-bold text-black">Jenis Permohonan</label>
+                            <select name="permohonan_jenis" x-model="jenis" @change="updateNomorPermohonan"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
+                                <option value="">Pilih jenis permohonan</option>
+                                <option value="Individu">Individu</option>
+                                <option value="UPZ">UPZ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-1 text-sm font-bold text-black">Nomor Permohonan</label>
+                            <input name="permohonan_nomor" type="text" x-model="permohonan_nomor"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                readonly>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block mb-1  text-sm font-bold text-black">Nomor Permohonan</label>
-                        <input wire:model.live="permohonan_nomor" wire:key="permohonan-nomor-{{ now() }}"
-                            type="text"
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            readonly>
+                
+                    <!-- Form untuk Individu -->
+                    <div x-show="jenis === 'Individu'">
+                        <div class="grid gap-4 mb-4 md:grid-cols-2">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">Nama Pemohon</label>
+                                <input name="permohonan_nama_pemohon" type="text"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan nama pemohon">
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">No HP Pemohon</label>
+                                <input name="permohonan_nohp_pemohon" type="number"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan no hp pemohon">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-bold text-black">Alamat Pemohon</label>
+                            <input name="permohonan_alamat_pemohon" type="text"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                placeholder="Masukan alamat pemohon">
+                        </div>
+                    </div>
+                
+                    <!-- Form untuk UPZ -->
+                    <div x-show="jenis === 'UPZ'">
+                        <div class="grid gap-4 mb-4 md:grid-cols-2">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">Nama UPZ</label>
+                                <input name="upz" type="text"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan nama UPZ">
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">No HP UPZ</label>
+                                <input name="nohp" type="number"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan no hp UPZ">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block mb-2 text-sm font-bold text-black">Alamat UPZ</label>
+                            <input name="alamat" type="text"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                placeholder="Masukan alamat UPZ">
+                        </div>
+                        <div class="grid gap-4 mb-4 md:grid-cols-2">
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">Nama PJ Permohonan</label>
+                                <input name="pj_nama" type="text"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan nama PJ permohonan">
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-bold text-black">Jabatan</label>
+                                <input name="pj_jabatan" type="text"
+                                    class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                                    placeholder="Masukan jabatan PJ">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @if ($this->permohonan_jenis == 'Individu')
-                    <div class="grid gap-4 mb-4 md:grid-cols-2">
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">Nama Pemohon</label>
-                            <input wire:model.live="permohonan_nama_pemohon" type="text" id="name"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan nama pemohon" required />
-                        </div>
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">No HP Pemohon</label>
-                            <input wire:model.live="permohonan_nohp_pemohon" type="number"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan no hp pemohon" required />
-                        </div>
-                    </div>
-                @endif
-                @if ($this->permohonan_jenis == 'Individu')
-                    <div class="mb-4">
-                        <label class="block mb-2 text-sm font-bold text-black">Alamat Pemohon</label>
-                        <input wire:model.live="permohonan_alamat_pemohon" type="text" id="address"
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Masukan alamat pemohon" required />
-                    </div>
-                @endif
-                @if ($this->permohonan_jenis == 'UPZ')
-                    <div class="grid gap-4 mb-4 md:grid-cols-2">
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">Nama UPZ</label>
-                            <input wire:model.live="upz" type="text" id="name"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan nama UPZ" required />
-                        </div>
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">No HP UPZ</label>
-                            <input wire:model.live="nohp" type="number"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan no hp UPZ" required />
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block mb-2 text-sm font-bold text-black">Alamat UPZ</label>
-                        <input wire:model.live="alamat" type="text" id="address"
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Masukan alamat UPZ" required />
-                    </div>
-                    <div class="grid gap-4 mb-4 md:grid-cols-2">
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">Nama PJ Permohonan</label>
-                            <input wire:model.live="pj_nama" type="text"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan nama PJ permohonan" required>
-                        </div>
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">Jabatan</label>
-                            <input wire:model.live="pj_jabatan" type="text" id="name"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan jabatan PJ" required />
-                        </div>
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">No HP</label>
-                            <input wire:model.live="pj_nohp" type="number"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan no hp PJ" required />
-                        </div>
-                        <div>
-                            <label class="block mb-1 text-sm font-bold text-black">Keterangan</label>
-                            <input wire:model.live="keterangan" type="number"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                                placeholder="Masukan keterangan" required />
-                        </div>
-                    </div>
-                @endif
+
 
                 <div class="mb-4">
                     <hr class="border-gray-500 rounded-lg border-[1.5px]">
@@ -112,27 +105,27 @@
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Judul Surat</label>
-                        <input wire:model.live="surat_judul" type="text" required
+                        <input name="surat_judul" type="text"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Masukan judul surat" required>
+                            placeholder="Masukan judul surat">
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Nomor Surat</label>
-                        <input wire:model.live="surat_nomor" type="text" required
+                        <input name="surat_nomor" type="text"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Masukan nomor surat" required>
+                            placeholder="Masukan nomor surat">
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Tanggal Surat</label>
-                        <input wire:model.live="surat_tgl" type="date" required
+                        <input name="surat_tgl" type="date"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Tanggal surat" required>
+                            placeholder="Tanggal surat">
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">File Scan Surat</label>
-                        <input wire:model.live="surat_url" type="file" id="name"
+                        <input name="surat_url" type="file" id="name"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            required />
+                         />
                     </div>
                 </div>
                 <div class="mb-4">
@@ -141,7 +134,7 @@
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Asnaf</label>
-                        <select wire:model.live="asnaf_id" id="countries"
+                        <select name="asnaf_id" id="countries"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option value="">Pilih Asnaf</option>
                             @php
@@ -154,7 +147,7 @@
                     </div>
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Program</label>
-                        <select wire:model.live="program_id" id="countries"
+                        <select name="program_id" id="program-select"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option value="">Pilih Program</option>
                             @php
@@ -168,28 +161,22 @@
                 </div>
                 <div class="mb-4">
                     <label class="block mb-1 text-sm font-bold text-black">Sub Program</label>
-                    {{-- <div wire:ignore> --}}
-                    <select wire:model.live="sub_program_id" wire:key="sub-program-select-{{ now() }}"
-                        id="sub-program-select"
+                    <select name="sub_program_id" id="sub-program-select"
                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
                         <option value="">Pilih program terlebih dahulu</option>
-                        @foreach ($sub_programs as $sub)
-                            <option value="{{ $sub->sub_program_id }}">{{ $sub->sub_program }}</option>
-                        @endforeach
                     </select>
-                    {{-- </div> --}}
-                    {{-- @dump($sub_program_id) --}}
                 </div>
                 <div class="grid gap-4 mb-4 md:grid-cols-2">
-                    <div>
+                    <div x-data="currencyFormatter()">
                         <label class="block mb-1 text-sm font-bold text-black">Nominal Diajukan</label>
-                        <input wire:model.live="permohonan_nominal" type="text" id="nominal-permohonan"
-                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 "
-                            placeholder="Masukan nominal" required>
-                    </div>
+                        <input type="text" id="nominal-permohonan"
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+                            placeholder="Masukkan nominal" x-model="formattedValue" @input="formatInput" @blur="cleanValue()">
+                        <input type="hidden" x-model="rawValue" name="permohonan_nominal">
+                    </div> 
                     <div>
                         <label class="block mb-1 text-sm font-bold text-black">Bentuk Bantuan</label>
-                        <select wire:model.live="permohonan_bentuk_bantuan" id="countries"
+                        <select name="permohonan_bentuk_bantuan" id="countries"
                             class="bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1 ">
                             <option value="">Pilih bentuk bantuan</option>
                             <option value="Uang Tunai">Uang Tunai</option>
@@ -200,20 +187,18 @@
                 <div class="mb-4">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Keterangan / Catatan
                         Tambahan</label>
-                    <textarea wire:model.live="permohonan_catatan_input" id="message" rows="4"
+                    <textarea name="permohonan_catatan_input" id="message" rows="4"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Masukan keterangan"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-4">
-                    {{-- <button id="closeModal" class="px-4 py-2 text-sm bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Batal</button> --}}
-                    @if ($permohonan_jenis == '' or $permohonan_nominal == '' or $permohonan_bentuk_bantuan == '')
-                        <button type="submit" disabled wire:loading.attr="disabled"
-                            class="px-4 py-2 text-sm bg-[#00593b] text-white rounded-lg hover:bg-[#004027]">Simpan</button>
-                    @else
-                        <button type="submit" wire:loading.attr="disabled"
-                            class="px-4 py-2 text-sm bg-[#00593b] text-white rounded-lg hover:bg-[#004027]">Simpan</button>
-                    @endif
+                    <button type="button" id="closeModall" class="bg-gray-300 px-3 py-2 rounded-md text-gray-700">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 text-sm bg-[#00593b] text-white rounded-lg hover:bg-[#004027]">Simpan</button>
+
                 </div>
             </div>
 
@@ -232,6 +217,10 @@
             document.getElementById("modal-addPermohonan").classList.add("hidden");
         });
 
+        document.getElementById("closeModall").addEventListener("click", function() {
+            document.getElementById("modal-addPermohonan").classList.add("hidden");
+        });
+
         // Tutup modal jika klik di luar modal
         document.getElementById("modal-addPermohonan").addEventListener("click", function(event) {
             if (event.target === this) {
@@ -240,29 +229,91 @@
         });
     </script>
 
-
-
-
     <script>
         $(document).ready(function() {
-            $('#sub-program-select').on('change', function() {
-                var value = $(this).val();
-                Livewire.emit('updateSubProgram', value);
+            $('#program-select').change(function() {
+                var program_id = $(this).val();
+                $('#sub-program-select').html('<option value="">Loading...</option>'); // Loading text
+
+                if (program_id) {
+                    $.ajax({
+                        url: "{{ route('get.sub_programs') }}",
+                        type: "GET",
+                        data: {
+                            program_id: program_id
+                        },
+                        success: function(response) {
+                            $('#sub-program-select').html(
+                                '<option value="">Pilih Sub Program</option>'
+                            ); // Reset dropdown
+                            $.each(response, function(key, value) {
+                                $('#sub-program-select').append('<option value="' +
+                                    value.sub_program_id + '">' + value
+                                    .sub_program + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#sub-program-select').html(
+                        '<option value="">Pilih program terlebih dahulu</option>'
+                    ); // Reset jika tidak dipilih
+                }
             });
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            window.loadContactDeviceSelect2 = () => {
-                $('#nominal-permohonan').on('input', function(e) {
-                    $('#nominal-permohonan').val(formatRupiah($('#nominal-permohonan').val(),
-                        'Rp. '));
-                });
+<script>
+    function permohonanData() {
+        return {
+            jenis: "{{ old('permohonan_jenis', '') }}",
+            permohonan_nomor: "",
+
+            updateNomorPermohonan() {
+                if (!this.jenis) return;
+
+                fetch(`/get-permohonan-nomor?jenis=${this.jenis}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.permohonan_nomor = data.nomor_permohonan;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
             }
-            loadContactDeviceSelect2();
-            window.livewire.on('loadContactDeviceSelect2', () => {
-                loadContactDeviceSelect2();
-            });
-        });
-    </script>
+        };
+    }
+</script>
+
+<script>
+    function formatRupiah(angka) {
+        let numberString = angka.replace(/\D/g, ""); // Hanya angka
+        let split = numberString.split(",");
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            let separator = sisa ? "." : "";
+            rupiah += separator + ribuan.join(".");
+        }
+
+        return rupiah;
+    }
+
+    function currencyFormatter() {
+        return {
+            rawValue: "", // Menyimpan nilai asli dalam angka tanpa format
+            formattedValue: "", // Menyimpan nilai dalam format rupiah
+            
+            formatInput(event) {
+                let rawValue = event.target.value;
+                this.formattedValue = formatRupiah(rawValue);
+                this.rawValue = rawValue.replace(/\D/g, ""); // Hanya menyimpan angka
+            },
+
+            cleanValue() {
+                this.rawValue = this.rawValue.replace(/\D/g, ""); // Pastikan nilai tetap angka
+            }
+        };
+    }
+</script>
+    
+</form>

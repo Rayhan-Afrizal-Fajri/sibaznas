@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailPermohonanController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SubProgram;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('home') : redirect()->route('login');
@@ -30,16 +32,32 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/index', [PermohonanController::class, 'index'])->name('permohonan.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
-    Route::post('/permohonan_post', [PermohonanController::class, 'permohonan_post']);
-    Route::get('/filter_permohonan/{c_filter_daterange}/{c_filters_fo}/{c_filters_atasan}/{c_filters_survey}/{c_filters_pencairan}/{c_filters_lpj}', [PermohonanController::class, 'filter_permohonan'])->name('permohonan.filter');
-    Route::get('/detail-permohonan/{permohonan_id}', [PermohonanController::class, 'show'])->name('permohonan.detail');
-    // Route::get('/detail_permohonan/1', [PermohonanController::class, 'show'])->name('permohonan.detail');
+    Route::post('/permohonan/post', [PermohonanController::class, 'store'])->name('permohonan.store');
+    Route::post('/permohonan/mustahik', [DetailPermohonanController::class, 'tambah_mustahik'])->name('permohonan.tambah-mustahik');
+    Route::post('/permohonan/lampiran', [DetailPermohonanController::class, 'tambah_lampiran'])->name('permohonan.tambah-lampiran');
+    Route::post('/permohonan_post', [PermohonanController::class, 'permohonan_post'])->name('permohonan.filter');
+    Route::put('/permohonan/{id}', [DetailPermohonanController::class, 'update'])->name('permohonan.update');
+    Route::delete('/permohonan/{id}', [DetailPermohonanController::class, 'destroy']);
+    Route::get('/detail-permohonan/{permohonan_id}', [DetailPermohonanController::class, 'index'])->name('permohonan.detail');
+    Route::put('/permohonan-mustahik/{id}', [DetailPermohonanController::class, 'update_mustahik'])->name('permohonan.update-mustahik');
+    Route::put('/permohonan-lampiran/{id}', [DetailPermohonanController::class, 'update_lampiran'])->name('permohonan.update-lampiran');
+    Route::delete('/mustahik/{id}', [DetailPermohonanController::class, 'destroy_mustahik']);
+    Route::delete('/lampiran/{id}', [DetailPermohonanController::class, 'destroy_lampiran']);
+    Route::get('/permohonan/selesai/{id}', [DetailPermohonanController::class, 'permohonanSelesai'])->name('permohonan.selesai');
+    Route::get('/permohonan/batal/{id}', [DetailPermohonanController::class, 'permohonanBatal'])->name('permohonan.batal');;
+    Route::get('/get-sub-programs', [ProgramController::class, 'getSubPrograms'])->name('get.sub_programs');
+    Route::get('/get-subprograms/{programId}', [PermohonanController::class, 'getSubPrograms']);
+    Route::get('/get-permohonan-nomor', [PermohonanController::class, 'getNomorPermohonan']);
 
     Route::resource('/program', ProgramController::class)->names('program');
     Route::resource('/sub_program', SubProgramController::class)->names('sub_program');
+    Route::get('/get-subprograms', function (Request $request) {
+        $subPrograms = DB::table('sub_program')->where('program_id', $request->program_id)->get();
+        return response()->json($subPrograms);
+    });
     // Route::get('/get-sub-program/{program_id}', [ProgramController::class, 'getSubProgram']);
 
     Route::resource('/divisi', DivisiController::class)->names('divisi');
