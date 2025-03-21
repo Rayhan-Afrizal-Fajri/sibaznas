@@ -22,6 +22,7 @@ class Pengguna extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'pengguna_id',
         'wilayah_id',
         'pengurus_id',
         'driver_id',

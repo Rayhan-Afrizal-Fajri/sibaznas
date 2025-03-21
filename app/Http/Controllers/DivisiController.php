@@ -48,23 +48,37 @@ class DivisiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Divisi $divisi): RedirectResponse
+    public function update(Request $request, Divisi $divisi)
     {
-        $validated = $this->validateDivisi($request, $divisi->id);
-
-        $divisi->update($validated);
-
-        return redirect()->route('divisi.index')->with('success', 'Data divisi berhasil diperbarui.');
+        $request->validate([
+            'divisi' => 'required|string|max:255',
+            'kode_divisi' => 'required|string|max:255',
+        ]);
+        
+        // $program = Divisi::findOrFail($request->divisi_id);
+        // dd($request->program_id, $program);
+        try {
+            $divisi->update([
+                'divisi' => $request->divisi,
+                'kode_divisi' => $request->kode_divisi,
+            ]);
+            return redirect()->route('divisi.index')->with('success', 'Divisi berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui program!'.$e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Divisi $divisi): RedirectResponse
+    public function destroy(Divisi $divisi)
     {
-        $divisi->delete();
-
-        return redirect()->route('divisi.index')->with('success', 'Data divisi berhasil dihapus.');
+        try {
+            $divisi->delete();
+            return redirect()->route('divisi.index')->with('success', 'Divi berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus program!'.$e->getMessage());
+        }
     }
 
     /**
@@ -74,6 +88,7 @@ class DivisiController extends Controller
     {
         return $request->validate([
             'divisi' => 'required|string|unique:divisi,divisi' . ($id ? ",$id" : ''),
+            'kode_divisi' => 'required|integer',
         ]);
     }
 }

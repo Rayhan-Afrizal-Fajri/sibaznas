@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('jabatan_id')->primary();
             $table->foreignUuid('divisi_id')->index();
             $table->foreign('divisi_id')->references('divisi_id')->on('divisi');
-            $table->string('jabatan')->unique();
+            $table->string('jabatan');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });

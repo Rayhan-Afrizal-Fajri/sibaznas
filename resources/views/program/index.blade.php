@@ -133,7 +133,8 @@
                             </button>
                             <!-- Form untuk menghapus program -->
                             <form id="deleteProgramForm" method="POST" action="">
-                                @csrf @method('DELETE')
+                                @csrf
+                                @method('DELETE')
                                 <input type="hidden" id="deleteProgramId" name="program_id">
                                     <button
                                         type="submit"

@@ -16,7 +16,7 @@ class SubProgramController extends Controller
         // }
     
         $sub_programs = SubProgram::where('program_id', $program_id)->get();
-        dd($sub_programs);
+        // dd($sub_programs);
     
         if ($sub_programs->isEmpty()) {
             return response()->json([]);
