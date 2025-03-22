@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-permohonan-nomor', [PermohonanController::class, 'getNomorPermohonan']);
     
     Route::get('/show-1', function() {
-        return view('permohonan.show_1');
+    return view('permohonan.show_1');
     });
 
     Route::resource('/program', ProgramController::class)->names('program');

@@ -131,19 +131,14 @@
                                 class="bg-yellow-400 px-3 py-2 text-xs font-semibold text-white rounded-lg">
                                 Edit
                             </button>
-                            <!-- Form untuk menghapus program -->
-                            <form id="deleteDivisiForm" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                {{-- <input type="hidden" id="deleteJabatanId" name="program_id"> --}}
-                                <button
-                                    type="submit"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus program ini?')"
-                                    class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg">
-                                    Hapus
-                                </button>
-                            </form>
-                            </div>
+                            <button
+                                type="submit"
+                                id="deleteProgramButton"
+                                {{-- onclick="return confirm('Apakah Anda yakin ingin menghapus program ini?')" --}}
+                                class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg delete-btn">
+                                Hapus
+                            </button>
+                        </div>
                             <button
                                 id="openModal-addDivisi"
                                 class="bg-[#00593b] px-3 py-2 text-xs font-semibold text-white rounded-lg flex justify-center gap-1">
@@ -226,6 +221,7 @@
         @include('modal.divisi.edit')
         @include('modal.jabatan.create')
         @include('modal.jabatan.edit')
+        @include('components.modal-confirm-delete')
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
@@ -237,7 +233,8 @@
                     // var programId = $(this).data("id");
                     // var programName = $(this).data("program");
                     $("#editDeleteDivisiContainer").removeClass("hidden");
-                    $("#deleteDivisiForm").attr("action", "/divisi/" + divisiId);
+                    $("#deleteProgramButton").attr("data-url", "/divisi/" + divisiId);
+                    $("#deleteProgramButton").attr("data-id", divisiId);
 
                     $('.divisi-row').removeClass("bg-gray-300 bg-white");
                     $(this).addClass("bg-gray-300");
@@ -271,13 +268,10 @@
                                                 <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                             </svg>
                                         </button>
-                                        <form method="POST" action="/jabatan/${jab.jabatan_id}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus jabatan ini?')" class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg">
-                                                Hapus
-                                            </button>
-                                        </form>
+                                        <button type="submit" class="delete-btn bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg"
+                                            data-id="${jab.jabatan_id}" data-url="/jabatan/${jab.jabatan_id}">
+                                            Hapus
+                                        </button>
                                     </div>
                                 </td>
                             </tr>`
@@ -312,7 +306,7 @@
                     $("#openModal-EditDivisi").click(function () {
                         $("#editDivisi").val(divisiName);
                         $("#editKodeDivisi").val(divisiCode);
-                        $("#formEditDivisi").attr("action", "divisi/"+divisiId);
+                        $("#formEditDivisi").attr("action", "/divisi/"+divisiId);
                         $("#modal-EditDivisi").removeClass("hidden");
                     });
 

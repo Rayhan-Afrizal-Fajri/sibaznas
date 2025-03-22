@@ -132,17 +132,13 @@
                                 Edit
                             </button>
                             <!-- Form untuk menghapus program -->
-                            <form id="deleteProgramForm" method="POST" action="">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" id="deleteProgramId" name="program_id">
-                                    <button
-                                        type="submit"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus program ini?')"
-                                        class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg">
-                                        Hapus
-                                    </button>
-                                </form>
+                            <button 
+                                type="button" 
+                                id="deleteProgramButton"
+                                class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg delete-btn" >
+                                Hapus
+                            </button>
+
                             </div>
                             <button
                                 id="openModal-addProgram"
@@ -209,6 +205,8 @@
             </div>
         </div>
 
+        @include('components.modal-confirm-delete')
+
         <!-- Modal Aksi Program & Sub Program -->
         @include('modal.modal_tambah_program')
         @include('modal.modal_tambah_sub_program') @include('modal.modal_edit_program')
@@ -222,9 +220,9 @@
                     var programName = $(this).data("program");
                     $("#editDeleteProgramContainer").removeClass("hidden");
 
-                    // Setel ID program ke input hidden dalam form
-                    $("#deleteProgramId").val(programId);
-                    $("#deleteProgramForm").attr("action", "/program/" + programId);
+                    $("#deleteProgramButton").attr("data-id", programId);
+                    $("#deleteProgramButton").attr("data-url", "/program/"+programId);
+
 
                     $("#sub_program-programIdEdit").val(programId);
                     $("#sub_program-programNameEdit").val(programName);
@@ -266,14 +264,14 @@
                                                 <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                             </svg>
                                         </button>
-                                        <form method="POST" action="/sub_program/${sub.sub_program_id}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" value="${sub.sub_program_id}" name="program_id">
-                                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus sub program ini?')" class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg">
-                                                Hapus
-                                            </button>
-                                        </form>
+                                        <button 
+                                            type="button" 
+                                            class="bg-red-700 px-3 py-2 text-xs font-semibold text-white rounded-lg delete-btn" 
+                                            data-id="${sub.sub_program_id}" 
+                                            data-url="/sub_program/${sub.sub_program_id}">
+                                            Hapus
+                                        </button>
+
                                     </div>
                                 </td>
                             </tr>`
@@ -329,7 +327,7 @@
             function closeModal(modalId) {
                 $("#" + modalId).addClass("hidden");
             }
-        </script>
+        </script>         
 
         @endsection
     </x-app-layout>

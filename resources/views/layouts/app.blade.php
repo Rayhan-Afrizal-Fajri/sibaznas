@@ -64,6 +64,7 @@
 
         {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> --}}
         {{-- @livewireStyles --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <body
@@ -151,7 +152,41 @@
         });
     </script>
 
-   
+   {{-- delete modal --}}
+    <script>
+        $(document).ready(function () {
+            let deleteUrl = ""; // Menyimpan URL delete
+            let deleteForm = $("<form>", {
+                method: "POST",
+                style: "display: none;"
+            });
+        
+            // Tambahkan CSRF token dan method DELETE ke form
+            deleteForm.append($('<input>', { type: 'hidden', name: '_token', value: "{{ csrf_token() }}" }));
+            deleteForm.append($('<input>', { type: 'hidden', name: '_method', value: 'DELETE' }));
+            $("body").append(deleteForm);
+        
+            // Ketika tombol hapus diklik, tampilkan modal konfirmasi
+            $(document).on("click", ".delete-btn", function () {
+                deleteUrl = $(this).data("url"); 
+                $("#deleteConfirmationModal").removeClass("hidden");
+            });
+        
+            // Jika tombol batal ditekan, sembunyikan modal
+            $("#cancelDelete").click(function () {
+                $("#deleteConfirmationModal").addClass("hidden");
+                deleteUrl = "";
+            });
+        
+            // Jika tombol hapus di modal diklik, kirim form delete
+            $("#confirmDelete").click(function () {
+                if (deleteUrl !== "") {
+                    deleteForm.attr("action", deleteUrl);
+                    deleteForm.submit();
+                }
+            });
+        });
+    </script>   
 
 
     {{-- @livewireScripts --}}

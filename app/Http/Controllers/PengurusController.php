@@ -229,13 +229,15 @@ class PengurusController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pengurus $pengurus): RedirectResponse
+    public function destroy($pengurus_id): RedirectResponse
     {
+        $pengurus = Pengurus::find($pengurus_id);
         $pengguna = Pengguna::where('pengurus_id', $pengurus->pengurus_id)->first();
+        // dd($pengguna);
         try {
             $pengguna->delete();
             $pengurus->delete();
-            return redirect()->route('')->with('success', 'Data pengurus berhasil dihapus.');
+            return redirect()->route('pengurus.index')->with('success', 'Data pengurus berhasil dihapus.');
         } catch (\Exception $e) {
             return back()->withErrors('Gagal menghapus data: ' . $e->getMessage());
         }
